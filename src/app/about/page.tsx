@@ -219,7 +219,7 @@ export default function AboutPage() {
                 school: "History Instructor, University School",
                 photo: "/team/tyler-yoder.png",
                 quote:
-                  "TEDxHuntingValley is independently organized. The license, the outreach, the vision — that belongs to Charlie and Jack.",
+                  "When Charlie and Jack came to me with this, they had already done the hard part. My job has been to make sure they get to the finish line.",
               },
             ].map((person, i) => (
               <FadeIn key={person.name} delay={i * 0.1}>

@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { FadeIn, StaggerContainer, StaggerItem } from "@/components/ui/FadeIn";
+// StaggerContainer and StaggerItem used in "What we post" section below
 import { CTASection } from "@/components/sections/CTASection";
+import { BeholdFeed } from "@/components/ui/BeholdFeed";
 import { siteConfig } from "@/data/site";
 
 export const metadata: Metadata = {
@@ -9,44 +11,6 @@ export const metadata: Metadata = {
     "Follow TEDxHuntingValley on Instagram and X for updates, speaker announcements, and behind-the-scenes coverage.",
 };
 
-const placeholderPosts = [
-  {
-    caption:
-      "Cleveland doesn't have an independent community TEDx anymore. We noticed. So we built one. TEDxHuntingValley is happening August 22.",
-    date: "Apr 11",
-    likes: 142,
-  },
-  {
-    caption:
-      "The theme for TEDxHuntingValley: The Invisible Engine: The Forces We Forget. Student applications are open. Deadline May 11.",
-    date: "Apr 15",
-    likes: 98,
-  },
-  {
-    caption:
-      "Any Cleveland-area high school student can apply. No GPA requirement. No experience requirement. The idea is what gets judged.",
-    date: "Apr 17",
-    likes: 211,
-  },
-  {
-    caption:
-      "Five student speakers. Five adult speakers. One stage. No age qualifier, no asterisk. TEDxHuntingValley — August 22, 2026.",
-    date: "Apr 20",
-    likes: 174,
-  },
-  {
-    caption:
-      "Gund Auditorium at University School. 500 seats. Capped at 100 by TED licensing. Intimate by design.",
-    date: "Apr 22",
-    likes: 119,
-  },
-  {
-    caption:
-      "The last community TEDx in Cleveland was June 2015. More than ten years passed. Two high school juniors decided to stop waiting.",
-    date: "Apr 23",
-    likes: 263,
-  },
-];
 
 export default function SocialPage() {
   return (
@@ -129,83 +93,31 @@ export default function SocialPage() {
         </div>
       </div>
 
-      {/* Feed placeholder */}
+      {/* Live Instagram feed via Behold */}
       <section className="py-20 md:py-28 bg-white" aria-labelledby="feed-heading">
         <div className="max-w-[1200px] mx-auto px-6 md:px-8 lg:px-12">
           <FadeIn>
-            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
-              <div>
-                <span className="inline-flex items-center gap-3 mb-4">
-                  <span className="inline-block w-8 h-0.5 bg-[#e62b1e]" aria-hidden="true" />
-                  <span className="text-[0.65rem] font-bold tracking-[0.18em] uppercase text-[#e62b1e]">
-                    Latest Posts
-                  </span>
+            <div className="mb-12">
+              <span className="inline-flex items-center gap-3 mb-4">
+                <span className="inline-block w-8 h-0.5 bg-[#e62b1e]" aria-hidden="true" />
+                <span className="text-[0.65rem] font-bold tracking-[0.18em] uppercase text-[#e62b1e]">
+                  Latest Posts
                 </span>
-                <h2
-                  id="feed-heading"
-                  className="font-extrabold text-[#0a0a0a]"
-                  style={{
-                    fontSize: "clamp(1.875rem, 4vw, 3rem)",
-                    letterSpacing: "-0.03em",
-                    lineHeight: 1.05,
-                  }}
-                >
-                  From the feed
-                </h2>
-              </div>
-              <p className="text-[#9a9a9a] text-xs max-w-xs leading-relaxed">
-                Live social feed coming soon. These are representative posts. Follow{" "}
-                {siteConfig.handle} for real-time updates.
-              </p>
+              </span>
+              <h2
+                id="feed-heading"
+                className="font-extrabold text-[#0a0a0a]"
+                style={{
+                  fontSize: "clamp(1.875rem, 4vw, 3rem)",
+                  letterSpacing: "-0.03em",
+                  lineHeight: 1.05,
+                }}
+              >
+                From the feed
+              </h2>
             </div>
           </FadeIn>
-
-          <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {placeholderPosts.map((post, i) => (
-              <StaggerItem key={i}>
-                <div className="bg-white border border-[#e0e0e0] hover:border-[#e62b1e]/30 hover:shadow-md transition-all duration-300 group">
-                  {/* Header */}
-                  <div className="flex items-center gap-3 p-5 border-b border-[#f0f0f0]">
-                    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#e62b1e] to-[#c9231a] flex items-center justify-center flex-shrink-0">
-                      <span className="text-white text-xs font-bold">T</span>
-                    </div>
-                    <div>
-                      <p className="text-xs font-bold text-[#0a0a0a]">tedxhuntingvalley</p>
-                      <p className="text-[0.65rem] text-[#9a9a9a]">{post.date}</p>
-                    </div>
-                  </div>
-
-                  {/* Image placeholder */}
-                  <div className="aspect-square bg-[#f0f0f0] flex items-center justify-center relative overflow-hidden">
-                    <svg
-                      className="w-10 h-10 text-[#c0c0c0]"
-                      fill="currentColor"
-                      viewBox="0 0 24 24"
-                      aria-hidden="true"
-                    >
-                      <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z" />
-                    </svg>
-                    <div className="absolute bottom-3 right-3">
-                      <span className="text-[0.55rem] font-bold tracking-widest uppercase text-[#b0b0b0] bg-white/80 px-2 py-1">
-                        Coming Soon
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Caption */}
-                  <div className="p-5">
-                    <p className="text-xs text-[#555555] leading-relaxed line-clamp-3">
-                      <span className="font-bold text-[#0a0a0a]">tedxhuntingvalley </span>
-                      {post.caption}
-                    </p>
-                    <p className="text-xs font-semibold text-[#0a0a0a] mt-3">
-                      {post.likes.toLocaleString()} likes
-                    </p>
-                  </div>
-                </div>
-              </StaggerItem>
-            ))}
-          </StaggerContainer>
+          <BeholdFeed feedId="n7Q4k8P6hLA35PL6L83y" />
         </div>
       </section>
 

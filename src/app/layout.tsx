@@ -14,7 +14,7 @@ const geistSans = Geist({
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
-    default: "TEDxHuntingValley | August 22, 2026",
+    default: "TEDxHuntingValley",
     template: "%s | TEDxHuntingValley",
   },
   description: siteConfig.description,
@@ -62,7 +62,7 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: "/favicon-32.png", sizes: "32x32", type: "image/png" },
+      { url: "/favicon.svg", type: "image/svg+xml" },
       { url: "/favicon.ico" },
     ],
     apple: "/apple-touch-icon.png",
