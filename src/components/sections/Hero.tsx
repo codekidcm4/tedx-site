@@ -68,18 +68,13 @@ export function Hero() {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
-            className="flex flex-wrap gap-6 mb-12 text-sm"
+            className="flex flex-wrap items-center gap-x-5 gap-y-2 mb-12 text-sm text-white/55"
           >
-            {[
-              { icon: "📅", label: "August 22, 2026" },
-              { icon: "📍", label: "Gund Auditorium, University School" },
-              { icon: "🎤", label: "Hunting Valley, Ohio" },
-            ].map((item) => (
-              <div key={item.label} className="flex items-center gap-2 text-white/60">
-                <span aria-hidden="true" className="text-base">{item.icon}</span>
-                <span>{item.label}</span>
-              </div>
-            ))}
+            <span>August 22, 2026</span>
+            <span className="w-px h-3 bg-white/20 hidden sm:block" aria-hidden="true" />
+            <span>Gund Auditorium, University School</span>
+            <span className="w-px h-3 bg-white/20 hidden sm:block" aria-hidden="true" />
+            <span>Hunting Valley, Ohio</span>
           </motion.div>
 
           {/* CTAs */}

@@ -41,15 +41,29 @@ export function Navbar() {
       >
         <div className="max-w-[1200px] mx-auto px-6 md:px-8 lg:px-12">
           <div className="flex items-center justify-between h-16 md:h-18">
-            {/* Logo */}
-            <Link href="/" className="flex items-center flex-shrink-0" aria-label="TEDxHuntingValley home">
+            {/* Logo — swaps between dark/light versions */}
+            <Link href="/" className="flex items-center flex-shrink-0 h-8" aria-label="TEDxHuntingValley home">
               <Image
-                src="/logo.jpeg"
+                src="/logo-dark.png"
                 alt="TEDxHuntingValley"
-                width={180}
-                height={40}
-                className="h-8 w-auto object-contain"
+                width={220}
+                height={48}
+                className={cn(
+                  "h-8 w-auto object-contain transition-opacity duration-300",
+                  scrolled || !isHome ? "opacity-0 absolute pointer-events-none" : "opacity-100"
+                )}
                 priority
+                loading="eager"
+              />
+              <Image
+                src="/logo-white.jpeg"
+                alt="TEDxHuntingValley"
+                width={220}
+                height={48}
+                className={cn(
+                  "h-8 w-auto object-contain transition-opacity duration-300",
+                  scrolled || !isHome ? "opacity-100" : "opacity-0 absolute pointer-events-none"
+                )}
                 loading="eager"
               />
             </Link>

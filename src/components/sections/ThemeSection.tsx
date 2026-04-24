@@ -70,8 +70,8 @@ export function ThemeSection() {
               </p>
 
               <p className="text-white/40 text-sm leading-relaxed italic border-l-2 border-[#e62b1e]/50 pl-4">
-                &ldquo;This is not a school showcase. A high school junior&apos;s idea is held to the
-                exact same standard as anyone else&apos;s.&rdquo;
+                &ldquo;A high schooler&apos;s idea is held to the exact same standard as anyone
+                else&apos;s.&rdquo;
                 <span className="block mt-2 text-white/30 not-italic text-xs">
                   Charlie Martin, co-organizer
                 </span>

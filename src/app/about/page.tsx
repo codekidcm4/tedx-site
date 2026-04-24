@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { FadeIn, StaggerContainer, StaggerItem } from "@/components/ui/FadeIn";
 import { CTASection } from "@/components/sections/CTASection";
 import Link from "next/link";
+import Image from "next/image";
 
 export const metadata: Metadata = {
   title: "About",
@@ -200,6 +201,7 @@ export default function AboutPage() {
                 name: "Charlie Martin",
                 role: "Co-Organizer",
                 school: "University School, Class of 2027",
+                photo: "/team/charlie-martin.jpg",
                 quote:
                   "We kept asking why Cleveland didn't have this anymore. We couldn't find a good answer. So we decided to stop waiting.",
               },
@@ -207,6 +209,7 @@ export default function AboutPage() {
                 name: "Jack Nelson",
                 role: "Co-Organizer",
                 school: "University School, Class of 2027",
+                photo: "/team/jack-nelson.jpg",
                 quote:
                   "If the idea is good enough, it doesn't matter how old you are. That's what makes this worth doing.",
               },
@@ -214,15 +217,23 @@ export default function AboutPage() {
                 name: "Dr. Tyler Yoder",
                 role: "Licensed Organizer",
                 school: "History Instructor, University School",
+                photo: "/team/tyler-yoder.jpg",
                 quote:
                   "TEDxHuntingValley is independently organized. The license, the outreach, the vision — that belongs to Charlie and Jack.",
               },
             ].map((person, i) => (
               <FadeIn key={person.name} delay={i * 0.1}>
                 <div className="group">
-                  {/* Avatar placeholder */}
-                  <div className="w-16 h-16 rounded-full bg-[#f0f0f0] flex items-center justify-center mb-5">
-                    <span className="text-xl font-bold text-[#9a9a9a]">{person.name[0]}</span>
+                  {/* Avatar — replace placeholder with photo once file is added */}
+                  <div className="w-16 h-16 rounded-full overflow-hidden bg-[#f0f0f0] flex items-center justify-center mb-5">
+                    <Image
+                      src={person.photo}
+                      alt={person.name}
+                      width={64}
+                      height={64}
+                      className="w-full h-full object-cover object-top"
+                      onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = "none"; }}
+                    />
                   </div>
                   <p className="font-bold text-[#0a0a0a] text-lg mb-0.5">{person.name}</p>
                   <p className="text-[#e62b1e] text-xs font-bold tracking-wider uppercase mb-0.5">{person.role}</p>
