@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { FadeIn, StaggerContainer, StaggerItem } from "@/components/ui/FadeIn";
-// StaggerContainer and StaggerItem used in "What we post" section below
 import { CTASection } from "@/components/sections/CTASection";
 import { BeholdFeed } from "@/components/ui/BeholdFeed";
 import { siteConfig } from "@/data/site";
