@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { FadeIn, StaggerContainer, StaggerItem } from "@/components/ui/FadeIn";
+import { CountdownTimer } from "@/components/ui/CountdownTimer";
 import { siteConfig } from "@/data/site";
 
 export const metadata: Metadata = {
@@ -55,19 +56,18 @@ export default function ApplyPage() {
         </div>
       </div>
 
-      {/* Deadline banner */}
-      <div className="bg-[#e62b1e] py-4">
+      {/* Deadline countdown banner */}
+      <div className="bg-[#e62b1e] py-5">
         <div className="max-w-[1200px] mx-auto px-6 md:px-8 lg:px-12">
-          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-8">
-            <div className="flex items-center gap-3">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-8">
+            <div className="flex items-center gap-3 flex-shrink-0">
               <div className="w-2 h-2 bg-white rounded-full animate-pulse" aria-hidden="true" />
-              <p className="text-white text-sm font-bold tracking-wide">
-                Applications Open
+              <p className="text-white text-sm font-bold tracking-wide uppercase">
+                Applications close in
               </p>
             </div>
-            <p className="text-white/80 text-sm">
-              Deadline: <strong className="text-white">May 11, 2026 at 11:59 PM</strong> &mdash; Hard deadline, no extensions.
-            </p>
+            <CountdownTimer targetDate="2026-05-11T23:59:00" variant="banner" expiredMessage="Applications closed — May 11 deadline has passed." />
+            <p className="text-white/70 text-xs sm:ml-auto flex-shrink-0">Hard deadline · No extensions</p>
           </div>
         </div>
       </div>

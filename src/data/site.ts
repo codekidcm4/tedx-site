@@ -22,6 +22,7 @@ export const navLinks = [
   { label: "About", href: "/about" },
   { label: "Speakers", href: "/speakers" },
   { label: "Apply", href: "/apply" },
+  { label: "Press", href: "/press" },
   { label: "Media", href: "/media" },
   { label: "Social", href: "/social" },
 ];

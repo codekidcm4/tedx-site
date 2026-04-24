@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { siteConfig } from "@/data/site";
+import { CountdownTimer } from "@/components/ui/CountdownTimer";
 
 export function Hero() {
   return (
@@ -75,6 +76,16 @@ export function Hero() {
             <span>Gund Auditorium, University School</span>
             <span className="w-px h-3 bg-white/20 hidden sm:block" aria-hidden="true" />
             <span>Hunting Valley, Ohio</span>
+          </motion.div>
+
+          {/* Countdown */}
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
+            className="mb-12"
+          >
+            <CountdownTimer targetDate="2026-08-22T09:00:00" variant="hero" expiredMessage="Today is the day." />
           </motion.div>
 
           {/* CTAs */}
