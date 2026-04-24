@@ -11,11 +11,11 @@ export function Footer() {
           <div className="md:col-span-1">
             <Link href="/" aria-label="TEDxHuntingValley home">
               <Image
-                src="/logo.jpeg"
+                src="/logo.png"
                 alt="TEDxHuntingValley"
                 width={180}
                 height={40}
-                className="h-8 w-auto object-contain brightness-0 invert mb-4"
+                className="h-8 w-auto object-contain mb-4"
               />
             </Link>
             <p className="text-[#9a9a9a] text-sm leading-relaxed max-w-xs">
