@@ -1,17 +1,22 @@
 "use client";
 
-import Script from "next/script";
+import { useEffect } from "react";
 
 interface BeholdFeedProps {
   feedId: string;
 }
 
 export function BeholdFeed({ feedId }: BeholdFeedProps) {
+  useEffect(() => {
+    if (document.querySelector('script[src="https://w.behold.so/widget.js"]')) return;
+    const script = document.createElement("script");
+    script.src = "https://w.behold.so/widget.js";
+    script.type = "module";
+    document.head.appendChild(script);
+  }, []);
+
   return (
-    <>
-      <Script src="https://w.behold.so/widget.js" strategy="lazyOnload" />
-      {/* @ts-expect-error custom web component */}
-      <behold-widget feed-id={feedId} />
-    </>
+    // @ts-expect-error: behold-widget is a custom web component
+    <behold-widget feed-id={feedId} />
   );
 }

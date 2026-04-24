@@ -6,7 +6,7 @@ export const siteConfig = {
   location: "Hunting Valley, Ohio",
   email: "tedxhuntingvalley@gmail.com",
   instagram: "https://instagram.com/tedxhuntingvalley",
-  twitter: "https://twitter.com/tedxhuntingvalley",
+  twitter: "https://x.com/tedxhv26",
   handle: "@tedxhuntingvalley",
   applicationDeadline: "May 11, 2026",
   organizers: ["Charlie Martin", "Jack Nelson"],
