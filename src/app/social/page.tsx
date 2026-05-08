@@ -8,6 +8,21 @@ export const metadata: Metadata = {
   title: "Social",
   description:
     "Follow TEDxHuntingValley on Instagram and X for updates, speaker announcements, and behind-the-scenes coverage.",
+  alternates: { canonical: "/social" },
+  openGraph: {
+    title: "Social | TEDxHuntingValley",
+    description:
+      "Speaker announcements, coaching coverage, and event-day updates from @tedxhuntingvalley on Instagram and X.",
+    url: "https://tedxhuntingvalley.com/social",
+    type: "website",
+    images: [{ url: "/og-image.jpg", width: 1200, height: 630, alt: "TEDxHuntingValley social" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Social | TEDxHuntingValley",
+    description: "Follow @tedxhuntingvalley for updates and behind-the-scenes coverage.",
+    images: ["/og-image.jpg"],
+  },
 };
 
 
@@ -148,7 +163,7 @@ export default function SocialPage() {
           <StaggerContainer className="grid grid-cols-1 md:grid-cols-3 gap-px bg-[#e0e0e0]">
             {[
               {
-                phase: "Now through May 11",
+                phase: "Now through May 25",
                 label: "Applications",
                 description:
                   "Speaker application updates, theme breakdowns, and tips for what we look for in a strong talk idea.",

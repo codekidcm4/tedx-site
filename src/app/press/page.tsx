@@ -1,12 +1,28 @@
 import type { Metadata } from "next";
 import { FadeIn, StaggerContainer, StaggerItem } from "@/components/ui/FadeIn";
 import { CTASection } from "@/components/sections/CTASection";
+import { pressItems } from "@/components/sections/PressSection";
 import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Press",
   description:
-    "Press kit, media contacts, story angles, and downloadable materials for TEDxHuntingValley — August 22, 2026 at Gund Auditorium, University School.",
+    "Press kit, media contacts, story angles, and downloadable materials for TEDxHuntingValley on August 22, 2026 at Gund Auditorium, University School.",
+  alternates: { canonical: "/press" },
+  openGraph: {
+    title: "Press | TEDxHuntingValley",
+    description:
+      "Story angles, organizer quotes, downloadable media kit, and press release for TEDxHuntingValley. The first independent community TEDx in Cleveland in over a decade.",
+    url: "https://tedxhuntingvalley.com/press",
+    type: "website",
+    images: [{ url: "/og-image.jpg", width: 1200, height: 630, alt: "TEDxHuntingValley press kit" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Press | TEDxHuntingValley",
+    description: "Press kit, story angles, and media contacts for TEDxHuntingValley.",
+    images: ["/og-image.jpg"],
+  },
 };
 
 const stats = [
@@ -22,7 +38,7 @@ const storyAngles = [
   {
     number: "01",
     title: "The Student Contest",
-    body: "Any Cleveland-area high school student can apply for a spot on a globally distributed speaking platform. The deadline is May 11. The selection process is a story about ideas, not credentials. What are teenagers in Cleveland thinking about in 2026?",
+    body: "Any Cleveland-area high school student can apply for a spot on a globally distributed speaking platform. Applications are now on a rolling basis through May 25. The selection process is a story about ideas, not credentials. What are teenagers in Cleveland thinking about in 2026?",
   },
   {
     number: "02",
@@ -48,16 +64,26 @@ const storyAngles = [
 
 const canProvide = [
   "Interviews with organizers Charlie Martin and Jack Nelson — available by phone, email, or in person",
-  "Interviews with student applicants before May 11 (several have agreed to speak with press)",
+  "Interviews with student applicants before the May 25 rolling deadline (several have agreed to speak with press)",
   "Interviews with selected speakers in early June after final selection is announced",
   "Behind-the-scenes access through rehearsals and the coaching process (June–July)",
   "Press credentials for the August 22 event — contact us to request",
   "Speaker bios and talk summaries once selections are finalized in early June",
 ];
 
+const breadcrumb = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Home", item: "https://tedxhuntingvalley.com" },
+    { "@type": "ListItem", position: 2, name: "Press", item: "https://tedxhuntingvalley.com/press" },
+  ],
+};
+
 export default function PressPage() {
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }} />
       {/* Page header */}
       <div className="bg-[#0a0a0a] pt-32 pb-16 md:pt-40 md:pb-20 relative overflow-hidden">
         <div className="absolute left-0 top-0 bottom-0 w-0.5 bg-[#e62b1e]" aria-hidden="true" />
@@ -199,6 +225,52 @@ export default function PressPage() {
         </div>
       </section>
 
+      {/* Coverage */}
+      <section className="py-20 md:py-28 bg-white border-y border-[#e8e8e8]" aria-labelledby="coverage-heading">
+        <div className="max-w-[1200px] mx-auto px-6 md:px-8 lg:px-12">
+          <FadeIn>
+            <div className="flex items-center gap-3 mb-2">
+              <span className="inline-block w-8 h-0.5 bg-[#e62b1e]" aria-hidden="true" />
+              <span id="coverage-heading" className="text-[0.65rem] font-bold tracking-[0.18em] uppercase text-[#9a9a9a]">
+                Coverage so far
+              </span>
+            </div>
+            <div className="divide-y divide-[#e8e8e8]">
+              {pressItems.map((item) => (
+                <a
+                  key={item.outlet}
+                  href={item.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group grid grid-cols-1 md:grid-cols-12 gap-2 md:gap-8 py-6 transition-colors duration-150"
+                >
+                  <div className="md:col-span-3 flex md:flex-col md:justify-start gap-3 md:gap-1 items-baseline md:items-start">
+                    <p className="text-[0.65rem] font-bold tracking-[0.14em] uppercase text-[#e62b1e] flex-shrink-0">
+                      {item.outlet}
+                    </p>
+                    <p className="text-[0.65rem] text-[#b0b0b0]">{item.date}</p>
+                  </div>
+                  <div className="md:col-span-9">
+                    <p className="text-sm font-semibold text-[#0a0a0a] leading-snug mb-1.5 group-hover:text-[#e62b1e] transition-colors duration-200">
+                      {item.headline}
+                    </p>
+                    <p className="text-xs text-[#777777] leading-relaxed line-clamp-2 mb-3">
+                      {item.quote}
+                    </p>
+                    <span className="inline-flex items-center gap-1 text-[0.65rem] font-bold tracking-wide uppercase text-[#e62b1e]">
+                      Read article
+                      <svg className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24" aria-hidden="true">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                      </svg>
+                    </span>
+                  </div>
+                </a>
+              ))}
+            </div>
+          </FadeIn>
+        </div>
+      </section>
+
       {/* Story angles */}
       <section className="py-20 md:py-28 bg-white" aria-labelledby="angles-heading">
         <div className="max-w-[1200px] mx-auto px-6 md:px-8 lg:px-12">
@@ -336,7 +408,7 @@ export default function PressPage() {
                 <p className="text-white/65 leading-relaxed mb-8">
                   Charlie Martin and Jack Nelson are available for interviews by phone, email,
                   or in person. We respond to every press inquiry. A 10-minute call is available
-                  to walk any journalist through the full story before May 11.
+                  to walk any journalist through the full story before the May 25 rolling deadline.
                 </p>
                 <div className="space-y-3">
                   <a

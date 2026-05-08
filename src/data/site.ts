@@ -8,7 +8,7 @@ export const siteConfig = {
   instagram: "https://instagram.com/tedxhuntingvalley",
   twitter: "https://x.com/tedxhv26",
   handle: "@tedxhuntingvalley",
-  applicationDeadline: "May 11, 2026",
+  applicationDeadline: "May 25, 2026 (rolling)",
   organizers: ["Charlie Martin", "Jack Nelson"],
   licensedOrganizer: "Dr. Tyler Yoder",
   school: "University School",
@@ -29,7 +29,7 @@ export const navLinks = [
 
 export const keyDates = [
   { date: "March 31, 2026", label: "Student applications open" },
-  { date: "May 11, 2026", label: "Application deadline (11:59 PM)" },
+  { date: "May 25, 2026", label: "Rolling application deadline (11:59 PM)" },
   { date: "May 2026", label: "Round 2 interviews at University School" },
   { date: "Early June 2026", label: "Five speakers selected and announced" },
   { date: "June – July 2026", label: "Speaker coaching and talk development" },

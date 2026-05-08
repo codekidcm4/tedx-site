@@ -6,7 +6,23 @@ import { siteConfig } from "@/data/site";
 export const metadata: Metadata = {
   title: "Apply to Speak",
   description:
-    "Apply to be a student speaker at TEDxHuntingValley. Any Cleveland-area high school student can apply. No GPA or experience required. Deadline: May 11, 2026.",
+    "Apply to be a student speaker at TEDxHuntingValley. Any Cleveland-area high school student can apply. No GPA or experience required. Rolling reviews through May 25, 2026.",
+  alternates: { canonical: "/apply" },
+  openGraph: {
+    title: "Apply to Speak | TEDxHuntingValley",
+    description:
+      "Rolling applications through May 25, 2026. Any Cleveland-area high school student can pitch an idea worth a globally distributed stage. No GPA, no portal, no fee.",
+    url: "https://tedxhuntingvalley.com/apply",
+    type: "website",
+    images: [{ url: "/og-image.jpg", width: 1200, height: 630, alt: "Apply to speak at TEDxHuntingValley" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Apply to Speak | TEDxHuntingValley",
+    description:
+      "Rolling applications through May 25, 2026. Any Cleveland-area high school student can pitch an idea worth a globally distributed stage.",
+    images: ["/og-image.jpg"],
+  },
 };
 
 const requirements = [
@@ -28,9 +44,47 @@ const requirements = [
   },
 ];
 
+const breadcrumb = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Home", item: "https://tedxhuntingvalley.com" },
+    { "@type": "ListItem", position: 2, name: "Apply to Speak", item: "https://tedxhuntingvalley.com/apply" },
+  ],
+};
+
+const applicationJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Event",
+  name: "TEDxHuntingValley Student Speaker Application",
+  description:
+    "Open student speaker contest for TEDxHuntingValley. Any high school student in the greater Cleveland area can apply on a rolling basis through May 25, 2026.",
+  startDate: "2026-03-31T00:00:00-04:00",
+  endDate: "2026-05-25T23:59:00-04:00",
+  eventStatus: "https://schema.org/EventScheduled",
+  eventAttendanceMode: "https://schema.org/OnlineEventAttendanceMode",
+  location: {
+    "@type": "VirtualLocation",
+    url: "https://tedxhuntingvalley.com/apply",
+  },
+  organizer: { "@type": "Organization", name: "TEDxHuntingValley", url: "https://tedxhuntingvalley.com" },
+  url: "https://tedxhuntingvalley.com/apply",
+  offers: {
+    "@type": "Offer",
+    name: "Student Speaker Application",
+    price: "0",
+    priceCurrency: "USD",
+    availability: "https://schema.org/InStock",
+    validThrough: "2026-05-25T23:59:00-04:00",
+    url: "https://tedxhuntingvalley.com/apply",
+  },
+};
+
 export default function ApplyPage() {
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(applicationJsonLd) }} />
       {/* Page header */}
       <div className="bg-[#0a0a0a] pt-32 pb-16 md:pt-40 md:pb-20 relative overflow-hidden">
         <div className="absolute left-0 top-0 bottom-0 w-0.5 bg-[#e62b1e]" aria-hidden="true" />
@@ -56,6 +110,43 @@ export default function ApplyPage() {
         </div>
       </div>
 
+      {/* Deadline Update callout */}
+      <section
+        className="bg-[#0a0a0a] py-16 md:py-20 relative overflow-hidden border-t border-[#1a1a1a]"
+        aria-labelledby="deadline-update-heading"
+      >
+        <div className="absolute left-0 top-0 bottom-0 w-0.5 bg-[#e62b1e]" aria-hidden="true" />
+        <div className="max-w-[1200px] mx-auto px-6 md:px-8 lg:px-12">
+          <FadeIn>
+            <span className="inline-flex items-center gap-3 mb-6">
+              <span className="inline-block w-8 h-0.5 bg-[#e62b1e]" aria-hidden="true" />
+              <span className="text-[0.65rem] font-bold tracking-[0.18em] uppercase text-[#e62b1e]">
+                Deadline Update
+              </span>
+            </span>
+            <h2
+              id="deadline-update-heading"
+              className="text-white font-extrabold mb-6 max-w-3xl"
+              style={{ fontSize: "clamp(1.75rem, 4vw, 3rem)", letterSpacing: "-0.03em", lineHeight: 1.05 }}
+            >
+              We are extending. Two extra weeks. Rolling reviews.
+            </h2>
+            <div className="space-y-5 text-white/75 text-base md:text-lg leading-relaxed max-w-2xl">
+              <p>
+                From now through May 25, 2026, applications are on a rolling basis. The standard
+                has not changed. The theme has not changed. The only thing that changed is how
+                long the door stays open.
+              </p>
+              <p>
+                We are excited about this, but we recognize it is the end of the year and that
+                people have a lot on their plates. The extra two weeks are there so you have real
+                time to put your best idea forward.
+              </p>
+            </div>
+          </FadeIn>
+        </div>
+      </section>
+
       {/* Deadline countdown banner */}
       <div className="bg-[#e62b1e] py-5">
         <div className="max-w-[1200px] mx-auto px-6 md:px-8 lg:px-12">
@@ -63,11 +154,17 @@ export default function ApplyPage() {
             <div className="flex items-center gap-3 flex-shrink-0">
               <div className="w-2 h-2 bg-white rounded-full animate-pulse" aria-hidden="true" />
               <p className="text-white text-sm font-bold tracking-wide uppercase">
-                Applications close in
+                Rolling deadline closes in
               </p>
             </div>
-            <CountdownTimer targetDate="2026-05-11T23:59:00" variant="banner" expiredMessage="Applications closed — May 11 deadline has passed." />
-            <p className="text-white/70 text-xs sm:ml-auto flex-shrink-0">Hard deadline · No extensions</p>
+            <CountdownTimer
+              targetDate="2026-05-25T23:59:00"
+              variant="banner"
+              expiredMessage="Applications closed. The May 25 rolling deadline has passed."
+            />
+            <p className="text-white/80 text-xs sm:ml-auto flex-shrink-0">
+              Rolling reviews &middot; Apply any time before close
+            </p>
           </div>
         </div>
       </div>
@@ -99,8 +196,9 @@ export default function ApplyPage() {
                   >
                     {siteConfig.email}
                   </a>{" "}
-                  before May 11 at 11:59 PM. There is no portal, no form, and no fee. Your
-                  application is evaluated entirely on the quality of what you submit.
+                  before May 25 at 11:59 PM. Reviews are rolling, so earlier submissions get
+                  reviewed earlier. There is no portal, no form, and no fee. Your application is
+                  evaluated entirely on the quality of what you submit.
                 </p>
 
                 <div className="space-y-px mb-8">

@@ -3,6 +3,7 @@ import { Hero } from "@/components/sections/Hero";
 import { StatsSection } from "@/components/sections/StatsSection";
 import { PressSection } from "@/components/sections/PressSection";
 import { ThemeSection } from "@/components/sections/ThemeSection";
+import { HomeApplySection } from "@/components/sections/HomeApplySection";
 import { SpeakersPreview } from "@/components/sections/SpeakersPreview";
 import { TimelineSection } from "@/components/sections/TimelineSection";
 import { SocialSection } from "@/components/sections/SocialSection";
@@ -11,7 +12,23 @@ import { CTASection } from "@/components/sections/CTASection";
 export const metadata: Metadata = {
   title: "TEDxHuntingValley",
   description:
-    "Cleveland's first independent community TEDx in over a decade. Student and adult speakers. One stage. Gund Auditorium, University School — August 22, 2026.",
+    "Cleveland's first independent community TEDx in over a decade. Student and adult speakers on one stage at Gund Auditorium, University School on August 22, 2026. Student speaker applications are rolling through May 25.",
+  alternates: { canonical: "/" },
+  openGraph: {
+    title: "TEDxHuntingValley | August 22, 2026",
+    description:
+      "Cleveland's first independent community TEDx in over a decade. Ten speakers, one stage, no age qualifier. Student applications are rolling through May 25, 2026.",
+    url: "https://tedxhuntingvalley.com",
+    type: "website",
+    images: [{ url: "/og-image.jpg", width: 1200, height: 630, alt: "TEDxHuntingValley | The Invisible Engine: The Forces We Forget" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "TEDxHuntingValley | August 22, 2026",
+    description:
+      "Cleveland's first independent community TEDx in over a decade. Ten speakers, one stage, no age qualifier. Student applications are rolling through May 25, 2026.",
+    images: ["/og-image.jpg"],
+  },
 };
 
 const eventJsonLd = {
@@ -42,6 +59,20 @@ const eventJsonLd = {
   ],
   url: "https://tedxhuntingvalley.com",
   image: "https://tedxhuntingvalley.com/og-image.jpg",
+  subEvent: [
+    {
+      "@type": "Event",
+      name: "Student Speaker Application Window",
+      description:
+        "Rolling student speaker applications. Any greater-Cleveland high school student can apply through May 25, 2026 at 11:59 PM.",
+      startDate: "2026-03-31T00:00:00-04:00",
+      endDate: "2026-05-25T23:59:00-04:00",
+      eventStatus: "https://schema.org/EventScheduled",
+      eventAttendanceMode: "https://schema.org/OnlineEventAttendanceMode",
+      location: { "@type": "VirtualLocation", url: "https://tedxhuntingvalley.com/apply" },
+      url: "https://tedxhuntingvalley.com/apply",
+    },
+  ],
 };
 
 export default function HomePage() {
@@ -55,6 +86,7 @@ export default function HomePage() {
       <StatsSection />
       <PressSection />
       <ThemeSection />
+      <HomeApplySection />
       <SpeakersPreview />
       <TimelineSection />
       <SocialSection />

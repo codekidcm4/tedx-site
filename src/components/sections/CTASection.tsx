@@ -49,8 +49,8 @@ export function CTASection() {
               </a>
             </div>
 
-            <p className="text-white/50 text-xs mt-8">
-              Deadline: May 11, 2026 at 11:59 PM &mdash; Applications to {siteConfig.email}
+            <p className="text-white/70 text-xs mt-8">
+              Rolling deadline through May 25, 2026 at 11:59 PM. Applications to {siteConfig.email}.
             </p>
           </div>
         </FadeIn>

@@ -8,6 +8,22 @@ export const metadata: Metadata = {
   title: "About",
   description:
     "Learn what TEDxHuntingValley is, what TEDx events represent, and why this event matters for Cleveland and for student voices.",
+  alternates: { canonical: "/about" },
+  openGraph: {
+    title: "About | TEDxHuntingValley",
+    description:
+      "A fully licensed, independently organized TEDx event built by two University School juniors. The first independent community TEDx in Cleveland in over a decade.",
+    url: "https://tedxhuntingvalley.com/about",
+    type: "website",
+    images: [{ url: "/og-image.jpg", width: 1200, height: 630, alt: "About TEDxHuntingValley" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "About | TEDxHuntingValley",
+    description:
+      "A fully licensed, independently organized TEDx event built by two University School juniors.",
+    images: ["/og-image.jpg"],
+  },
 };
 
 const differentiators = [
@@ -33,9 +49,19 @@ const differentiators = [
   },
 ];
 
+const breadcrumb = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Home", item: "https://tedxhuntingvalley.com" },
+    { "@type": "ListItem", position: 2, name: "About", item: "https://tedxhuntingvalley.com/about" },
+  ],
+};
+
 export default function AboutPage() {
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }} />
       {/* Page header */}
       <div className="bg-[#0a0a0a] pt-32 pb-16 md:pt-40 md:pb-20 relative overflow-hidden">
         <div className="absolute left-0 top-0 bottom-0 w-0.5 bg-[#e62b1e]" aria-hidden="true" />

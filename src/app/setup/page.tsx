@@ -400,7 +400,7 @@ git push`}</CodeBlock>
               <p>The <code className="bg-[#f0f0f0] px-1 py-0.5 rounded text-xs">keyDates</code> array in <code className="bg-[#f0f0f0] px-1 py-0.5 rounded text-xs">src/data/site.ts</code> powers the timeline section on the home page:</p>
               <CodeBlock>{`export const keyDates = [
   { date: "March 31, 2026", label: "Student applications open" },
-  { date: "May 11, 2026",   label: "Application deadline (11:59 PM)" },
+  { date: "May 25, 2026",   label: "Rolling application deadline (11:59 PM)" },
   // add or change entries here
 ];`}</CodeBlock>
             </Step>

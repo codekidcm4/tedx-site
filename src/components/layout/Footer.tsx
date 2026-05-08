@@ -113,7 +113,7 @@ export function Footer() {
               </li>
               <li>
                 <span className="text-[#9a9a9a] text-xs uppercase tracking-wider block mb-0.5">Application Deadline</span>
-                May 11, 2026 at 11:59 PM
+                Rolling through May 25, 2026 at 11:59 PM
               </li>
             </ul>
           </div>

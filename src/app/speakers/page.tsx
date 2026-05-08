@@ -8,11 +8,36 @@ export const metadata: Metadata = {
   title: "Speakers",
   description:
     "Meet the TEDxHuntingValley speakers. Five adult speakers and five student speakers sharing the same stage on August 22, 2026.",
+  alternates: { canonical: "/speakers" },
+  openGraph: {
+    title: "Speakers | TEDxHuntingValley",
+    description:
+      "Ten voices, one stage, no age qualifier. Five adult speakers and five student speakers introduced the same way and held to the same standard on August 22, 2026.",
+    url: "https://tedxhuntingvalley.com/speakers",
+    type: "website",
+    images: [{ url: "/og-image.jpg", width: 1200, height: 630, alt: "TEDxHuntingValley speakers" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Speakers | TEDxHuntingValley",
+    description: "Ten voices, one stage, no age qualifier. August 22, 2026.",
+    images: ["/og-image.jpg"],
+  },
+};
+
+const breadcrumb = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Home", item: "https://tedxhuntingvalley.com" },
+    { "@type": "ListItem", position: 2, name: "Speakers", item: "https://tedxhuntingvalley.com/speakers" },
+  ],
 };
 
 export default function SpeakersPage() {
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }} />
       {/* Page header */}
       <div className="bg-[#0a0a0a] pt-32 pb-16 md:pt-40 md:pb-20 relative overflow-hidden">
         <div className="absolute left-0 top-0 bottom-0 w-0.5 bg-[#e62b1e]" aria-hidden="true" />
@@ -146,7 +171,7 @@ export default function SpeakersPage() {
                     <div>
                       <p className="font-semibold text-[#0a0a0a] text-sm">Round 1: Written Application</p>
                       <p className="text-[#9a9a9a] text-xs mt-0.5">Talk title, 200-word idea summary, 400-600 word excerpt, one recommendation letter</p>
-                      <p className="text-[#e62b1e] text-xs font-bold mt-0.5">Deadline: May 11, 2026</p>
+                      <p className="text-[#e62b1e] text-xs font-bold mt-0.5">Rolling deadline through May 25, 2026</p>
                     </div>
                   </div>
                   <div className="flex items-start gap-4">

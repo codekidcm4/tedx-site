@@ -2,7 +2,6 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { siteConfig } from "@/data/site";
 import { CountdownTimer } from "@/components/ui/CountdownTimer";
 
 export function Hero() {
@@ -96,7 +95,7 @@ export function Hero() {
             className="flex flex-wrap gap-4"
           >
             <Link
-              href="/apply"
+              href="#apply-now"
               className="inline-flex items-center gap-2 px-8 py-4 bg-[#e62b1e] text-white font-bold text-sm tracking-wide rounded-sm hover:bg-[#c9231a] transition-all duration-200 shadow-lg shadow-red-900/30"
             >
               Apply to Speak
@@ -111,6 +110,16 @@ export function Hero() {
               Learn More
             </Link>
           </motion.div>
+
+          {/* Rolling deadline note */}
+          <motion.p
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.55, ease: [0.16, 1, 0.3, 1] }}
+            className="mt-6 text-xs font-semibold tracking-wide text-white/60"
+          >
+            Applications are on a rolling deadline through May 25
+          </motion.p>
         </div>
       </div>
 

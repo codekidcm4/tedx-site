@@ -7,6 +7,21 @@ export const metadata: Metadata = {
   title: "Media",
   description:
     "Press resources, media kit, and event coverage for TEDxHuntingValley. Talks published to the TEDx YouTube channel after August 22, 2026.",
+  alternates: { canonical: "/media" },
+  openGraph: {
+    title: "Media | TEDxHuntingValley",
+    description:
+      "Resources for journalists, photographers, and producers. Talks published to the TEDx YouTube channel after the August 22, 2026 event.",
+    url: "https://tedxhuntingvalley.com/media",
+    type: "website",
+    images: [{ url: "/og-image.jpg", width: 1200, height: 630, alt: "TEDxHuntingValley media resources" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Media | TEDxHuntingValley",
+    description: "Press resources and event coverage for TEDxHuntingValley.",
+    images: ["/og-image.jpg"],
+  },
 };
 
 export default function MediaPage() {
@@ -136,7 +151,7 @@ export default function MediaPage() {
                 <ul className="space-y-2.5">
                   {[
                     "Interviews with Charlie Martin and Jack Nelson (phone, email, or in person)",
-                    "Interviews with student applicants before May 11",
+                    "Interviews with student applicants before the May 25 rolling deadline",
                     "Interviews with selected speakers after early June",
                     "Behind-the-scenes access through rehearsals and coaching (June-July)",
                     "Press credentials for August 22",
@@ -212,8 +227,8 @@ export default function MediaPage() {
                   Covering TEDxHuntingValley?
                 </p>
                 <p className="text-[#555555] text-sm leading-relaxed max-w-md">
-                  We offer a 10-minute call to walk any journalist through the full story before the May 11
-                  deadline. Contact us and we will set it up.
+                  We offer a 10-minute call to walk any journalist through the full story before
+                  the May 25 rolling deadline. Contact us and we will set it up.
                 </p>
               </div>
               <div className="flex gap-4 flex-shrink-0">

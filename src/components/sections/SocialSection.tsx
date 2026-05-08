@@ -10,7 +10,7 @@ const placeholderPosts = [
   },
   {
     type: "instagram",
-    caption: "The theme for TEDxHuntingValley: The Invisible Engine: The Forces We Forget. Student applications are open. Deadline May 11.",
+    caption: "The theme for TEDxHuntingValley: The Invisible Engine: The Forces We Forget. Student applications are open on a rolling basis through May 25.",
     date: "Apr 15",
     likes: 98,
   },

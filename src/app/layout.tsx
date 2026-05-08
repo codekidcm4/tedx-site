@@ -77,6 +77,27 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${geistSans.variable} antialiased`} data-scroll-behavior="smooth">
       <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              name: "TEDxHuntingValley",
+              url: "https://tedxhuntingvalley.com",
+              logo: "https://tedxhuntingvalley.com/logo.png",
+              sameAs: [
+                "https://instagram.com/tedxhuntingvalley",
+                "https://x.com/tedxhv26",
+              ],
+              contactPoint: {
+                "@type": "ContactPoint",
+                email: "tedxhuntingvalley@gmail.com",
+                contactType: "Press",
+              },
+            }),
+          }}
+        />
         {/* Google Analytics placeholder — replace GA_MEASUREMENT_ID with your ID */}
         {/* <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID" /> */}
         {/* <script dangerouslySetInnerHTML={{ __html: `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','GA_MEASUREMENT_ID');` }} /> */}

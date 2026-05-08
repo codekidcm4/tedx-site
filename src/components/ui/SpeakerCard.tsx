@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 import type { Speaker } from "@/data/speakers";
@@ -12,6 +12,15 @@ interface SpeakerCardProps {
 
 export function SpeakerCard({ speaker, className }: SpeakerCardProps) {
   const [modalOpen, setModalOpen] = useState(false);
+
+  useEffect(() => {
+    if (!modalOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setModalOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [modalOpen]);
 
   if (speaker.status === "coming-soon" || !speaker.name) {
     return (
