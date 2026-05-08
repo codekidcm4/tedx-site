@@ -3,6 +3,14 @@ import Link from "next/link";
 
 export const pressItems = [
   {
+    outlet: "Signal Cleveland",
+    headline: "Greater Cleveland students invited to apply to give Ted Talks",
+    quote:
+      "Two local students are bringing Ted Talks to Greater Cleveland for the first time in more than a decade, and this time high schoolers will be giving the talks.",
+    url: "https://signalcleveland.org/greater-cleveland-students-invited-to-apply-to-give-ted-talks/",
+    date: "May 7, 2026",
+  },
+  {
     outlet: "Axios Cleveland",
     headline: "TEDx event is coming to Hunting Valley in August",
     quote:
