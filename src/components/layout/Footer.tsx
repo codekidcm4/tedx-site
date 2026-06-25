@@ -57,6 +57,18 @@ export function Footer() {
                 </svg>
               </a>
             </div>
+            {/* Required: visible link to the TEDx program */}
+            <a
+              href={siteConfig.tedxProgramUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 mt-6 text-xs font-semibold text-[#9a9a9a] hover:text-white transition-colors duration-200"
+            >
+              Part of the TEDx program
+              <svg className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24" aria-hidden="true">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </a>
           </div>
 
           {/* Navigation */}

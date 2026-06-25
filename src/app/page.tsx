@@ -7,6 +7,7 @@ import { StatsSection } from "@/components/sections/StatsSection";
 import { PressSection } from "@/components/sections/PressSection";
 import { ThemeSection } from "@/components/sections/ThemeSection";
 import { SpeakersPreview } from "@/components/sections/SpeakersPreview";
+import { WhatIsTedx } from "@/components/sections/WhatIsTedx";
 import { OrganizersSection } from "@/components/sections/OrganizersSection";
 import { TimelineSection } from "@/components/sections/TimelineSection";
 import { WatchOnlineSection } from "@/components/sections/WatchOnlineSection";
@@ -43,8 +44,9 @@ const eventJsonLd = {
   name: "TEDxHuntingValley",
   description:
     "The Invisible Engine: The Forces We Forget. Cleveland's first independent community TEDx in over a decade. Six adult speakers and six student speakers share one stage. Organized by two University School students.",
-  startDate: siteConfig.startDateTimeISO,
-  endDate: siteConfig.endDateTimeISO,
+  // Date-only until doors/start times are confirmed (the visible UI says "time to be announced").
+  // Restore time-precise start/end once siteConfig.doorsOpen/startTime are set.
+  startDate: siteConfig.dateISO,
   eventStatus: "https://schema.org/EventScheduled",
   eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
   location: {
@@ -52,7 +54,7 @@ const eventJsonLd = {
     name: "Gund Auditorium, University School",
     address: {
       "@type": "PostalAddress",
-      streetAddress: "20701 Brantley Rd",
+      streetAddress: "2785 SOM Center Road",
       addressLocality: "Hunting Valley",
       addressRegion: "OH",
       postalCode: "44022",
@@ -90,6 +92,7 @@ export default function HomePage() {
       <PressSection />
       <ThemeSection />
       <SpeakersPreview />
+      <WhatIsTedx />
       <OrganizersSection />
       <TimelineSection />
       <WatchOnlineSection />

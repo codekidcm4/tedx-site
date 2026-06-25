@@ -30,7 +30,7 @@ const stats = [
   { number: "10+", label: "Years since Cleveland's last independent community TEDx" },
   { number: "100", label: "Seats (TED licensing cap)" },
   { number: "12", label: "Voices on one stage, six adult and six student" },
-  { number: "12 min", label: "Maximum talk length" },
+  { number: "18 min", label: "Maximum talk length" },
 ];
 
 const storyAngles = [
@@ -181,7 +181,7 @@ export default function PressPage() {
                     { label: "Venue", value: "Gund Auditorium, University School\nHunting Valley, Ohio" },
                     { label: "Audience", value: "100 attendees (TED licensing cap)" },
                     { label: "Theme", value: '"The Invisible Engine: The Forces We Forget"' },
-                    { label: "Format", value: "Live speakers, talks ≤12 min, no panels, no PowerPoints" },
+                    { label: "Format", value: "Live speakers, talks ≤18 min, no panels, no PowerPoints" },
                     { label: "After event", value: "All talks uploaded to TEDx YouTube channel" },
                     { label: "Contact", value: "tedxhuntingvalley@gmail.com" },
                   ].map((item) => (
@@ -229,8 +229,9 @@ export default function PressPage() {
         <div className="max-w-[1200px] mx-auto px-6 md:px-8 lg:px-12">
           <FadeIn>
             <div className="flex items-center gap-3 mb-2">
+              <h2 id="coverage-heading" className="sr-only">Coverage so far</h2>
               <span className="inline-block w-8 h-0.5 bg-[#e62b1e]" aria-hidden="true" />
-              <span id="coverage-heading" className="text-[0.65rem] font-bold tracking-[0.18em] uppercase text-[#9a9a9a]">
+              <span className="text-[0.65rem] font-bold tracking-[0.18em] uppercase text-[#9a9a9a]">
                 Coverage so far
               </span>
             </div>

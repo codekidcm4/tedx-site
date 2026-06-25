@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { FadeIn, StaggerContainer, StaggerItem } from "@/components/ui/FadeIn";
 import { CTASection } from "@/components/sections/CTASection";
 import { OrganizerPhoto } from "@/components/ui/OrganizerPhoto";
-import Link from "next/link";
+import { siteConfig } from "@/data/site";
 
 export const metadata: Metadata = {
   title: "About",
@@ -117,7 +117,7 @@ export default function AboutPage() {
                   <p>
                     TEDx is the independently organized version. Any individual can apply for a TED
                     license, organize a local event, and follow the standard TEDx format: live
-                    speakers, talks under 12 minutes, no panels, no PowerPoints. Since 2009, more
+                    speakers, talks under 18 minutes, no panels, no PowerPoints. Since 2009, more
                     than 44,000 TEDx events have been held in over 160 countries.
                   </p>
                   <p>
@@ -126,6 +126,41 @@ export default function AboutPage() {
                     241,000 published talks. That is the platform that every speaker at
                     TEDxHuntingValley is speaking to.
                   </p>
+                </div>
+
+                {/* Standardized About TED / About TEDx language (required by TED) */}
+                <div className="mt-8 border-l-2 border-[#e62b1e] pl-5 space-y-4">
+                  <div>
+                    <p className="text-[0.65rem] font-bold tracking-[0.18em] uppercase text-[#9a9a9a] mb-2">About TEDx</p>
+                    <p className="text-[#555555] text-sm leading-relaxed">
+                      In the spirit of ideas worth spreading, TED has created a program called TEDx. TEDx is a
+                      program of local, self-organized events that bring people together to share a TED-like
+                      experience. Our event is called TEDxHuntingValley, where x = independently organized TED
+                      event. At our TEDxHuntingValley event, TEDTalks video and live speakers will combine to
+                      spark deep discussion and connection in a small group. The TED Conference provides general
+                      guidance for the TEDx program, but individual TEDx events, including ours, are self-organized.
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-[0.65rem] font-bold tracking-[0.18em] uppercase text-[#9a9a9a] mb-2">About TED</p>
+                    <p className="text-[#555555] text-sm leading-relaxed">
+                      TED is a nonprofit organization devoted to ideas worth spreading, usually in the form of
+                      short, powerful talks delivered by today&apos;s leading thinkers and doers. Many of these talks
+                      are given at TED conferences, intimate TED salons, and thousands of independently organized
+                      TEDx events around the world. Videos of these talks are made available, free, on TED.com.
+                    </p>
+                  </div>
+                  <a
+                    href={siteConfig.tedxProgramUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 text-sm font-bold tracking-wide text-[#e62b1e] hover:underline"
+                  >
+                    Learn more about the TEDx program
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24" aria-hidden="true">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                    </svg>
+                  </a>
                 </div>
               </div>
             </FadeIn>
@@ -139,7 +174,7 @@ export default function AboutPage() {
                   {[
                     { label: "Date", value: "August 22, 2026" },
                     { label: "Venue", value: "Gund Auditorium, University School\nHunting Valley, Ohio" },
-                    { label: "Format", value: "Live speakers, talks 12 minutes or under\nNo panels, no PowerPoints" },
+                    { label: "Format", value: "Live speakers, talks 18 minutes or under\nNo panels, no PowerPoints" },
                     { label: "Audience", value: "100 attendees (TED licensing cap)" },
                     { label: "Theme", value: "\"The Invisible Engine: The Forces We Forget\"" },
                     { label: "Organizers", value: "Charlie Martin and Jack Nelson\nUniversity School, Class of 2027" },
@@ -314,7 +349,7 @@ export default function AboutPage() {
                 <div className="space-y-4 text-sm">
                   {[
                     { label: "Name", value: "Gund Auditorium" },
-                    { label: "Location", value: "University School\n20701 Brantley Rd\nHunting Valley, OH 44022" },
+                    { label: "Location", value: "University School (Hunting Valley Campus)\n2785 SOM Center Road\nHunting Valley, OH 44022" },
                     { label: "Capacity", value: "500-seat professional performance venue\n(Event capped at 100 per TED licensing)" },
                     { label: "Production", value: "Full professional sound and lighting" },
                   ].map((item) => (

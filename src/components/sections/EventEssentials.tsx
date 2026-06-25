@@ -18,8 +18,9 @@ export function EventEssentials() {
       <div className="max-w-[1200px] mx-auto px-6 md:px-8 lg:px-12">
         <FadeIn>
           <div className="flex items-center gap-3 mb-8">
+            <h2 id="essentials-heading" className="sr-only">Event essentials</h2>
             <span className="inline-block w-8 h-0.5 bg-[#e62b1e]" aria-hidden="true" />
-            <span id="essentials-heading" className="text-[0.65rem] font-bold tracking-[0.18em] uppercase text-[#e62b1e]">
+            <span className="text-[0.65rem] font-bold tracking-[0.18em] uppercase text-[#e62b1e]">
               Event essentials
             </span>
           </div>

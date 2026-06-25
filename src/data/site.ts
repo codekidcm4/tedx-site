@@ -16,17 +16,20 @@ export const siteConfig = {
   // Venue + address
   venue: "Gund Auditorium, University School",
   venueName: "Gund Auditorium",
-  school: "University School",
-  streetAddress: "20701 Brantley Rd",
+  school: "University School (Hunting Valley Campus)",
+  // Gund Auditorium is on University School's Hunting Valley (Upper School) campus.
+  // 20701 Brantley Rd is the separate Shaker Heights campus, so the precise address below is used
+  // for the map to pin only the Hunting Valley location.
+  streetAddress: "2785 SOM Center Road",
   city: "Hunting Valley",
   state: "OH",
   zip: "44022",
   location: "Hunting Valley, Ohio",
-  addressFull: "20701 Brantley Rd, Hunting Valley, OH 44022",
+  addressFull: "2785 SOM Center Road, Hunting Valley, OH 44022",
   mapsUrl:
-    "https://www.google.com/maps/search/?api=1&query=Gund%20Auditorium%20University%20School%2020701%20Brantley%20Rd%20Hunting%20Valley%20OH%2044022",
+    "https://www.google.com/maps/search/?api=1&query=2785%20SOM%20Center%20Road%2C%20Hunting%20Valley%2C%20OH%2044022",
   mapEmbedUrl:
-    "https://www.google.com/maps?q=University%20School%2020701%20Brantley%20Rd%20Hunting%20Valley%20OH%2044022&output=embed",
+    "https://www.google.com/maps?q=2785%20SOM%20Center%20Road%2C%20Hunting%20Valley%2C%20OH%2044022&output=embed",
 
   // Contact + social
   email: "tedxhuntingvalley@gmail.com",
@@ -40,6 +43,10 @@ export const siteConfig = {
   licensedOrganizer: "Dr. Tyler Yoder",
 
   url: "https://tedxhuntingvalley.com",
+
+  // Official TED / TEDx program links (required: a visible TEDx program link on the homepage).
+  tedUrl: "https://www.ted.com",
+  tedxProgramUrl: "https://www.ted.com/about/programs-initiatives/tedx-program",
 
   // Swappable launch config. Each value is null until the real thing exists; setting a value
   // flips the matching section from its "coming soon" state to live, with no other code change.

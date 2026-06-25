@@ -29,8 +29,8 @@ export const globalStats: Stat[] = [
     description: "In over 160 countries around the world",
   },
   {
-    value: "12",
-    numericValue: 12,
+    value: "18",
+    numericValue: 18,
     suffix: " min",
     label: "Maximum talk length",
     description: "Every idea, distilled to its essence",

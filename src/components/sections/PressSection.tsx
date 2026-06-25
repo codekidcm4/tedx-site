@@ -59,8 +59,9 @@ export function PressSection() {
       <div className="max-w-[1200px] mx-auto px-6 md:px-8 lg:px-12">
         <FadeIn>
           <div className="flex items-center gap-3 mb-2">
+            <h2 id="press-section-heading" className="sr-only">In the press</h2>
             <span className="inline-block w-8 h-0.5 bg-[#e62b1e]" aria-hidden="true" />
-            <span id="press-section-heading" className="text-[0.65rem] font-bold tracking-[0.18em] uppercase text-[#9a9a9a]">
+            <span className="text-[0.65rem] font-bold tracking-[0.18em] uppercase text-[#9a9a9a]">
               In the press
             </span>
           </div>

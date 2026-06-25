@@ -119,8 +119,10 @@ export function Navbar() {
 
       {/* Mobile menu */}
       <div
+        inert={!mobileOpen}
+        aria-hidden={!mobileOpen}
         className={cn(
-          "fixed inset-0 z-30 bg-white flex flex-col transition-all duration-400 ease-in-out",
+          "fixed inset-0 z-30 bg-white flex flex-col transition-all duration-400 ease-in-out md:hidden",
           mobileOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
         )}
       >

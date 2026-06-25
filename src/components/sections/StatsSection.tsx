@@ -45,7 +45,8 @@ export function StatsSection() {
                   <div
                     className="font-extrabold text-[#0a0a0a] leading-none mb-2"
                     style={{ fontSize: "clamp(2.5rem, 5vw, 4rem)", letterSpacing: "-0.04em" }}
-                    aria-label={`${stat.value}${stat.suffix} ${stat.label}`}
+                    role="img"
+                    aria-label={`${stat.value}${stat.suffix}`}
                   >
                     {stat.numericValue > 0 ? (
                       <>
@@ -90,6 +91,8 @@ export function StatsSection() {
                     <div
                       className="font-extrabold text-[#0a0a0a] leading-none mb-1"
                       style={{ fontSize: "clamp(1.75rem, 3vw, 2.5rem)", letterSpacing: "-0.03em" }}
+                      role="img"
+                      aria-label={`${stat.value}${stat.suffix}`}
                     >
                       <AnimatedCounter
                         value={stat.numericValue}

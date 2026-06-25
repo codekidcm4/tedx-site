@@ -60,3 +60,9 @@ summary:focus-visible {
   outline: 2px solid var(--ted-red);
   outline-offset: 3px;
 }
+
+/* Behold Instagram feed widget: fill the container full width. */
+behold-widget {
+  display: block;
+  width: 100%;
+}
