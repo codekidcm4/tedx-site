@@ -43,6 +43,14 @@ export const pressItems = [
     url: "https://www.wfmj.com/news/local-news/mahoning-valley-students-sought-for-ted-event-in-cleveland-area/article_94320327-cafc-4cc7-9f00-0920b055a921.html",
     date: "April 2026",
   },
+  {
+    outlet: "THISISCLE",
+    headline: "Featured in the THISISCLE weekly Cleveland roundup",
+    quote:
+      "TEDxHuntingValley was featured in THISISCLE's weekly roundup of what's happening around Cleveland, which pointed its audience to the new local TEDx.",
+    url: "https://www.instagram.com/p/DYmrSNfjoWl/",
+    date: "Spring 2026",
+  },
 ];
 
 export function PressSection() {

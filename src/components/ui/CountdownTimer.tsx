@@ -12,7 +12,7 @@ interface TimeLeft {
 interface CountdownTimerProps {
   targetDate: string; // ISO date string e.g. "2026-05-25T23:59:00"
   expiredMessage?: string;
-  /** "banner" = tight single-line for the apply banner; "hero" = subtle for the hero; "block" = large display */
+  /** "banner" = tight single-line; "hero" = subtle for the hero; "block" = large display */
   variant?: "banner" | "hero" | "block";
 }
 

@@ -1,10 +1,11 @@
 import Link from "next/link";
 import { SpeakerCard } from "@/components/ui/SpeakerCard";
 import { FadeIn } from "@/components/ui/FadeIn";
-import { speakers } from "@/data/speakers";
+import { adultSpeakers } from "@/data/speakers";
 
 export function SpeakersPreview() {
-  const previewSpeakers = speakers.slice(0, 4);
+  // Lead the preview with announced speakers; the full 12-person lineup lives on /speakers.
+  const previewSpeakers = adultSpeakers.slice(0, 4);
 
   return (
     <section className="bg-white py-20 md:py-28" aria-labelledby="speakers-preview-heading">
@@ -23,14 +24,14 @@ export function SpeakersPreview() {
                 className="font-extrabold text-[#0a0a0a]"
                 style={{ fontSize: "clamp(1.875rem, 4vw, 3rem)", letterSpacing: "-0.03em", lineHeight: 1.05 }}
               >
-                Ten voices.
+                Twelve voices.
                 <br />
                 One stage.
               </h2>
             </div>
             <p className="text-[#555555] text-base leading-relaxed max-w-sm md:text-right">
-              Five adult speakers. Five student speakers. No age qualifier, no asterisk.
-              Speakers are announced as selections are finalized.
+              Six adult speakers. Six student speakers. No age qualifier, no asterisk.
+              The full lineup is taking shape ahead of August 22.
             </p>
           </div>
         </FadeIn>
@@ -38,7 +39,7 @@ export function SpeakersPreview() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-10">
           {previewSpeakers.map((speaker, i) => (
             <FadeIn key={speaker.id} delay={i * 0.08}>
-              <SpeakerCard speaker={speaker} className="w-full" />
+              <SpeakerCard speaker={speaker} variant="compact" className="w-full" />
             </FadeIn>
           ))}
         </div>

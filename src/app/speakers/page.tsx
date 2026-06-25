@@ -7,12 +7,12 @@ import { adultSpeakers, studentSpeakers } from "@/data/speakers";
 export const metadata: Metadata = {
   title: "Speakers",
   description:
-    "Meet the TEDxHuntingValley speakers. Five adult speakers and five student speakers sharing the same stage on August 22, 2026.",
+    "Meet the TEDxHuntingValley speakers. Six adult speakers and six student speakers sharing one stage on August 22, 2026.",
   alternates: { canonical: "/speakers" },
   openGraph: {
     title: "Speakers | TEDxHuntingValley",
     description:
-      "Ten voices, one stage, no age qualifier. Five adult speakers and five student speakers introduced the same way and held to the same standard on August 22, 2026.",
+      "Twelve voices, one stage, no age qualifier. Six adult speakers and six student speakers introduced the same way and held to the same standard on August 22, 2026.",
     url: "https://tedxhuntingvalley.com/speakers",
     type: "website",
     images: [{ url: "/og-image.jpg", width: 1200, height: 630, alt: "TEDxHuntingValley speakers" }],
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Speakers | TEDxHuntingValley",
-    description: "Ten voices, one stage, no age qualifier. August 22, 2026.",
+    description: "Twelve voices, one stage, no age qualifier. August 22, 2026.",
     images: ["/og-image.jpg"],
   },
 };
@@ -53,11 +53,11 @@ export default function SpeakersPage() {
               className="text-white font-extrabold mb-6 max-w-3xl"
               style={{ fontSize: "clamp(2.5rem, 6vw, 5rem)", letterSpacing: "-0.03em", lineHeight: 1.0 }}
             >
-              Ten voices. One stage. No asterisk.
+              Twelve voices. One stage. No asterisk.
             </h1>
             <p className="text-white/65 text-xl leading-relaxed max-w-2xl">
-              Five adult speakers and five student speakers. Each one introduced the same way.
-              Each one held to the same standard. Speakers are announced as selections are finalized.
+              Six adult speakers and six student speakers. Each one introduced the same way.
+              Each one held to the same standard. The full lineup is taking shape ahead of August 22.
             </p>
           </FadeIn>
         </div>
@@ -91,15 +91,15 @@ export default function SpeakersPage() {
                 Adult Speakers
               </h2>
               <p className="text-[#555555] mt-3 max-w-xl leading-relaxed">
-                Five speakers selected from across fields. Announcements coming as selections are confirmed.
+                Six leaders from across Cleveland and beyond, sharing the same stage as our student speakers.
               </p>
             </div>
           </FadeIn>
 
-          <StaggerContainer className="grid grid-cols-2 md:grid-cols-5 gap-4 md:gap-5">
+          <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
             {adultSpeakers.map((speaker) => (
-              <StaggerItem key={speaker.id}>
-                <SpeakerCard speaker={speaker} className="w-full" />
+              <StaggerItem key={speaker.id} className="h-full">
+                <SpeakerCard speaker={speaker} variant="full" className="h-full" />
               </StaggerItem>
             ))}
           </StaggerContainer>
@@ -114,7 +114,7 @@ export default function SpeakersPage() {
               <span className="inline-flex items-center gap-3 mb-4">
                 <span className="inline-block w-8 h-0.5 bg-[#e62b1e]" aria-hidden="true" />
                 <span className="text-[0.65rem] font-bold tracking-[0.18em] uppercase text-[#e62b1e]">
-                  Student Contest
+                  Student Speakers
                 </span>
               </span>
               <h2
@@ -125,85 +125,25 @@ export default function SpeakersPage() {
                 Student Speakers
               </h2>
               <p className="text-[#555555] mt-3 max-w-xl leading-relaxed">
-                Five student speakers selected from the greater Cleveland area through an open
-                competition. Any high school student can apply. Selections announced in early June 2026.
+                Six student speakers selected from across the greater Cleveland area through an open
+                competition. Their bios and talks are added here as each is confirmed.
               </p>
             </div>
           </FadeIn>
 
-          <StaggerContainer className="grid grid-cols-2 md:grid-cols-5 gap-4 md:gap-5">
+          <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
             {studentSpeakers.map((speaker) => (
-              <StaggerItem key={speaker.id}>
-                <SpeakerCard speaker={speaker} className="w-full" />
+              <StaggerItem key={speaker.id} className="h-full">
+                <SpeakerCard speaker={speaker} variant="full" className="h-full" />
               </StaggerItem>
             ))}
           </StaggerContainer>
 
-          <FadeIn delay={0.3}>
-            <div className="mt-12 bg-white border border-[#e0e0e0] p-8 md:p-10">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-                <div>
-                  <h3 className="font-bold text-[#0a0a0a] text-lg mb-3">
-                    The selection process
-                  </h3>
-                  <div className="space-y-3 text-[#555555] text-sm leading-relaxed">
-                    <p>
-                      Round 1 applications are evaluated entirely on the strength and clarity of
-                      the idea. No GPA requirement, no prior speaking experience, no extracurricular
-                      history.
-                    </p>
-                    <p>
-                      Round 2 interviews take place at University School in May. Five speakers are
-                      selected in early June and enter a structured talk development and coaching
-                      program that runs through July.
-                    </p>
-                    <p>
-                      By August 22, selected speakers have had months of real preparation, the same
-                      kind of development process used for professional TEDx events worldwide.
-                    </p>
-                  </div>
-                </div>
-                <div className="space-y-4">
-                  <div className="flex items-start gap-4">
-                    <div className="flex-shrink-0 w-8 h-8 bg-[#e62b1e] text-white text-xs font-bold flex items-center justify-center">
-                      1
-                    </div>
-                    <div>
-                      <p className="font-semibold text-[#0a0a0a] text-sm">Round 1: Written Application</p>
-                      <p className="text-[#9a9a9a] text-xs mt-0.5">Talk title, 200-word idea summary, 400-600 word excerpt, one recommendation letter</p>
-                      <p className="text-[#e62b1e] text-xs font-bold mt-0.5">Rolling deadline through May 25, 2026</p>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-4">
-                    <div className="flex-shrink-0 w-8 h-8 bg-[#0a0a0a] text-white text-xs font-bold flex items-center justify-center">
-                      2
-                    </div>
-                    <div>
-                      <p className="font-semibold text-[#0a0a0a] text-sm">Round 2: Interviews</p>
-                      <p className="text-[#9a9a9a] text-xs mt-0.5">In-person at University School, May 2026</p>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-4">
-                    <div className="flex-shrink-0 w-8 h-8 bg-[#0a0a0a] text-white text-xs font-bold flex items-center justify-center">
-                      3
-                    </div>
-                    <div>
-                      <p className="font-semibold text-[#0a0a0a] text-sm">Selection and Coaching</p>
-                      <p className="text-[#9a9a9a] text-xs mt-0.5">Five speakers selected early June, coaching through July</p>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-4">
-                    <div className="flex-shrink-0 w-8 h-8 bg-[#e62b1e] text-white text-xs font-bold flex items-center justify-center">
-                      4
-                    </div>
-                    <div>
-                      <p className="font-semibold text-[#0a0a0a] text-sm">August 22 &mdash; The Stage</p>
-                      <p className="text-[#9a9a9a] text-xs mt-0.5">Gund Auditorium, University School</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+          {/* Single subtle note that 2026 applications are closed. */}
+          <FadeIn delay={0.2}>
+            <p className="mt-10 text-sm text-[#9a9a9a]">
+              Speaker applications for 2026 are closed. Thank you to everyone who applied.
+            </p>
           </FadeIn>
         </div>
       </section>

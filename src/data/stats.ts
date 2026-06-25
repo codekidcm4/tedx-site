@@ -39,6 +39,13 @@ export const globalStats: Stat[] = [
 
 export const localStats: Stat[] = [
   {
+    value: "12",
+    numericValue: 12,
+    suffix: "",
+    label: "Voices on one stage",
+    description: "Six adult speakers and six student speakers, no age qualifier",
+  },
+  {
     value: "10",
     numericValue: 10,
     suffix: "+",
@@ -53,17 +60,10 @@ export const localStats: Stat[] = [
     description: "Intimate by design, per TED licensing",
   },
   {
-    value: "5",
-    numericValue: 5,
+    value: "1",
+    numericValue: 1,
     suffix: "",
-    label: "Student speakers selected",
-    description: "From across the greater Cleveland area",
-  },
-  {
-    value: "0",
-    numericValue: 0,
-    suffix: "",
-    label: "GPA or experience requirements",
-    description: "Ideas are judged on their own merits, nothing else",
+    label: "Day that changes the conversation",
+    description: "August 22, 2026 at Gund Auditorium, University School",
   },
 ];

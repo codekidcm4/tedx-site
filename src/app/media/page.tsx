@@ -94,7 +94,7 @@ export default function MediaPage() {
                     {[
                       { label: "Talk recordings", status: "Available after August 22, 2026" },
                       { label: "Event photography", status: "Available after August 22, 2026" },
-                      { label: "Speaker bios and summaries", status: "Available in early June 2026" },
+                      { label: "Speaker bios and summaries", status: "As the lineup is confirmed" },
                       { label: "Press credentials", status: "Contact us to request" },
                       { label: "Organizer interviews", status: "Available now" },
                     ].map((item) => (
@@ -151,11 +151,10 @@ export default function MediaPage() {
                 <ul className="space-y-2.5">
                   {[
                     "Interviews with Charlie Martin and Jack Nelson (phone, email, or in person)",
-                    "Interviews with student applicants before the May 25 rolling deadline",
-                    "Interviews with selected speakers after early June",
-                    "Behind-the-scenes access through rehearsals and coaching (June-July)",
+                    "Interviews with announced speakers as each is confirmed",
+                    "Behind-the-scenes access through rehearsals and summer coaching",
                     "Press credentials for August 22",
-                    "Speaker bios and talk summaries after early June",
+                    "Speaker bios and talk summaries as the lineup is finalized",
                     "High-resolution event photos after August 22",
                   ].map((item, i) => (
                     <li key={i} className="flex items-start gap-2.5 text-sm text-[#555555]">
@@ -227,8 +226,8 @@ export default function MediaPage() {
                   Covering TEDxHuntingValley?
                 </p>
                 <p className="text-[#555555] text-sm leading-relaxed max-w-md">
-                  We offer a 10-minute call to walk any journalist through the full story before
-                  the May 25 rolling deadline. Contact us and we will set it up.
+                  We offer a 10-minute call to walk any journalist through the full story ahead of
+                  August 22. Contact us and we will set it up.
                 </p>
               </div>
               <div className="flex gap-4 flex-shrink-0">

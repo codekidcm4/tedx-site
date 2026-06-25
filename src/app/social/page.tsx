@@ -155,7 +155,7 @@ export default function SocialPage() {
                   lineHeight: 1.05,
                 }}
               >
-                Follow the journey from application to stage
+                Follow the journey from idea to stage
               </h2>
             </div>
           </FadeIn>
@@ -163,13 +163,13 @@ export default function SocialPage() {
           <StaggerContainer className="grid grid-cols-1 md:grid-cols-3 gap-px bg-[#e0e0e0]">
             {[
               {
-                phase: "Now through May 25",
-                label: "Applications",
+                phase: "Now",
+                label: "The Lineup",
                 description:
-                  "Speaker application updates, theme breakdowns, and tips for what we look for in a strong talk idea.",
+                  "Speaker reveals, theme breakdowns, and the stories behind the twelve voices taking our stage.",
               },
               {
-                phase: "June through July",
+                phase: "Summer",
                 label: "Coaching",
                 description:
                   "Behind-the-scenes coverage of the talk development process. How ideas become talks, how talks become something worth watching.",

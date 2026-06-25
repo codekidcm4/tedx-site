@@ -59,8 +59,8 @@ export function Hero() {
             transition={{ duration: 0.7, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
             className="text-white/65 text-lg md:text-xl leading-relaxed max-w-2xl mb-10"
           >
-            Cleveland&apos;s first independent community TEDx in over a decade. Student and adult
-            speakers. One stage. Ideas that reach 44 million people.
+            Cleveland&apos;s first independent community TEDx in over a decade. Twelve voices, one
+            stage, ideas that reach 44 million people.
           </motion.p>
 
           {/* Event info row */}
@@ -95,31 +95,21 @@ export function Hero() {
             className="flex flex-wrap gap-4"
           >
             <Link
-              href="#apply-now"
+              href="#tickets"
               className="inline-flex items-center gap-2 px-8 py-4 bg-[#e62b1e] text-white font-bold text-sm tracking-wide rounded-sm hover:bg-[#c9231a] transition-all duration-200 shadow-lg shadow-red-900/30"
             >
-              Apply to Speak
+              Get ticket updates
               <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24" aria-hidden="true">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
               </svg>
             </Link>
             <Link
-              href="/about"
+              href="/speakers"
               className="inline-flex items-center gap-2 px-8 py-4 border border-white/30 text-white font-semibold text-sm tracking-wide rounded-sm hover:bg-white/10 transition-all duration-200"
             >
-              Learn More
+              Meet the speakers
             </Link>
           </motion.div>
-
-          {/* Rolling deadline note */}
-          <motion.p
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.55, ease: [0.16, 1, 0.3, 1] }}
-            className="mt-6 text-xs font-semibold tracking-wide text-white/60"
-          >
-            Applications are on a rolling deadline through May 25
-          </motion.p>
         </div>
       </div>
 

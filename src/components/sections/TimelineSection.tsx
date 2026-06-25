@@ -27,15 +27,19 @@ export function TimelineSection() {
           <div className="space-y-0">
             {keyDates.map((item, i) => {
               const isLast = i === keyDates.length - 1;
+              const isEvent = item.status === "event";
+              const isDone = item.status === "done";
               return (
                 <StaggerItem key={i}>
                   <div className="flex items-start gap-6 md:gap-10 pb-8 relative">
                     {/* Left: vertical line and dot */}
                     <div className="flex flex-col items-center flex-shrink-0 w-5 pt-1">
                       <div
-                        className={`w-3 h-3 rounded-full border-2 flex-shrink-0 ${
-                          isLast
+                        className={`w-3 h-3 rounded-full border-2 flex-shrink-0 flex items-center justify-center ${
+                          isEvent
                             ? "bg-[#e62b1e] border-[#e62b1e]"
+                            : isDone
+                            ? "bg-[#e0e0e0] border-[#e0e0e0]"
                             : "bg-white border-[#e62b1e]"
                         }`}
                         aria-hidden="true"
@@ -49,14 +53,15 @@ export function TimelineSection() {
                     <div className="pb-2">
                       <p
                         className={`text-[0.65rem] font-bold tracking-[0.15em] uppercase mb-0.5 ${
-                          isLast ? "text-[#e62b1e]" : "text-[#9a9a9a]"
+                          isEvent ? "text-[#e62b1e]" : "text-[#9a9a9a]"
                         }`}
                       >
                         {item.date}
+                        {isDone && <span className="ml-2 text-[#b0b0b0] normal-case tracking-normal">(completed)</span>}
                       </p>
                       <p
                         className={`font-semibold text-sm md:text-base ${
-                          isLast ? "text-[#e62b1e]" : "text-[#0a0a0a]"
+                          isEvent ? "text-[#e62b1e]" : isDone ? "text-[#9a9a9a]" : "text-[#0a0a0a]"
                         }`}
                       >
                         {item.label}

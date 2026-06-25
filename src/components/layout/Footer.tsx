@@ -77,10 +77,10 @@ export function Footer() {
               ))}
               <li>
                 <Link
-                  href="/apply"
+                  href="/#tickets"
                   className="text-sm text-[#e62b1e] hover:text-[#ff4438] font-semibold transition-colors duration-200"
                 >
-                  Apply Now &rarr;
+                  Tickets &rarr;
                 </Link>
               </li>
             </ul>
@@ -112,8 +112,10 @@ export function Footer() {
                 </a>
               </li>
               <li>
-                <span className="text-[#9a9a9a] text-xs uppercase tracking-wider block mb-0.5">Application Deadline</span>
-                Rolling through May 25, 2026 at 11:59 PM
+                <span className="text-[#9a9a9a] text-xs uppercase tracking-wider block mb-0.5">Tickets</span>
+                <Link href="/#tickets" className="hover:text-white transition-colors duration-200">
+                  Coming soon. Join the interest list.
+                </Link>
               </li>
             </ul>
           </div>

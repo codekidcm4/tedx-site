@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { FadeIn, StaggerContainer, StaggerItem } from "@/components/ui/FadeIn";
 import { CTASection } from "@/components/sections/CTASection";
 import { pressItems } from "@/components/sections/PressSection";
-import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Press",
@@ -30,15 +29,15 @@ const stats = [
   { number: "8B+", label: "Total TEDx talk views" },
   { number: "10+", label: "Years since Cleveland's last independent community TEDx" },
   { number: "100", label: "Seats (TED licensing cap)" },
-  { number: "5", label: "Student speakers selected" },
+  { number: "12", label: "Voices on one stage, six adult and six student" },
   { number: "12 min", label: "Maximum talk length" },
 ];
 
 const storyAngles = [
   {
     number: "01",
-    title: "The Student Contest",
-    body: "Any Cleveland-area high school student can apply for a spot on a globally distributed speaking platform. Applications are now on a rolling basis through May 25. The selection process is a story about ideas, not credentials. What are teenagers in Cleveland thinking about in 2026?",
+    title: "Students on the Same Stage",
+    body: "Six student speakers earned their spots on a globally distributed platform through an open competition, judged on ideas rather than credentials. They share the stage with six accomplished adults, introduced exactly the same way. What are teenagers in Cleveland thinking about in 2026?",
   },
   {
     number: "02",
@@ -53,22 +52,22 @@ const storyAngles = [
   {
     number: "04",
     title: "The Organizers",
-    body: "Two high school juniors who filed a TED license application, negotiated a venue partnership, built a media outreach program, and are running a city-wide speaker competition — all as a side project outside school.",
+    body: "Two high school students who filed a TED license application, negotiated a venue partnership, built a media outreach program, and ran a city-wide speaker competition, all as a side project outside school.",
   },
   {
     number: "05",
     title: "The Coaching Arc",
-    body: "Five selected student speakers enter a multi-month coaching program in June and July to develop their talks. What does it look like to prepare a 16-year-old for a globally distributed stage?",
+    body: "Six selected student speakers enter a multi-month coaching program over the summer to develop their talks. What does it look like to prepare a high schooler for a globally distributed stage?",
   },
 ];
 
 const canProvide = [
-  "Interviews with organizers Charlie Martin and Jack Nelson — available by phone, email, or in person",
-  "Interviews with student applicants before the May 25 rolling deadline (several have agreed to speak with press)",
-  "Interviews with selected speakers in early June after final selection is announced",
-  "Behind-the-scenes access through rehearsals and the coaching process (June–July)",
-  "Press credentials for the August 22 event — contact us to request",
-  "Speaker bios and talk summaries once selections are finalized in early June",
+  "Interviews with organizers Charlie Martin and Jack Nelson, available by phone, email, or in person",
+  "Interviews with announced speakers as each is confirmed",
+  "Behind-the-scenes access through rehearsals and the summer coaching process",
+  "Press credentials for the August 22 event, contact us to request",
+  "Speaker bios and talk summaries as the lineup is finalized",
+  "High-resolution event photos after August 22",
 ];
 
 const breadcrumb = {
@@ -408,7 +407,7 @@ export default function PressPage() {
                 <p className="text-white/65 leading-relaxed mb-8">
                   Charlie Martin and Jack Nelson are available for interviews by phone, email,
                   or in person. We respond to every press inquiry. A 10-minute call is available
-                  to walk any journalist through the full story before the May 25 rolling deadline.
+                  to walk any journalist through the full story ahead of August 22.
                 </p>
                 <div className="space-y-3">
                   <a

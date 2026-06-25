@@ -110,10 +110,10 @@ export function ThemeSection() {
 
               <div className="mt-8">
                 <Link
-                  href="/apply"
+                  href="/speakers"
                   className="inline-flex items-center gap-2 px-6 py-3 border border-[#e62b1e] text-[#e62b1e] text-sm font-semibold rounded-sm hover:bg-[#e62b1e] hover:text-white transition-all duration-200"
                 >
-                  Have an idea? Apply to speak
+                  Meet the twelve speakers
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24" aria-hidden="true">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
                   </svg>

@@ -106,13 +106,13 @@ export default function SetupPage() {
             <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
               {[
                 { label: "Site structure and all pages", status: "Done", color: "green" as const },
+                { label: "Adult speakers (6, with photos)", status: "Live", color: "green" as const },
+                { label: "Student bios and photos (6)", status: "Pending", color: "yellow" as const },
+                { label: "Organizer bios", status: "Pending", color: "yellow" as const },
+                { label: "Tickets / interest list", status: "Config", color: "yellow" as const },
+                { label: "Livestream link", status: "Config", color: "yellow" as const },
                 { label: "Google Analytics", status: "Needs ID", color: "yellow" as const },
-                { label: "Live social feed", status: "Needs API", color: "yellow" as const },
-                { label: "Vercel deployment", status: "Ready to deploy", color: "yellow" as const },
-                { label: "Speaker content", status: "Placeholders", color: "yellow" as const },
-                { label: "Speaker photos", status: "Placeholders", color: "yellow" as const },
-                { label: "Custom domain", status: "Optional", color: "yellow" as const },
-                { label: "Application PDF", status: "Done", color: "green" as const },
+                { label: "Live social feed (Behold)", status: "Live", color: "green" as const },
               ].map((item) => (
                 <StaggerItem key={item.label}>
                   <div className="bg-[#f9f9f9] border border-[#e0e0e0] p-4">
@@ -157,7 +157,7 @@ export default function SetupPage() {
         <Section id="running-locally" label="Local Development" title="Running the site on your computer">
           <Step number="1" title="Install dependencies">
             <p>Open a terminal, navigate to the project folder, and run:</p>
-            <CodeBlock>cd /Users/cmartin27/Downloads/Tedx/tedx-site
+            <CodeBlock>cd path/to/tedx-site
 npm install</CodeBlock>
             <p>This installs everything the project needs. It only needs to be done once (or again after pulling new changes).</p>
           </Step>
@@ -327,51 +327,40 @@ INSTAGRAM_TOKEN=your_token_here              # if using Instagram API`}</CodeBlo
 
           <Step number="1" title="Open the speakers data file">
             <CodeBlock>src/data/speakers.ts</CodeBlock>
-            <p>Each of the 10 speaker slots has a <code className="bg-[#f0f0f0] px-1 py-0.5 rounded text-xs">status: &quot;coming-soon&quot;</code>. When a speaker is selected, you update their slot.</p>
+            <p>There are 12 speaker objects: 6 adults and 6 students. The six students currently have a name only. When a student is ready, you fill in their <code className="bg-[#f0f0f0] px-1 py-0.5 rounded text-xs">bio</code> and <code className="bg-[#f0f0f0] px-1 py-0.5 rounded text-xs">image</code>. A talk title is added to any speaker (adult or student) once it is confirmed.</p>
           </Step>
 
           <Step number="2" title="Fill in the speaker's details">
-            <p>Change the slot from its placeholder state:</p>
-            <CodeBlock>{`// BEFORE (placeholder):
-{
-  id: "student-1",
-  name: null,
-  role: null,
-  organization: null,
-  type: "student",
-  bio: null,
-  talkTitle: null,
-  talkDescription: null,
-  image: null,
-  status: "coming-soon",
-},
+            <p>Update the student object in place:</p>
+            <CodeBlock>{`// BEFORE (name only):
+{ id: "kamryn-taylor", name: "Kamryn Taylor", role: null, organization: null,
+  type: "student", bio: null, talkTitle: null, image: null, order: 7 },
 
-// AFTER (announced speaker):
+// AFTER (bio + headshot added):
 {
-  id: "student-1",
-  name: "Sarah Kim",
-  role: "Junior, Shaker Heights High School",
-  organization: "Shaker Heights High School",
+  id: "kamryn-taylor",
+  name: "Kamryn Taylor",
+  role: "Junior, Shaker Heights High School",       // optional
+  organization: "Shaker Heights High School",        // optional
   type: "student",
-  bio: "Sarah is a junior at Shaker Heights interested in cognitive science and how sleep affects memory consolidation...",
-  talkTitle: "The Night Shift Your Brain Runs Without You",
-  talkDescription: "What happens to everything you learned today after you fall asleep — and why skipping that process has consequences nobody told you about.",
-  image: "/speakers/sarah-kim.jpg",
-  status: "announced",
+  bio: "Two to four sentences, the same medium length as the adult bios.",
+  talkTitle: "The Night Shift Your Brain Runs Without You",  // when confirmed; else null
+  image: "/speakers/kamryn-taylor.jpg",              // null shows an initials avatar
+  order: 7,
 },`}</CodeBlock>
           </Step>
 
           <Step number="3" title="Add the speaker's headshot">
             <p>Save the headshot image to:</p>
-            <CodeBlock>public/speakers/sarah-kim.jpg</CodeBlock>
+            <CodeBlock>public/speakers/kamryn-taylor.jpg</CodeBlock>
             <p>Images in the <code className="bg-[#f0f0f0] px-1 py-0.5 rounded text-xs">public/</code> folder are served directly. The <code className="bg-[#f0f0f0] px-1 py-0.5 rounded text-xs">image</code> field in the speaker object should match the path starting with <code className="bg-[#f0f0f0] px-1 py-0.5 rounded text-xs">/</code>.</p>
-            <p className="text-[#9a9a9a] text-xs">Image format: JPG or WebP. Recommended size: 600px wide, 3:4 aspect ratio (portrait). Next.js handles resizing automatically.</p>
+            <p className="text-[#9a9a9a] text-xs">Image format: JPG or WebP. Recommended size: 600 to 800px wide, portrait or square. Every card uses object-fit cover, so any crop is centered automatically. Next.js handles resizing.</p>
           </Step>
 
           <Step number="4" title="Deploy the update">
             <p>Save the file, commit, and push:</p>
             <CodeBlock>{`git add src/data/speakers.ts public/speakers/
-git commit -m "Add student speaker: Sarah Kim"
+git commit -m "Add student speaker: Kamryn Taylor"
 git push`}</CodeBlock>
             <p>The site updates automatically within 60 seconds on Vercel.</p>
           </Step>
@@ -379,8 +368,9 @@ git push`}</CodeBlock>
           <div className="mt-6 p-5 bg-[#f9f9f9] border border-[#e0e0e0]">
             <p className="text-xs font-semibold text-[#0a0a0a] mb-2">Speaker card behavior</p>
             <ul className="text-xs text-[#555555] space-y-1 list-disc list-inside">
-              <li>While <code className="font-mono bg-[#e0e0e0] px-1 rounded">status: &quot;coming-soon&quot;</code> — shows a gray silhouette card.</li>
-              <li>Once <code className="font-mono bg-[#e0e0e0] px-1 rounded">status: &quot;announced&quot;</code> — shows the headshot, name, and role. Clicking opens a modal with the full bio and talk title.</li>
+              <li>With no <code className="font-mono bg-[#e0e0e0] px-1 rounded">image</code> (or if the file fails to load), the card shows a clean initials avatar, so it never breaks.</li>
+              <li>With no <code className="font-mono bg-[#e0e0e0] px-1 rounded">bio</code>, the card shows a tasteful &quot;Bio coming soon&quot; line; add the bio and it appears inline.</li>
+              <li>A <code className="font-mono bg-[#e0e0e0] px-1 rounded">talkTitle</code> renders alongside the name and bio whenever it is present.</li>
               <li>Adult speakers appear in the first grid, student speakers in the second grid, automatically.</li>
             </ul>
           </div>
@@ -393,15 +383,15 @@ git push`}</CodeBlock>
             <Step number="1" title="Change dates, email, venue, or event details">
               <p>All global site info is in one file:</p>
               <CodeBlock>src/data/site.ts</CodeBlock>
-              <p>The <code className="bg-[#f0f0f0] px-1 py-0.5 rounded text-xs">siteConfig</code> object at the top controls the event name, date, venue, email, social handles, and application deadline. Change it once and it updates everywhere on the site.</p>
+              <p>The <code className="bg-[#f0f0f0] px-1 py-0.5 rounded text-xs">siteConfig</code> object at the top controls the event name, date, venue, address, email, social handles, and the swappable tickets/livestream config. Change it once and it updates everywhere on the site.</p>
             </Step>
 
             <Step number="2" title="Update the timeline (key dates)">
               <p>The <code className="bg-[#f0f0f0] px-1 py-0.5 rounded text-xs">keyDates</code> array in <code className="bg-[#f0f0f0] px-1 py-0.5 rounded text-xs">src/data/site.ts</code> powers the timeline section on the home page:</p>
               <CodeBlock>{`export const keyDates = [
-  { date: "March 31, 2026", label: "Student applications open" },
-  { date: "May 25, 2026",   label: "Rolling application deadline (11:59 PM)" },
-  // add or change entries here
+  { date: "Summer 2026",     label: "Speaker coaching and talk development", status: "upcoming" },
+  { date: "August 22, 2026", label: "TEDxHuntingValley at Gund Auditorium",  status: "event" },
+  // status is "done" | "upcoming" | "event"; add or change entries here
 ];`}</CodeBlock>
             </Step>
 
@@ -411,20 +401,23 @@ git push`}</CodeBlock>
               <p>Edit <code className="bg-[#f0f0f0] px-1 py-0.5 rounded text-xs">localStats</code> and <code className="bg-[#f0f0f0] px-1 py-0.5 rounded text-xs">globalStats</code> to change the numbers, labels, or descriptions.</p>
             </Step>
 
-            <Step number="4" title="Update page text (About, Apply, etc.)">
+            <Step number="4" title="Update page text (About, Speakers, etc.)">
               <p>Each page is its own file in <code className="bg-[#f0f0f0] px-1 py-0.5 rounded text-xs">src/app/</code>:</p>
-              <CodeBlock>{`src/app/about/page.tsx     — About page
-src/app/apply/page.tsx    — Application page
-src/app/speakers/page.tsx — Speakers page
-src/app/media/page.tsx    — Media page
-src/app/social/page.tsx   — Social page`}</CodeBlock>
+              <CodeBlock>{`src/app/about/page.tsx     about page
+src/app/speakers/page.tsx  speakers page
+src/app/press/page.tsx     press page
+src/app/media/page.tsx     media page
+src/app/social/page.tsx    social page`}</CodeBlock>
               <p>All body text is written directly in the JSX. Find the section you want to update and change the text inside the <code className="bg-[#f0f0f0] px-1 py-0.5 rounded text-xs">{"<p>"}</code> tags.</p>
             </Step>
 
-            <Step number="5" title="Replace the application PDF">
-              <p>The embedded PDF on the Apply page comes from:</p>
-              <CodeBlock>public/application.pdf</CodeBlock>
-              <p>Replace this file with an updated PDF and the site will serve the new version automatically. Do not rename the file — the embed uses the path <code className="bg-[#f0f0f0] px-1 py-0.5 rounded text-xs">/application.pdf</code>.</p>
+            <Step number="5" title="Flip tickets, livestream, and notify lists live">
+              <p>The swappable launch values live at the bottom of <code className="bg-[#f0f0f0] px-1 py-0.5 rounded text-xs">src/data/site.ts</code>:</p>
+              <CodeBlock>{`ticketsUrl: null,      // real ticket / registration link
+interestFormUrl: null, // seat-interest / notify list (e.g. a Google Form URL)
+livestreamUrl: null,   // event-day livestream link
+watchNotifyUrl: null,  // "notify me when talks publish" list`}</CodeBlock>
+              <p>Each value is null until the real thing exists. Set a value and the matching section flips from its &quot;coming soon&quot; state to live, with no other code change. While null, the Tickets and Watch Online sections still capture emails through a mailto fallback.</p>
             </Step>
 
             <Step number="6" title="Update the OG image (social share preview)">
@@ -469,44 +462,34 @@ src/app/social/page.tsx   — Social page`}</CodeBlock>
           <FadeIn delay={0.1}>
             <CodeBlock>{`tedx-site/
 ├── instrumentation-client.ts   ← Google Analytics (activate here)
-├── next.config.ts               ← Next.js configuration
+├── next.config.ts               ← Next.js config + /apply & /application.pdf redirects
+├── archive/                     ← Retired apply program (recoverable, not compiled)
 ├── public/
-│   ├── application.pdf          ← Replace with updated application
-│   ├── logo.jpeg                ← Event logo
+│   ├── logo.png                 ← Event logo
 │   ├── og-image.jpg             ← Social share image (replace with branded version)
 │   ├── favicon.ico              ← Browser tab icon
-│   └── speakers/                ← Add speaker headshots here (create this folder)
-│       └── speaker-name.jpg
+│   ├── tedxhuntingvalley.ics    ← Add-to-calendar file (update if times change)
+│   ├── team/                    ← Organizer headshots
+│   └── speakers/                ← Speaker headshots (drop new files here)
+│       └── kamryn-taylor.jpg
 └── src/
     ├── app/
     │   ├── layout.tsx            ← Root layout, metadata, fonts
     │   ├── page.tsx              ← Home page (assembles section components)
-    │   ├── about/page.tsx
-    │   ├── apply/page.tsx
-    │   ├── speakers/page.tsx
-    │   ├── media/page.tsx
-    │   ├── social/page.tsx
-    │   └── setup/page.tsx        ← This page (not in main nav)
+    │   ├── not-found.tsx         ← Branded 404
+    │   ├── about/ speakers/ press/ media/ social/   ← page.tsx each
+    │   └── setup/page.tsx        ← This page (not in main nav, noindex)
     ├── components/
-    │   ├── layout/
-    │   │   ├── Navbar.tsx
-    │   │   └── Footer.tsx
-    │   ├── sections/             ← Home page sections
-    │   │   ├── Hero.tsx
-    │   │   ├── StatsSection.tsx
-    │   │   ├── ThemeSection.tsx
-    │   │   ├── SpeakersPreview.tsx
-    │   │   ├── TimelineSection.tsx
-    │   │   ├── SocialSection.tsx
-    │   │   └── CTASection.tsx
-    │   └── ui/                   ← Reusable components
-    │       ├── SpeakerCard.tsx   ← Card + modal for each speaker
-    │       ├── AnimatedCounter.tsx
-    │       ├── FadeIn.tsx
-    │       └── Button.tsx
+    │   ├── layout/               ← Navbar.tsx, Footer.tsx
+    │   ├── sections/             ← Hero, MediaBar, EventEssentials, TicketsSection,
+    │   │                            StatsSection, PressSection, ThemeSection,
+    │   │                            SpeakersPreview, OrganizersSection, TimelineSection,
+    │   │                            WatchOnlineSection, SocialSection, CTASection
+    │   └── ui/                   ← SpeakerCard, SpeakerHeadshot, NotifyForm,
+    │                                AddToCalendar, CountdownTimer, FadeIn, AnimatedCounter
     └── data/                     ← ALL CONTENT LIVES HERE
-        ├── site.ts               ← Event info, nav links, dates
-        ├── speakers.ts           ← Speaker slots (fill these in)
+        ├── site.ts               ← Event info, nav links, dates, launch config
+        ├── speakers.ts           ← 12 speakers (fill in student bios/photos)
         └── stats.ts              ← Numbers shown on home page`}</CodeBlock>
           </FadeIn>
         </section>

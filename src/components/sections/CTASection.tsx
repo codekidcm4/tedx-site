@@ -17,26 +17,26 @@ export function CTASection() {
         <FadeIn>
           <div className="max-w-3xl mx-auto text-center">
             <p className="text-[0.65rem] font-bold tracking-[0.18em] uppercase text-white/60 mb-6">
-              Student Speaker Contest
+              August 22, 2026 &middot; Gund Auditorium
             </p>
             <h2
               id="cta-heading"
               className="text-white font-extrabold mb-6"
               style={{ fontSize: "clamp(2rem, 5vw, 3.75rem)", letterSpacing: "-0.03em", lineHeight: 1.05 }}
             >
-              Any Cleveland-area high schooler can apply.
+              Be in the room when the lights go up.
             </h2>
             <p className="text-white/80 text-lg leading-relaxed mb-10 max-w-xl mx-auto">
-              No GPA requirement. No prior speaking experience. No extracurricular list to submit.
-              Your application is evaluated entirely on the strength and clarity of your idea.
+              Twelve voices, one stage, and an intentionally intimate room. Join the list and you will be the
+              first to know the moment seats are released.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
-                href="/apply"
+                href="/#tickets"
                 className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white text-[#e62b1e] font-bold text-sm tracking-wide rounded-sm hover:bg-[#f0f0f0] transition-all duration-200 shadow-lg"
               >
-                View the Application
+                Get ticket updates
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24" aria-hidden="true">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
                 </svg>
@@ -50,7 +50,7 @@ export function CTASection() {
             </div>
 
             <p className="text-white/70 text-xs mt-8">
-              Rolling deadline through May 25, 2026 at 11:59 PM. Applications to {siteConfig.email}.
+              Seating at Gund Auditorium is intentionally limited. Questions to {siteConfig.email}.
             </p>
           </div>
         </FadeIn>

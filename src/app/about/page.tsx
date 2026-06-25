@@ -36,8 +36,8 @@ const differentiators = [
     body: "At TEDxHuntingValley, a student speaker is not introduced as a student. They are introduced as a TEDxHuntingValley speaker, identical to every adult on the same stage. No age qualifier. No asterisk. An idea is an idea.",
   },
   {
-    label: "Open to any Cleveland-area student",
-    body: "Any high school student in the greater Cleveland area can apply. There is no GPA requirement, no prior experience needed, and no extracurricular list to submit. Five speakers are selected entirely on the strength and clarity of their idea.",
+    label: "An open student competition",
+    body: "The student lineup came from an open competition across the greater Cleveland area, with no GPA requirement, no prior experience needed, and no extracurricular list to submit. Six student speakers were selected entirely on the strength and clarity of their idea.",
   },
   {
     label: "A globally distributed platform",
@@ -235,7 +235,7 @@ export default function AboutPage() {
                 name: "Jack Nelson",
                 role: "Co-Organizer",
                 school: "University School, Class of 2027",
-                photo: "/team/jack-nelson.png",
+                photo: "/team/jack-nelson.jpg",
                 quote:
                   "If the idea is good enough, it doesn't matter how old you are. That's what makes this worth doing.",
               },
@@ -243,7 +243,7 @@ export default function AboutPage() {
                 name: "Dr. Tyler Yoder",
                 role: "Licensed Organizer",
                 school: "History Instructor, University School",
-                photo: "/team/tyler-yoder.png",
+                photo: "/team/tyler-yoder.jpg",
                 quote:
                   "When Charlie and Jack came to me with this, they had already done the hard part. My job has been to make sure they get to the finish line.",
               },

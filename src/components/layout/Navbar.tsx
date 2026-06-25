@@ -77,29 +77,10 @@ export function Navbar() {
                 </Link>
               ))}
               <Link
-                href="/apply"
-                aria-label="Applications open. Rolling deadline through May 25. Apply now."
-                className={cn(
-                  "ml-2 inline-flex items-center gap-2 px-3 py-1.5 rounded-full border text-[0.65rem] font-bold tracking-[0.14em] uppercase transition-colors duration-200",
-                  scrolled || !isHome
-                    ? "border-[#e62b1e]/30 bg-[#e62b1e]/10 text-[#e62b1e] hover:bg-[#e62b1e]/15"
-                    : "border-white/30 bg-white/5 text-white hover:bg-white/15"
-                )}
-              >
-                <span
-                  className={cn(
-                    "inline-block w-1.5 h-1.5 rounded-full animate-pulse",
-                    scrolled || !isHome ? "bg-[#e62b1e]" : "bg-white"
-                  )}
-                  aria-hidden="true"
-                />
-                Applications open
-              </Link>
-              <Link
-                href="/apply"
+                href="/#tickets"
                 className="ml-2 px-5 py-2.5 bg-[#e62b1e] text-white text-sm font-semibold rounded-sm hover:bg-[#c9231a] transition-colors duration-200 shadow-sm"
               >
-                Apply Now
+                Tickets
               </Link>
             </nav>
 
@@ -160,10 +141,10 @@ export function Navbar() {
           ))}
           <div className="mt-8">
             <Link
-              href="/apply"
+              href="/#tickets"
               className="inline-flex items-center justify-center w-full py-4 bg-[#e62b1e] text-white text-lg font-bold rounded-sm hover:bg-[#c9231a] transition-colors duration-200"
             >
-              Apply Now
+              Get ticket updates
             </Link>
           </div>
 

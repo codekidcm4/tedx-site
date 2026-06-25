@@ -11,6 +11,15 @@ const nextConfig: NextConfig = {
   images: {
     formats: ["image/avif", "image/webp"],
   },
+  // The student application program is retired. Permanently send any old bookmarks, shared links,
+  // or search results for /apply and the application PDF to the home page instead of a 404.
+  // Redirects are evaluated before the filesystem, so these catch the public PDF path too.
+  async redirects() {
+    return [
+      { source: "/apply", destination: "/", permanent: true },
+      { source: "/application.pdf", destination: "/", permanent: true },
+    ];
+  },
 };
 
 export default nextConfig;

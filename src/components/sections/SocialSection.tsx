@@ -1,26 +1,6 @@
 import { FadeIn } from "@/components/ui/FadeIn";
+import { BeholdFeed } from "@/components/ui/BeholdFeed";
 import { siteConfig } from "@/data/site";
-
-const placeholderPosts = [
-  {
-    type: "instagram",
-    caption: "Cleveland doesn't have an independent community TEDx anymore. We noticed. So we built one. TEDxHuntingValley is happening August 22.",
-    date: "Apr 11",
-    likes: 142,
-  },
-  {
-    type: "instagram",
-    caption: "The theme for TEDxHuntingValley: The Invisible Engine: The Forces We Forget. Student applications are open on a rolling basis through May 25.",
-    date: "Apr 15",
-    likes: 98,
-  },
-  {
-    type: "instagram",
-    caption: "Any Cleveland-area high school student can apply. No GPA requirement. No experience requirement. The idea is what gets judged.",
-    date: "Apr 17",
-    likes: 211,
-  },
-];
 
 export function SocialSection() {
   return (
@@ -72,48 +52,9 @@ export function SocialSection() {
           </div>
         </FadeIn>
 
-        {/* Post placeholders */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          {placeholderPosts.map((post, i) => (
-            <FadeIn key={i} delay={i * 0.1}>
-              <div className="bg-white border border-[#e0e0e0] p-6 hover:border-[#e62b1e]/30 hover:shadow-md transition-all duration-300 group">
-                {/* Header */}
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#e62b1e] to-[#c9231a] flex items-center justify-center">
-                    <span className="text-white text-xs font-bold">T</span>
-                  </div>
-                  <div>
-                    <p className="text-xs font-bold text-[#0a0a0a]">tedxhuntingvalley</p>
-                    <p className="text-[0.65rem] text-[#9a9a9a]">{post.date}</p>
-                  </div>
-                </div>
-
-                {/* Image placeholder */}
-                <div className="aspect-square bg-[#f0f0f0] mb-4 flex items-center justify-center">
-                  <svg className="w-10 h-10 text-[#c0c0c0]" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z" />
-                  </svg>
-                </div>
-
-                {/* Caption */}
-                <p className="text-xs text-[#555555] leading-relaxed line-clamp-3">
-                  <span className="font-bold text-[#0a0a0a]">tedxhuntingvalley </span>
-                  {post.caption}
-                </p>
-
-                {/* Likes */}
-                <p className="text-xs font-semibold text-[#0a0a0a] mt-3">
-                  {post.likes.toLocaleString()} likes
-                </p>
-              </div>
-            </FadeIn>
-          ))}
-        </div>
-
-        <FadeIn delay={0.3}>
-          <p className="text-center text-xs text-[#9a9a9a] mt-6">
-            Live social feed coming soon. Follow {siteConfig.handle} for real-time updates.
-          </p>
+        {/* Live Instagram feed via Behold. Update the feed id in siteConfig if the account changes. */}
+        <FadeIn delay={0.1}>
+          <BeholdFeed feedId={siteConfig.beholdFeedId} />
         </FadeIn>
       </div>
     </section>

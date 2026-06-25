@@ -1,23 +1,29 @@
 import type { Metadata } from "next";
 import { Hero } from "@/components/sections/Hero";
+import { MediaBar } from "@/components/sections/MediaBar";
+import { EventEssentials } from "@/components/sections/EventEssentials";
+import { TicketsSection } from "@/components/sections/TicketsSection";
 import { StatsSection } from "@/components/sections/StatsSection";
 import { PressSection } from "@/components/sections/PressSection";
 import { ThemeSection } from "@/components/sections/ThemeSection";
-import { HomeApplySection } from "@/components/sections/HomeApplySection";
 import { SpeakersPreview } from "@/components/sections/SpeakersPreview";
+import { OrganizersSection } from "@/components/sections/OrganizersSection";
 import { TimelineSection } from "@/components/sections/TimelineSection";
+import { WatchOnlineSection } from "@/components/sections/WatchOnlineSection";
 import { SocialSection } from "@/components/sections/SocialSection";
 import { CTASection } from "@/components/sections/CTASection";
+import { siteConfig } from "@/data/site";
+import { speakers } from "@/data/speakers";
 
 export const metadata: Metadata = {
   title: "TEDxHuntingValley",
   description:
-    "Cleveland's first independent community TEDx in over a decade. Student and adult speakers on one stage at Gund Auditorium, University School on August 22, 2026. Student speaker applications are rolling through May 25.",
+    "Cleveland's first independent community TEDx in over a decade. Twelve voices, six adult speakers and six student speakers, on one stage at Gund Auditorium, University School on August 22, 2026.",
   alternates: { canonical: "/" },
   openGraph: {
     title: "TEDxHuntingValley | August 22, 2026",
     description:
-      "Cleveland's first independent community TEDx in over a decade. Ten speakers, one stage, no age qualifier. Student applications are rolling through May 25, 2026.",
+      "Cleveland's first independent community TEDx in over a decade. Twelve voices, one stage, no age qualifier. The full lineup is taking shape ahead of August 22, 2026.",
     url: "https://tedxhuntingvalley.com",
     type: "website",
     images: [{ url: "/og-image.jpg", width: 1200, height: 630, alt: "TEDxHuntingValley | The Invisible Engine: The Forces We Forget" }],
@@ -26,7 +32,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "TEDxHuntingValley | August 22, 2026",
     description:
-      "Cleveland's first independent community TEDx in over a decade. Ten speakers, one stage, no age qualifier. Student applications are rolling through May 25, 2026.",
+      "Cleveland's first independent community TEDx in over a decade. Twelve voices, one stage, no age qualifier. The full lineup is taking shape ahead of August 22, 2026.",
     images: ["/og-image.jpg"],
   },
 };
@@ -36,9 +42,9 @@ const eventJsonLd = {
   "@type": "Event",
   name: "TEDxHuntingValley",
   description:
-    "Cleveland's first independent community TEDx in over a decade. Student and adult speakers on one stage. Organized by two University School juniors.",
-  startDate: "2026-08-22T09:00:00-04:00",
-  endDate: "2026-08-22T17:00:00-04:00",
+    "The Invisible Engine: The Forces We Forget. Cleveland's first independent community TEDx in over a decade. Six adult speakers and six student speakers share one stage. Organized by two University School students.",
+  startDate: siteConfig.startDateTimeISO,
+  endDate: siteConfig.endDateTimeISO,
   eventStatus: "https://schema.org/EventScheduled",
   eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
   location: {
@@ -57,22 +63,16 @@ const eventJsonLd = {
     { "@type": "Person", name: "Charlie Martin" },
     { "@type": "Person", name: "Jack Nelson" },
   ],
+  // Performer list reflects the announced lineup. Talk titles are added to each Person as they confirm.
+  performer: speakers.map((s) => ({
+    "@type": "Person",
+    name: s.name,
+    ...(s.role ? { jobTitle: s.role } : {}),
+  })),
   url: "https://tedxhuntingvalley.com",
   image: "https://tedxhuntingvalley.com/og-image.jpg",
-  subEvent: [
-    {
-      "@type": "Event",
-      name: "Student Speaker Application Window",
-      description:
-        "Rolling student speaker applications. Any greater-Cleveland high school student can apply through May 25, 2026 at 11:59 PM.",
-      startDate: "2026-03-31T00:00:00-04:00",
-      endDate: "2026-05-25T23:59:00-04:00",
-      eventStatus: "https://schema.org/EventScheduled",
-      eventAttendanceMode: "https://schema.org/OnlineEventAttendanceMode",
-      location: { "@type": "VirtualLocation", url: "https://tedxhuntingvalley.com/apply" },
-      url: "https://tedxhuntingvalley.com/apply",
-    },
-  ],
+  // Ticket/offer info goes here once seats are released, e.g.:
+  // offers: { "@type": "Offer", url: siteConfig.ticketsUrl, availability: "https://schema.org/InStock", ... }
 };
 
 export default function HomePage() {
@@ -83,13 +83,31 @@ export default function HomePage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(eventJsonLd) }}
       />
       <Hero />
+      <MediaBar />
+      <EventEssentials />
+      <TicketsSection />
       <StatsSection />
       <PressSection />
       <ThemeSection />
-      <HomeApplySection />
       <SpeakersPreview />
+      <OrganizersSection />
       <TimelineSection />
+      <WatchOnlineSection />
       <SocialSection />
+
+      {/* ─────────────────────────────────────────────────────────────────
+          RESERVED: Day-of schedule / run-of-show.
+          Build the schedule section here (speaker order, timing, breaks).
+          The #run-of-show anchor is kept stable so nav and links can target it.
+         ───────────────────────────────────────────────────────────────── */}
+      <section id="run-of-show" aria-hidden="true" className="hidden" />
+
+      {/* ─────────────────────────────────────────────────────────────────
+          RESERVED: Post-event area (thank-you state, talk videos, photo gallery).
+          Build this after August 22. The #after anchor is kept stable.
+         ───────────────────────────────────────────────────────────────── */}
+      <section id="after" aria-hidden="true" className="hidden" />
+
       <CTASection />
     </>
   );
