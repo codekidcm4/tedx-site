@@ -1,12 +1,10 @@
 import Link from "next/link";
-import { SpeakerCard } from "@/components/ui/SpeakerCard";
-import { FadeIn } from "@/components/ui/FadeIn";
-import { adultSpeakers } from "@/data/speakers";
+import { FadeIn, StaggerContainer, StaggerItem } from "@/components/ui/FadeIn";
+import { SpeakerHeadshot } from "@/components/ui/SpeakerHeadshot";
+import { speakers } from "@/data/speakers";
 
 export function SpeakersPreview() {
-  // Lead the preview with announced speakers; the full 12-person lineup lives on /speakers.
-  const previewSpeakers = adultSpeakers.slice(0, 4);
-
+  // Show the full twelve-voice lineup as a compact roster, not a handful of cards.
   return (
     <section className="bg-white py-20 md:py-28" aria-labelledby="speakers-preview-heading">
       <div className="max-w-[1200px] mx-auto px-6 md:px-8 lg:px-12">
@@ -16,7 +14,7 @@ export function SpeakersPreview() {
               <span className="inline-flex items-center gap-3 mb-4">
                 <span className="inline-block w-8 h-0.5 bg-[#e62b1e]" aria-hidden="true" />
                 <span className="text-[0.65rem] font-bold tracking-[0.18em] uppercase text-[#e62b1e]">
-                  Speakers
+                  The Lineup
                 </span>
               </span>
               <h2
@@ -31,18 +29,32 @@ export function SpeakersPreview() {
             </div>
             <p className="text-[#555555] text-base leading-relaxed max-w-sm md:text-right">
               Six adult speakers. Six student speakers. No age qualifier, no asterisk.
-              The full lineup is taking shape ahead of August 22.
+              Bios and talks are revealed as each speaker is confirmed.
             </p>
           </div>
         </FadeIn>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-10">
-          {previewSpeakers.map((speaker, i) => (
-            <FadeIn key={speaker.id} delay={i * 0.08}>
-              <SpeakerCard speaker={speaker} variant="compact" className="w-full" />
-            </FadeIn>
+        <StaggerContainer className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4 mb-12">
+          {speakers.map((speaker) => (
+            <StaggerItem key={speaker.id} className="h-full">
+              <Link
+                href="/speakers"
+                aria-label={`${speaker.name}, view all speakers`}
+                className="group flex h-full flex-col items-center text-center gap-4 p-6 border border-[#e0e0e0] bg-white hover:border-[#e62b1e]/40 hover:shadow-md transition-all duration-300"
+              >
+                <div className="relative w-16 h-16 md:w-20 md:h-20 rounded-full overflow-hidden bg-[#f0f0f0]">
+                  <SpeakerHeadshot src={speaker.image} name={speaker.name} sizes="80px" initialsFontSize="1.35rem" />
+                </div>
+                <div>
+                  <p className="font-bold text-[#0a0a0a] text-sm leading-snug">{speaker.name}</p>
+                  <p className="text-[0.55rem] font-bold tracking-[0.14em] uppercase text-[#9a9a9a] group-hover:text-[#e62b1e] transition-colors duration-200 mt-1.5">
+                    {speaker.type === "student" ? "Student Speaker" : "Speaker"}
+                  </p>
+                </div>
+              </Link>
+            </StaggerItem>
           ))}
-        </div>
+        </StaggerContainer>
 
         <FadeIn>
           <div className="flex justify-center">

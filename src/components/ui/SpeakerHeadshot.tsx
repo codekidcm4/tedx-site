@@ -11,6 +11,8 @@ interface SpeakerHeadshotProps {
   sizes?: string;
   /** Set true only for above-the-fold cards; everything else lazy-loads. */
   priority?: boolean;
+  /** CSS font-size for the initials fallback (override for small avatars). */
+  initialsFontSize?: string;
 }
 
 /**
@@ -18,7 +20,7 @@ interface SpeakerHeadshotProps {
  * photo is centered and uniform regardless of source crop, and falls back to a tasteful initials
  * avatar when there is no image or the image fails to load, so the layout never breaks.
  */
-export function SpeakerHeadshot({ src, name, sizes, priority = false }: SpeakerHeadshotProps) {
+export function SpeakerHeadshot({ src, name, sizes, priority = false, initialsFontSize }: SpeakerHeadshotProps) {
   const [errored, setErrored] = useState(false);
   const showImage = Boolean(src) && !errored;
 
@@ -44,7 +46,7 @@ export function SpeakerHeadshot({ src, name, sizes, priority = false }: SpeakerH
     >
       <span
         className="font-extrabold text-white/85 tracking-tight"
-        style={{ fontSize: "clamp(2rem, 6vw, 3.5rem)" }}
+        style={{ fontSize: initialsFontSize ?? "clamp(2rem, 6vw, 3.5rem)" }}
       >
         {speakerInitials(name)}
       </span>
