@@ -24,16 +24,35 @@ export type Speaker = {
 
 export const speakers: Speaker[] = [
   // ── Adult speakers (6) ──────────────────────────────────────────────
-  // Titles, bios, and headshots were removed per request, so these render as plain name cards,
-  // identical to the students. The original adult bios/titles are in git history, and the headshot
-  // files still live in public/speakers/. To re-enable a speaker, restore their role/bio and set
-  // image back to "/speakers/<id>.jpg".
-  { id: "nic-barlage", name: "Nic Barlage", role: null, organization: null, type: "adult", bio: null, talkTitle: null, image: null, order: 1 },
+  // Speakers are revealed (photo + title + bio) as they are confirmed. The rest stay as plain name
+  // cards until ready. To reveal a speaker, fill role/bio and set image to "/speakers/<id>.jpg".
+  // Headshot files for all six adults are in public/speakers/ (original bios are in git history).
+  {
+    id: "nic-barlage",
+    name: "Nic Barlage",
+    role: "CEO, Cleveland Cavaliers & Rock Entertainment Group",
+    organization: "Rock Entertainment Group",
+    type: "adult",
+    bio: "Nic Barlage is the Chief Executive Officer of Rock Entertainment Group, the Dan Gilbert company behind the NBA's Cleveland Cavaliers, Rocket Arena, Cleveland's incoming WNBA team, and a growing portfolio of teams, venues, and media. Since becoming CEO in 2021 he has driven the organization's transformation into a national force in sports and entertainment, twice named a Best Place to Work in Sports, while investing more than $48 million back into the community. He is helping reshape Cleveland's urban core through major city-building projects, from the Rock Block entertainment district to the revitalization of Public Hall, on the belief that a strong downtown is the heartbeat of an entire region.",
+    talkTitle: null,
+    image: "/speakers/nic-barlage.jpg",
+    order: 1,
+  },
   { id: "fred-nance", name: "Fred Nance", role: null, organization: null, type: "adult", bio: null, talkTitle: null, image: null, order: 2 },
   { id: "laila-edwards", name: "Laila Edwards", role: null, organization: null, type: "adult", bio: null, talkTitle: null, image: null, order: 3 },
   { id: "marc-byrnes", name: "Marc Byrnes", role: null, organization: null, type: "adult", bio: null, talkTitle: null, image: null, order: 4 },
   { id: "brandon-chrostowski", name: "Brandon Chrostowski", role: null, organization: null, type: "adult", bio: null, talkTitle: null, image: null, order: 5 },
-  { id: "india-birdsong-terry", name: "India L. Birdsong Terry", role: null, organization: null, type: "adult", bio: null, talkTitle: null, image: null, order: 6 },
+  {
+    id: "india-birdsong-terry",
+    name: "India L. Birdsong Terry",
+    role: "General Manager and CEO, Greater Cleveland Regional Transit Authority",
+    organization: "Greater Cleveland Regional Transit Authority",
+    type: "adult",
+    bio: "India L. Birdsong Terry is the General Manager and CEO of the Greater Cleveland Regional Transit Authority, Ohio's largest transit system, where she leads more than 2,200 employees and a $342.5 million budget that delivers over 24 million rides a year across the county's 457 square miles. Since joining RTA in 2019 she has guided the agency through a pivotal period, working to modernize an aging rail fleet, secure sustainable funding, and expand the service that connects people to opportunity. A nationally respected transit leader with more than 15 years in the industry, she serves on boards from the United Way of Greater Cleveland to the American Public Transportation Foundation.",
+    talkTitle: null,
+    image: "/speakers/india-birdsong-terry.jpg",
+    order: 6,
+  },
 
   // ── Student speakers (6) ────────────────────────────────────────────
   // Names only for now. Paste a bio (two to four sentences) and drop a headshot into
