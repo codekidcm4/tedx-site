@@ -66,3 +66,37 @@ behold-widget {
   display: block;
   width: 100%;
 }
+
+/* Seat map (tickets page) */
+.seat {
+  transition: fill 0.12s ease, stroke 0.12s ease;
+}
+.seat-available {
+  fill: #ffffff;
+  stroke: #c4c4c4;
+  cursor: pointer;
+}
+.seat-available:hover {
+  fill: #fdeceb;
+  stroke: #e62b1e;
+}
+.seat-selected {
+  fill: #e62b1e;
+  stroke: #e62b1e;
+  cursor: pointer;
+}
+.seat-sold {
+  fill: #dcdcdc;
+  stroke: #dcdcdc;
+  cursor: not-allowed;
+}
+.seat-disabled {
+  fill: #ffffff;
+  stroke: #e5e5e5;
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.seat:focus-visible {
+  outline: 2px solid #e62b1e;
+  outline-offset: 1px;
+}

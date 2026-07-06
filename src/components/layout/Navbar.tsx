@@ -77,7 +77,7 @@ export function Navbar() {
                 </Link>
               ))}
               <Link
-                href="/#tickets"
+                href="/tickets"
                 className="ml-2 px-5 py-2.5 bg-[#e62b1e] text-white text-sm font-semibold rounded-sm hover:bg-[#c9231a] transition-colors duration-200 shadow-sm"
               >
                 Tickets
@@ -143,10 +143,10 @@ export function Navbar() {
           ))}
           <div className="mt-8">
             <Link
-              href="/#tickets"
+              href="/tickets"
               className="inline-flex items-center justify-center w-full py-4 bg-[#e62b1e] text-white text-lg font-bold rounded-sm hover:bg-[#c9231a] transition-colors duration-200"
             >
-              Get ticket updates
+              Get tickets
             </Link>
           </div>
 

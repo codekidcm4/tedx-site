@@ -89,7 +89,7 @@ export function Footer() {
               ))}
               <li>
                 <Link
-                  href="/#tickets"
+                  href="/tickets"
                   className="text-sm text-[#e62b1e] hover:text-[#ff4438] font-semibold transition-colors duration-200"
                 >
                   Tickets &rarr;

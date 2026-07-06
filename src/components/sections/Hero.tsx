@@ -95,10 +95,10 @@ export function Hero() {
             className="flex flex-wrap gap-4"
           >
             <Link
-              href="#tickets"
+              href="/tickets"
               className="inline-flex items-center gap-2 px-8 py-4 bg-[#e62b1e] text-white font-bold text-sm tracking-wide rounded-sm hover:bg-[#c9231a] transition-all duration-200 shadow-lg shadow-red-900/30"
             >
-              Get ticket updates
+              Get tickets
               <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24" aria-hidden="true">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
               </svg>
