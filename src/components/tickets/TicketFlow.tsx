@@ -11,6 +11,7 @@ import {
 } from "@/data/tickets";
 import type { SessionId } from "@/data/tickets";
 import { SeatMap } from "@/components/tickets/SeatMap";
+import { StripePayment, stripeConfigured } from "@/components/tickets/StripePayment";
 import { verifyPresaleCode } from "@/app/tickets/actions";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -114,6 +115,7 @@ export function TicketFlow() {
   const [sessionId, setSessionId] = useState<SessionId | null>(null);
   const [selected, setSelected] = useState<string[]>([]);
   const [step, setStep] = useState<"select" | "details">("select");
+  const [substep, setSubstep] = useState<"info" | "payment">("info");
   const [names, setNames] = useState<Record<string, string>>({});
   const [email, setEmail] = useState("");
   const [formError, setFormError] = useState<string | null>(null);
@@ -125,11 +127,16 @@ export function TicketFlow() {
   const total = selected.length * price;
   const maxReached = selected.length >= ticketConfig.maxPerOrder;
 
+  function resetToSeats() {
+    setStep("select");
+    setSubstep("info");
+    setPaid(false);
+    setFormError(null);
+  }
   function pickSession(id: SessionId) {
     setSessionId(id);
     setSelected([]);
-    setStep("select");
-    setPaid(false);
+    resetToSeats();
   }
   function toggleSeat(id: string) {
     setSelected((prev) =>
@@ -140,7 +147,7 @@ export function TicketFlow() {
         : prev
     );
   }
-  function pay() {
+  function submitDetails() {
     for (const id of selected) {
       if (!(names[id] && names[id].trim())) {
         setFormError("Please add a name for each ticket.");
@@ -152,35 +159,65 @@ export function TicketFlow() {
       return;
     }
     setFormError(null);
-    // checkoutLive is false: show the preview confirmation. When Stripe is wired, this is where the
-    // payment is created and, on success, the tickets are emailed.
-    setPaid(true);
+    if (stripeConfigured) setSubstep("payment");
+    else setPaid(true); // no Stripe keys on this deploy: show the preview confirmation
   }
 
   if (!unlocked) return <Gate onUnlock={() => setUnlocked(true)} />;
 
-  // ── Step 2: details + payment ──
+  // ── Step 3: details → payment ──
   if (step === "details" && sessionId) {
     return (
       <div>
         <button
           type="button"
-          onClick={() => { setStep("select"); setPaid(false); }}
+          onClick={() => {
+            if (substep === "payment") { setSubstep("info"); return; }
+            resetToSeats();
+          }}
           className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#555555] hover:text-[#e62b1e] transition-colors mb-8"
         >
           <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24" aria-hidden="true">
             <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
           </svg>
-          Back to seats
+          {substep === "payment" ? "Back to details" : "Back to seats"}
         </button>
 
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-10">
           <div>
-            <p className="text-[0.65rem] font-bold tracking-[0.18em] uppercase text-[#9a9a9a] mb-4">
-              3 · Your details
-            </p>
-            {!paid ? (
+            {paid ? (
               <>
+                <p className="text-[0.65rem] font-bold tracking-[0.18em] uppercase text-[#9a9a9a] mb-4">Confirmation</p>
+                <div className="max-w-lg border border-[#e0e0e0] rounded-sm p-6 bg-[#f9f9f9]">
+                  <div className="inline-flex items-center gap-2 mb-3 px-2.5 py-1 rounded-full bg-[#0a0a0a]">
+                    <span className="text-[0.55rem] font-bold tracking-[0.16em] uppercase text-[#e62b1e]">Test mode</span>
+                  </div>
+                  <p className="font-bold text-[#0a0a0a] mb-2">
+                    {stripeConfigured ? "Payment received." : "Your details look good."}
+                  </p>
+                  <p className="text-sm text-[#555555] leading-relaxed">
+                    {stripeConfigured
+                      ? "In test mode no real charge is made. The final step (emailing a QR code per seat and reserving the seats) connects with the database next."
+                      : "Once Stripe is connected, this step charges the card and emails your tickets."}{" "}
+                    Your {selected.length} ticket{selected.length > 1 ? "s" : ""} would go to{" "}
+                    <span className="font-semibold text-[#0a0a0a]">{email}</span>.
+                  </p>
+                </div>
+              </>
+            ) : substep === "payment" ? (
+              <>
+                <p className="text-[0.65rem] font-bold tracking-[0.18em] uppercase text-[#9a9a9a] mb-4">4 · Payment</p>
+                <StripePayment
+                  sessionId={sessionId}
+                  seats={selected}
+                  email={email}
+                  amount={total}
+                  onSuccess={() => setPaid(true)}
+                />
+              </>
+            ) : (
+              <>
+                <p className="text-[0.65rem] font-bold tracking-[0.18em] uppercase text-[#9a9a9a] mb-4">3 · Your details</p>
                 <div className="space-y-5 max-w-lg">
                   {selected.map((id, i) => (
                     <div key={id}>
@@ -198,9 +235,7 @@ export function TicketFlow() {
                     </div>
                   ))}
                   <div>
-                    <label htmlFor="purchaser-email" className="block text-sm font-semibold text-[#0a0a0a] mb-1.5">
-                      Email
-                    </label>
+                    <label htmlFor="purchaser-email" className="block text-sm font-semibold text-[#0a0a0a] mb-1.5">Email</label>
                     <input
                       id="purchaser-email"
                       type="email"
@@ -214,39 +249,21 @@ export function TicketFlow() {
                     <p className="text-xs text-[#9a9a9a] mt-1.5">Your tickets, one QR code per seat, are sent here.</p>
                   </div>
                 </div>
-
-                {formError && (
-                  <p className="mt-4 text-xs text-[#e62b1e] font-semibold" role="alert">{formError}</p>
-                )}
-
+                {formError && <p className="mt-4 text-xs text-[#e62b1e] font-semibold" role="alert">{formError}</p>}
                 <button
                   type="button"
-                  onClick={pay}
+                  onClick={submitDetails}
                   className="mt-7 inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-[#e62b1e] text-white font-bold text-sm rounded-sm hover:bg-[#c9231a] transition-colors"
                 >
-                  Pay {formatPrice(total)}
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24" aria-hidden="true">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                  {stripeConfigured ? "Continue to payment" : `Pay ${formatPrice(total)}`}
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24" aria-hidden="true">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
                   </svg>
                 </button>
                 <p className="text-[0.65rem] text-[#9a9a9a] mt-3 leading-relaxed max-w-lg">
-                  Secure card payment by Stripe. One order, up to {ticketConfig.maxPerOrder} tickets. You will
-                  not be charged until payment is connected.
+                  Secure card payment by Stripe. One order, up to {ticketConfig.maxPerOrder} tickets.
                 </p>
               </>
-            ) : (
-              <div className="max-w-lg border border-[#e0e0e0] rounded-sm p-6 bg-[#f9f9f9]">
-                <div className="inline-flex items-center gap-2 mb-3 px-2.5 py-1 rounded-full bg-[#0a0a0a]">
-                  <span className="text-[0.55rem] font-bold tracking-[0.16em] uppercase text-[#e62b1e]">Test mode</span>
-                </div>
-                <p className="font-bold text-[#0a0a0a] mb-2">Your details look good.</p>
-                <p className="text-sm text-[#555555] leading-relaxed">
-                  In preview, no card is charged. Once Stripe is connected, this step charges{" "}
-                  <span className="font-semibold text-[#0a0a0a]">{formatPrice(total)}</span> and emails{" "}
-                  {selected.length} ticket{selected.length > 1 ? "s" : ""} (one QR code each) to{" "}
-                  <span className="font-semibold text-[#0a0a0a]">{email}</span>.
-                </p>
-              </div>
             )}
           </div>
 
@@ -258,7 +275,7 @@ export function TicketFlow() {
     );
   }
 
-  // ── Step 1: choose session + seats ──
+  // ── Steps 1 & 2: choose session + seats ──
   return (
     <div>
       <fieldset>
@@ -312,8 +329,8 @@ export function TicketFlow() {
               />
             </div>
             <p className="text-xs text-[#9a9a9a] mt-3">
-              Sample layout shown. The exact Gund Auditorium seat map goes in once the seating chart
-              is finalized. Scroll sideways on the map if it runs off the screen.
+              Modeled on the Gund Auditorium layout (Center section plus front wing seats). Scroll
+              sideways on the map if it runs off the screen.
             </p>
           </div>
 
@@ -353,7 +370,7 @@ export function TicketFlow() {
               <button
                 type="button"
                 disabled={selected.length === 0}
-                onClick={() => setStep("details")}
+                onClick={() => { setStep("details"); setSubstep("info"); }}
                 className="w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-[#e62b1e] text-white font-bold text-sm rounded-sm hover:bg-[#c9231a] transition-colors disabled:opacity-40"
               >
                 Continue to checkout

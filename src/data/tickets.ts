@@ -44,28 +44,25 @@ export function sessionById(id: SessionId): TicketSession {
 export type SeatRow = { row: string; seats: number };
 export type SeatSection = { id: string; name: string; rows: SeatRow[] };
 
-// Plan: seat the Center section in full, plus 2 seats per row on each wing. 100-seat cap.
-// This sample totals exactly 100 (Center 9 x 8 = 72, each wing 2 x 7 = 14). The exact Gund
-// layout replaces this once the seating photos are parsed.
+// Modeled on the Gund Auditorium photos: a dominant, fan-shaped Center block (rows widen toward
+// the back) plus a couple of seats on each front wing. Capped at 100 (Center 88 + 6 + 6).
+// The per-row counts are a close estimate from stage-angle photos; adjust here to match the
+// venue's official seating chart exactly.
 const centerRows: SeatRow[] = [
-  { row: "A", seats: 9 },
-  { row: "B", seats: 9 },
-  { row: "C", seats: 9 },
-  { row: "D", seats: 9 },
-  { row: "E", seats: 9 },
-  { row: "F", seats: 9 },
-  { row: "G", seats: 9 },
-  { row: "H", seats: 9 },
+  { row: "A", seats: 10 },
+  { row: "B", seats: 10 },
+  { row: "C", seats: 11 },
+  { row: "D", seats: 11 },
+  { row: "E", seats: 11 },
+  { row: "F", seats: 11 },
+  { row: "G", seats: 12 },
+  { row: "H", seats: 12 },
 ];
 
 const wingRows: SeatRow[] = [
   { row: "A", seats: 2 },
   { row: "B", seats: 2 },
   { row: "C", seats: 2 },
-  { row: "D", seats: 2 },
-  { row: "E", seats: 2 },
-  { row: "F", seats: 2 },
-  { row: "G", seats: 2 },
 ];
 
 export const sampleSections: SeatSection[] = [
@@ -76,8 +73,8 @@ export const sampleSections: SeatSection[] = [
 
 // SAMPLE unavailable seats per session (real availability comes from the database later).
 export const sampleSold: Record<SessionId, string[]> = {
-  s1: ["C-A3", "C-A4", "C-B7", "C-D8", "C-E5", "C-E6", "C-G2", "L-B1", "R-C2", "C-H1", "C-H9"],
-  s2: ["C-B5", "C-B6", "C-C1", "C-F3", "C-F4", "C-G7", "R-B1", "L-D2", "C-A8", "C-A9"],
+  s1: ["C-A3", "C-A4", "C-B7", "C-D8", "C-E5", "C-E6", "C-G2", "L-B1", "R-C2", "C-H1", "C-H12"],
+  s2: ["C-B5", "C-B6", "C-C1", "C-F3", "C-F4", "C-G7", "R-B1", "L-C2", "C-A8", "C-A9"],
   "all-day": ["C-A3", "C-A4", "C-B5", "C-B6", "C-B7", "C-E5", "C-E6", "C-F3", "C-F4", "L-B1", "R-C2"],
 };
 
