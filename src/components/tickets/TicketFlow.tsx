@@ -13,8 +13,9 @@ import type { SessionId } from "@/data/tickets";
 import { SeatMap } from "@/components/tickets/SeatMap";
 import { verifyPresaleCode } from "@/app/tickets/actions";
 
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
 function seatLabel(id: string): string {
-  // id like "C-A12" -> "Center · A12" style short label
   const [section, rest] = id.split("-");
   const names: Record<string, string> = { L: "Left", C: "Center", R: "Right" };
   return `${names[section] ?? section} ${rest}`;
@@ -42,8 +43,8 @@ function Gate({ onUnlock }: { onUnlock: () => void }) {
         Tickets aren&apos;t public yet.
       </h2>
       <p className="text-[#555555] leading-relaxed mb-8">
-        Seating at Gund Auditorium is intimate, so tickets open first to our pre-sale list. Enter your
-        pre-sale code to choose your seats, or join the list below and we will send you a code.
+        Seating at Gund Auditorium is capped at 100, so tickets open first to our pre-sale list. Enter
+        your pre-sale code to choose your seats, or join the list below and we will send you a code.
       </p>
       <form onSubmit={submit} className="flex flex-col sm:flex-row gap-3 justify-center">
         <label htmlFor="presale-code" className="sr-only">Pre-sale code</label>
@@ -86,11 +87,37 @@ function LegendDot({ className, label }: { className: string; label: string }) {
   );
 }
 
+function OrderReview({ sessionId, selected, price, total }: { sessionId: SessionId; selected: string[]; price: number; total: number }) {
+  return (
+    <div className="border border-[#e0e0e0] rounded-sm p-6 bg-white">
+      <p className="text-[0.65rem] font-bold tracking-[0.18em] uppercase text-[#9a9a9a] mb-4">Your order</p>
+      <p className="font-bold text-[#0a0a0a]">{sessionById(sessionId).name}</p>
+      <p className="text-xs text-[#777777] mb-4">{sessionById(sessionId).detail}</p>
+      <ul className="border-t border-[#f0f0f0] divide-y divide-[#f0f0f0] mb-4">
+        {selected.map((id) => (
+          <li key={id} className="flex items-center justify-between py-2.5 text-sm">
+            <span className="text-[#0a0a0a] font-medium">Seat {seatLabel(id)}</span>
+            <span className="text-[#555555]">{formatPrice(price)}</span>
+          </li>
+        ))}
+      </ul>
+      <div className="flex items-center justify-between border-t border-[#e0e0e0] pt-4">
+        <span className="text-sm font-semibold text-[#0a0a0a]">Total</span>
+        <span className="text-xl font-extrabold text-[#0a0a0a]">{formatPrice(total)}</span>
+      </div>
+    </div>
+  );
+}
+
 export function TicketFlow() {
   const [unlocked, setUnlocked] = useState(!ticketConfig.presaleActive);
   const [sessionId, setSessionId] = useState<SessionId | null>(null);
   const [selected, setSelected] = useState<string[]>([]);
-  const [checkoutOpen, setCheckoutOpen] = useState(false);
+  const [step, setStep] = useState<"select" | "details">("select");
+  const [names, setNames] = useState<Record<string, string>>({});
+  const [email, setEmail] = useState("");
+  const [formError, setFormError] = useState<string | null>(null);
+  const [paid, setPaid] = useState(false);
 
   const soldSet = useMemo(() => new Set(sessionId ? sampleSold[sessionId] : []), [sessionId]);
   const selectedSet = useMemo(() => new Set(selected), [selected]);
@@ -101,10 +128,10 @@ export function TicketFlow() {
   function pickSession(id: SessionId) {
     setSessionId(id);
     setSelected([]);
-    setCheckoutOpen(false);
+    setStep("select");
+    setPaid(false);
   }
   function toggleSeat(id: string) {
-    setCheckoutOpen(false);
     setSelected((prev) =>
       prev.includes(id)
         ? prev.filter((s) => s !== id)
@@ -113,12 +140,127 @@ export function TicketFlow() {
         : prev
     );
   }
+  function pay() {
+    for (const id of selected) {
+      if (!(names[id] && names[id].trim())) {
+        setFormError("Please add a name for each ticket.");
+        return;
+      }
+    }
+    if (!EMAIL_RE.test(email.trim())) {
+      setFormError("Please enter a valid email for your tickets.");
+      return;
+    }
+    setFormError(null);
+    // checkoutLive is false: show the preview confirmation. When Stripe is wired, this is where the
+    // payment is created and, on success, the tickets are emailed.
+    setPaid(true);
+  }
 
   if (!unlocked) return <Gate onUnlock={() => setUnlocked(true)} />;
 
+  // ── Step 2: details + payment ──
+  if (step === "details" && sessionId) {
+    return (
+      <div>
+        <button
+          type="button"
+          onClick={() => { setStep("select"); setPaid(false); }}
+          className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#555555] hover:text-[#e62b1e] transition-colors mb-8"
+        >
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24" aria-hidden="true">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+          </svg>
+          Back to seats
+        </button>
+
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-10">
+          <div>
+            <p className="text-[0.65rem] font-bold tracking-[0.18em] uppercase text-[#9a9a9a] mb-4">
+              3 · Your details
+            </p>
+            {!paid ? (
+              <>
+                <div className="space-y-5 max-w-lg">
+                  {selected.map((id, i) => (
+                    <div key={id}>
+                      <label htmlFor={`name-${id}`} className="block text-sm font-semibold text-[#0a0a0a] mb-1.5">
+                        Ticket {i + 1} · Seat {seatLabel(id)} — full name
+                      </label>
+                      <input
+                        id={`name-${id}`}
+                        value={names[id] ?? ""}
+                        onChange={(e) => { setNames((p) => ({ ...p, [id]: e.target.value })); setFormError(null); }}
+                        placeholder="First and last name"
+                        autoComplete="name"
+                        className="w-full px-4 py-3 text-sm rounded-sm border border-[#e0e0e0] outline-none focus:border-[#e62b1e] transition-colors"
+                      />
+                    </div>
+                  ))}
+                  <div>
+                    <label htmlFor="purchaser-email" className="block text-sm font-semibold text-[#0a0a0a] mb-1.5">
+                      Email
+                    </label>
+                    <input
+                      id="purchaser-email"
+                      type="email"
+                      inputMode="email"
+                      autoComplete="email"
+                      value={email}
+                      onChange={(e) => { setEmail(e.target.value); setFormError(null); }}
+                      placeholder="you@email.com"
+                      className="w-full px-4 py-3 text-sm rounded-sm border border-[#e0e0e0] outline-none focus:border-[#e62b1e] transition-colors"
+                    />
+                    <p className="text-xs text-[#9a9a9a] mt-1.5">Your tickets, one QR code per seat, are sent here.</p>
+                  </div>
+                </div>
+
+                {formError && (
+                  <p className="mt-4 text-xs text-[#e62b1e] font-semibold" role="alert">{formError}</p>
+                )}
+
+                <button
+                  type="button"
+                  onClick={pay}
+                  className="mt-7 inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-[#e62b1e] text-white font-bold text-sm rounded-sm hover:bg-[#c9231a] transition-colors"
+                >
+                  Pay {formatPrice(total)}
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24" aria-hidden="true">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                  </svg>
+                </button>
+                <p className="text-[0.65rem] text-[#9a9a9a] mt-3 leading-relaxed max-w-lg">
+                  Secure card payment by Stripe. One order, up to {ticketConfig.maxPerOrder} tickets. You will
+                  not be charged until payment is connected.
+                </p>
+              </>
+            ) : (
+              <div className="max-w-lg border border-[#e0e0e0] rounded-sm p-6 bg-[#f9f9f9]">
+                <div className="inline-flex items-center gap-2 mb-3 px-2.5 py-1 rounded-full bg-[#0a0a0a]">
+                  <span className="text-[0.55rem] font-bold tracking-[0.16em] uppercase text-[#e62b1e]">Test mode</span>
+                </div>
+                <p className="font-bold text-[#0a0a0a] mb-2">Your details look good.</p>
+                <p className="text-sm text-[#555555] leading-relaxed">
+                  In preview, no card is charged. Once Stripe is connected, this step charges{" "}
+                  <span className="font-semibold text-[#0a0a0a]">{formatPrice(total)}</span> and emails{" "}
+                  {selected.length} ticket{selected.length > 1 ? "s" : ""} (one QR code each) to{" "}
+                  <span className="font-semibold text-[#0a0a0a]">{email}</span>.
+                </p>
+              </div>
+            )}
+          </div>
+
+          <aside className="lg:sticky lg:top-24 h-fit">
+            <OrderReview sessionId={sessionId} selected={selected} price={price} total={total} />
+          </aside>
+        </div>
+      </div>
+    );
+  }
+
+  // ── Step 1: choose session + seats ──
   return (
     <div>
-      {/* Session selection */}
       <fieldset>
         <legend className="text-[0.65rem] font-bold tracking-[0.18em] uppercase text-[#9a9a9a] mb-4">
           1 · Choose a session
@@ -151,7 +293,6 @@ export function TicketFlow() {
 
       {sessionId && (
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-10">
-          {/* Seat map */}
           <div>
             <p className="text-[0.65rem] font-bold tracking-[0.18em] uppercase text-[#9a9a9a] mb-4">
               2 · Pick your seats (up to {ticketConfig.maxPerOrder})
@@ -176,12 +317,9 @@ export function TicketFlow() {
             </p>
           </div>
 
-          {/* Order summary */}
           <aside className="lg:sticky lg:top-24 h-fit">
             <div className="border border-[#e0e0e0] rounded-sm p-6 bg-white">
-              <p className="text-[0.65rem] font-bold tracking-[0.18em] uppercase text-[#9a9a9a] mb-4">
-                Your order
-              </p>
+              <p className="text-[0.65rem] font-bold tracking-[0.18em] uppercase text-[#9a9a9a] mb-4">Your order</p>
               <p className="font-bold text-[#0a0a0a]">{sessionById(sessionId).name}</p>
               <p className="text-xs text-[#777777] mb-4">{sessionById(sessionId).detail}</p>
 
@@ -215,7 +353,7 @@ export function TicketFlow() {
               <button
                 type="button"
                 disabled={selected.length === 0}
-                onClick={() => setCheckoutOpen(true)}
+                onClick={() => setStep("details")}
                 className="w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-[#e62b1e] text-white font-bold text-sm rounded-sm hover:bg-[#c9231a] transition-colors disabled:opacity-40"
               >
                 Continue to checkout
@@ -226,19 +364,6 @@ export function TicketFlow() {
               <p className="text-[0.65rem] text-[#9a9a9a] mt-3 leading-relaxed">
                 Limit {ticketConfig.maxPerOrder} tickets per order. Seats are held for you at checkout.
               </p>
-
-              {checkoutOpen && (
-                <div className="mt-5 p-4 rounded-sm bg-[#0a0a0a] text-white" role="status">
-                  <p className="text-[0.6rem] font-bold tracking-[0.16em] uppercase text-[#e62b1e] mb-2">
-                    Test mode
-                  </p>
-                  <p className="text-sm text-white/80 leading-relaxed">
-                    This is where secure card payment (Stripe) drops in. Your {selected.length}-seat
-                    order for {formatPrice(total)} would be charged here, then your tickets email with a
-                    QR code for each seat. Payment goes live once Stripe is connected.
-                  </p>
-                </div>
-              )}
             </div>
           </aside>
         </div>

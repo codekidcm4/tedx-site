@@ -44,22 +44,28 @@ export function sessionById(id: SessionId): TicketSession {
 export type SeatRow = { row: string; seats: number };
 export type SeatSection = { id: string; name: string; rows: SeatRow[] };
 
+// Plan: seat the Center section in full, plus 2 seats per row on each wing. 100-seat cap.
+// This sample totals exactly 100 (Center 9 x 8 = 72, each wing 2 x 7 = 14). The exact Gund
+// layout replaces this once the seating photos are parsed.
 const centerRows: SeatRow[] = [
-  { row: "A", seats: 12 },
-  { row: "B", seats: 12 },
-  { row: "C", seats: 14 },
-  { row: "D", seats: 14 },
-  { row: "E", seats: 14 },
-  { row: "F", seats: 14 },
-  { row: "G", seats: 16 },
-  { row: "H", seats: 16 },
+  { row: "A", seats: 9 },
+  { row: "B", seats: 9 },
+  { row: "C", seats: 9 },
+  { row: "D", seats: 9 },
+  { row: "E", seats: 9 },
+  { row: "F", seats: 9 },
+  { row: "G", seats: 9 },
+  { row: "H", seats: 9 },
 ];
 
 const wingRows: SeatRow[] = [
-  { row: "A", seats: 3 },
-  { row: "B", seats: 3 },
-  { row: "C", seats: 4 },
-  { row: "D", seats: 4 },
+  { row: "A", seats: 2 },
+  { row: "B", seats: 2 },
+  { row: "C", seats: 2 },
+  { row: "D", seats: 2 },
+  { row: "E", seats: 2 },
+  { row: "F", seats: 2 },
+  { row: "G", seats: 2 },
 ];
 
 export const sampleSections: SeatSection[] = [
@@ -70,9 +76,9 @@ export const sampleSections: SeatSection[] = [
 
 // SAMPLE unavailable seats per session (real availability comes from the database later).
 export const sampleSold: Record<SessionId, string[]> = {
-  s1: ["C-A3", "C-A4", "C-B7", "C-D9", "C-E5", "C-E6", "C-G12", "L-A2", "R-C3", "C-H1", "C-H2"],
-  s2: ["C-B5", "C-B6", "C-C10", "C-F3", "C-F4", "C-G2", "R-B1", "L-D4", "C-A11", "C-A12"],
-  "all-day": ["C-A3", "C-A4", "C-B5", "C-B6", "C-B7", "C-E5", "C-E6", "C-F3", "C-F4", "L-A2", "R-C3"],
+  s1: ["C-A3", "C-A4", "C-B7", "C-D8", "C-E5", "C-E6", "C-G2", "L-B1", "R-C2", "C-H1", "C-H9"],
+  s2: ["C-B5", "C-B6", "C-C1", "C-F3", "C-F4", "C-G7", "R-B1", "L-D2", "C-A8", "C-A9"],
+  "all-day": ["C-A3", "C-A4", "C-B5", "C-B6", "C-B7", "C-E5", "C-E6", "C-F3", "C-F4", "L-B1", "R-C2"],
 };
 
 export function seatId(sectionId: string, row: string, num: number): string {
