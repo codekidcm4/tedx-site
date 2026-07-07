@@ -64,9 +64,14 @@ secret = the webhook is off.
 1. **Copy the Supabase service_role key.** Supabase → Project Settings → API keys → reveal and copy
    `service_role`. Paste it into `SUPABASE_SERVICE_ROLE_KEY` in Vercel and `.env.local`.
 
-2. **Create the Resend key + sender.** resend.com → add and verify your domain (follow their DNS
-   steps) → API Keys → Create → paste into `RESEND_API_KEY`. Set `TICKETS_FROM_EMAIL` to an address on
-   that domain.
+2. **Set up Resend email** (this is what sends the QR ticket):
+   1. resend.com → API Keys → Create → paste into `RESEND_API_KEY` in Vercel.
+   2. Resend → Domains → Add `tedxhuntingvalley.com`. Resend shows ~3 DNS records (one MX, two TXT).
+   3. Your DNS is at **GoDaddy** (nameservers `ns67`/`ns68.domaincontrol.com`). Add each record in
+      GoDaddy → your domain → DNS → Add New Record. **GoDaddy gotcha:** in the Name/Host field enter
+      only the prefix (`send`, `resend._domainkey`), not the full domain — GoDaddy appends it for you.
+   4. Click **Verify** in Resend. `TICKETS_FROM_EMAIL` is already an address on that domain.
+   Until the domain shows Verified, ticket emails will not send.
 
 3. **Add the Stripe webhook.** Stripe → Developers → Webhooks → **Add endpoint**:
    - Endpoint URL: `https://www.tedxhuntingvalley.com/api/stripe/webhook`
