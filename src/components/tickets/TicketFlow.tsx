@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import {
   ticketConfig,
@@ -120,8 +120,23 @@ export function TicketFlow() {
   const [email, setEmail] = useState("");
   const [formError, setFormError] = useState<string | null>(null);
   const [paid, setPaid] = useState(false);
+  const [taken, setTaken] = useState<string[]>([]);
 
-  const soldSet = useMemo(() => new Set(sessionId ? sampleSold[sessionId] : []), [sessionId]);
+  // Live seat availability from the database (stays empty until the DB is connected).
+  useEffect(() => {
+    if (!sessionId) { setTaken([]); return; }
+    let active = true;
+    fetch(`/api/seats?session=${sessionId}`)
+      .then((r) => r.json())
+      .then((d) => { if (active && Array.isArray(d.taken)) setTaken(d.taken); })
+      .catch(() => {});
+    return () => { active = false; };
+  }, [sessionId]);
+
+  const soldSet = useMemo(
+    () => new Set([...(sessionId ? sampleSold[sessionId] : []), ...taken]),
+    [sessionId, taken]
+  );
   const selectedSet = useMemo(() => new Set(selected), [selected]);
   const price = sessionId ? sessionById(sessionId).price : 0;
   const total = selected.length * price;
@@ -211,6 +226,7 @@ export function TicketFlow() {
                   sessionId={sessionId}
                   seats={selected}
                   email={email}
+                  names={names}
                   amount={total}
                   onSuccess={() => setPaid(true)}
                 />

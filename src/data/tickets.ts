@@ -44,25 +44,26 @@ export function sessionById(id: SessionId): TicketSession {
 export type SeatRow = { row: string; seats: number };
 export type SeatSection = { id: string; name: string; rows: SeatRow[] };
 
-// Modeled on the Gund Auditorium photos: a dominant, fan-shaped Center block (rows widen toward
-// the back) plus a couple of seats on each front wing. Capped at 100 (Center 88 + 6 + 6).
-// The per-row counts are a close estimate from stage-angle photos; adjust here to match the
-// venue's official seating chart exactly.
+// The real Gund Auditorium plan for TEDxHuntingValley. Row A (front row) is NOT used, so the
+// first row in use is B. Center block is filled first; the two side wings add 2 seats per row.
+// Total = 98 (Center 74 + Left 12 + Right 12), inside the 100 cap.
 const centerRows: SeatRow[] = [
-  { row: "A", seats: 10 },
   { row: "B", seats: 10 },
-  { row: "C", seats: 11 },
-  { row: "D", seats: 11 },
-  { row: "E", seats: 11 },
-  { row: "F", seats: 11 },
-  { row: "G", seats: 12 },
-  { row: "H", seats: 12 },
+  { row: "C", seats: 12 },
+  { row: "D", seats: 12 },
+  { row: "E", seats: 13 },
+  { row: "F", seats: 13 },
+  { row: "G", seats: 14 },
 ];
 
+// Side sections: 7 physical rows, front row (A) unused, so 2 seats each across rows B–G.
 const wingRows: SeatRow[] = [
-  { row: "A", seats: 2 },
   { row: "B", seats: 2 },
   { row: "C", seats: 2 },
+  { row: "D", seats: 2 },
+  { row: "E", seats: 2 },
+  { row: "F", seats: 2 },
+  { row: "G", seats: 2 },
 ];
 
 export const sampleSections: SeatSection[] = [
@@ -71,11 +72,17 @@ export const sampleSections: SeatSection[] = [
   { id: "R", name: "Right", rows: wingRows },
 ];
 
-// SAMPLE unavailable seats per session (real availability comes from the database later).
+/** Total sellable seats in the plan above (per session). */
+export const totalSeats = sampleSections.reduce(
+  (sum, s) => sum + s.rows.reduce((r, row) => r + row.seats, 0),
+  0
+);
+
+// Nothing is taken by default; real, live availability comes from the database (/api/seats).
 export const sampleSold: Record<SessionId, string[]> = {
-  s1: ["C-A3", "C-A4", "C-B7", "C-D8", "C-E5", "C-E6", "C-G2", "L-B1", "R-C2", "C-H1", "C-H12"],
-  s2: ["C-B5", "C-B6", "C-C1", "C-F3", "C-F4", "C-G7", "R-B1", "L-C2", "C-A8", "C-A9"],
-  "all-day": ["C-A3", "C-A4", "C-B5", "C-B6", "C-B7", "C-E5", "C-E6", "C-F3", "C-F4", "L-B1", "R-C2"],
+  s1: [],
+  s2: [],
+  "all-day": [],
 };
 
 export function seatId(sectionId: string, row: string, num: number): string {

@@ -12,7 +12,7 @@ export function Hero() {
     >
       {/* Subtle background texture */}
       <div
-        className="absolute inset-0 opacity-5"
+        className="absolute inset-0 opacity-5 pointer-events-none"
         style={{
           backgroundImage: `radial-gradient(circle at 20% 50%, #e62b1e 0%, transparent 50%), radial-gradient(circle at 80% 20%, #e62b1e 0%, transparent 40%)`,
         }}
@@ -21,11 +21,11 @@ export function Hero() {
 
       {/* Vertical rule accent */}
       <div
-        className="absolute left-0 top-0 bottom-0 w-0.5 bg-[#e62b1e]"
+        className="absolute left-0 top-0 bottom-0 w-0.5 bg-[#e62b1e] pointer-events-none"
         aria-hidden="true"
       />
 
-      <div className="max-w-[1200px] mx-auto px-6 md:px-8 lg:px-12 w-full pt-28 pb-24 md:pt-36 md:pb-32">
+      <div className="relative z-10 max-w-[1200px] mx-auto px-6 md:px-8 lg:px-12 w-full pt-28 pb-24 md:pt-36 md:pb-32">
         <div className="max-w-4xl">
           {/* Event badge */}
           <motion.div
@@ -118,7 +118,7 @@ export function Hero() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.2, duration: 0.6 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 pointer-events-none"
         aria-hidden="true"
       >
         <span className="text-[0.6rem] font-bold tracking-[0.2em] uppercase text-white/30">Scroll</span>
@@ -129,9 +129,9 @@ export function Hero() {
         />
       </motion.div>
 
-      {/* Bottom gradient fade */}
+      {/* Bottom gradient fade (decorative; must not capture clicks over the CTA buttons) */}
       <div
-        className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-white to-transparent"
+        className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-white to-transparent pointer-events-none"
         aria-hidden="true"
       />
     </section>

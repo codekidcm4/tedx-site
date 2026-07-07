@@ -58,11 +58,12 @@ interface StripePaymentProps {
   sessionId: SessionId;
   seats: string[];
   email: string;
+  names: Record<string, string>;
   amount: number;
   onSuccess: () => void;
 }
 
-export function StripePayment({ sessionId, seats, email, amount, onSuccess }: StripePaymentProps) {
+export function StripePayment({ sessionId, seats, email, names, amount, onSuccess }: StripePaymentProps) {
   const [clientSecret, setClientSecret] = useState<string | null>(null);
   const [err, setErr] = useState<string | null>(null);
   const seatsKey = seats.join(",");
@@ -72,11 +73,15 @@ export function StripePayment({ sessionId, seats, email, amount, onSuccess }: St
     fetch("/api/checkout", {
       method: "POST",
       headers: { "content-type": "application/json" },
-      body: JSON.stringify({ sessionId, seats, email }),
+      body: JSON.stringify({ sessionId, seats, email, names }),
     })
-      .then((r) => r.json())
-      .then((d) => {
+      .then(async (r) => {
+        const d = await r.json().catch(() => ({}));
         if (!active) return;
+        if (r.status === 409) {
+          setErr("One of your seats was just taken. Please go back and choose another.");
+          return;
+        }
         if (d.clientSecret) setClientSecret(d.clientSecret);
         else setErr("We couldn't start the payment. Please go back and try again.");
       })

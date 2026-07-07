@@ -4,14 +4,23 @@
 // never shipped in the client bundle. Set TICKETS_PRESALE_CODE in your Vercel project (and in a
 // local .env.local) to your real pre-sale code; until then a default is used for development.
 //
-// This is the only "backend" piece live right now. Stripe checkout + the seat database land next.
+// Set TICKETS_PRESALE_CODE in Vercel (and .env.local) to your real, strong code. The fallback below
+// is only a dev default; ALWAYS set the env var in production so the real code isn't in the public
+// repo. Supports several codes at once (comma-separated) if you want different codes per group.
 
-const FALLBACK_CODE = "TEDXHV2026"; // dev fallback — override with TICKETS_PRESALE_CODE in Vercel
+const FALLBACK_CODE = "TEDXHV-FRONTROW-Q7KX";
+
+function normalize(s: string): string {
+  return (s || "").trim().toLowerCase();
+}
 
 export async function verifyPresaleCode(code: string): Promise<{ ok: boolean }> {
-  const expected = (process.env.TICKETS_PRESALE_CODE || FALLBACK_CODE).trim().toLowerCase();
-  const given = (code || "").trim().toLowerCase();
-  // Tiny delay to blunt brute-force guessing of the code.
+  const allowed = (process.env.TICKETS_PRESALE_CODE || FALLBACK_CODE)
+    .split(",")
+    .map(normalize)
+    .filter(Boolean);
+  const given = normalize(code);
+  // Small constant delay to blunt brute-force guessing (no early-return timing signal).
   await new Promise((r) => setTimeout(r, 400));
-  return { ok: given.length > 0 && given === expected };
+  return { ok: given.length > 0 && allowed.includes(given) };
 }
