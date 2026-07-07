@@ -69,7 +69,9 @@ secret = the webhook is off.
    that domain.
 
 3. **Add the Stripe webhook.** Stripe → Developers → Webhooks → **Add endpoint**:
-   - Endpoint URL: `https://tedxhuntingvalley.com/api/stripe/webhook`
+   - Endpoint URL: `https://www.tedxhuntingvalley.com/api/stripe/webhook`
+     (use **www** — the plain domain redirects to www, and Stripe does not follow redirects, so a
+     non-www endpoint silently fails).
    - Events to send: **`payment_intent.succeeded`** and **`charge.refunded`** (add both).
    - Save, then copy the **Signing secret** (`whsec_…`) into `STRIPE_WEBHOOK_SECRET`.
 
