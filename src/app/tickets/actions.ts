@@ -8,7 +8,7 @@
 // is only a dev default; ALWAYS set the env var in production so the real code isn't in the public
 // repo. Supports several codes at once (comma-separated) if you want different codes per group.
 
-const FALLBACK_CODE = "TEDXHV-FRONTROW-Q7KX";
+const FALLBACK_CODE = "TEDXHV-EARLYACCESS-Q7KX";
 
 function normalize(s: string): string {
   return (s || "").trim().toLowerCase();

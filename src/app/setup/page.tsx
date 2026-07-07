@@ -327,32 +327,32 @@ INSTAGRAM_TOKEN=your_token_here              # if using Instagram API`}</CodeBlo
 
           <Step number="1" title="Open the speakers data file">
             <CodeBlock>src/data/speakers.ts</CodeBlock>
-            <p>There are 12 speaker objects: 6 adults and 6 students. The six students currently have a name only. When a student is ready, you fill in their <code className="bg-[#f0f0f0] px-1 py-0.5 rounded text-xs">bio</code> and <code className="bg-[#f0f0f0] px-1 py-0.5 rounded text-xs">image</code>. A talk title is added to any speaker (adult or student) once it is confirmed.</p>
+            <p>There are 11 speaker objects: 6 adults and 5 students. Students that are not yet revealed have a name only. When a student is ready, you fill in their <code className="bg-[#f0f0f0] px-1 py-0.5 rounded text-xs">bio</code> and <code className="bg-[#f0f0f0] px-1 py-0.5 rounded text-xs">image</code>. A talk title is added to any speaker (adult or student) once it is confirmed.</p>
           </Step>
 
           <Step number="2" title="Fill in the speaker's details">
             <p>Update the student object in place:</p>
             <CodeBlock>{`// BEFORE (name only):
-{ id: "kamryn-taylor", name: "Kamryn Taylor", role: null, organization: null,
+{ id: "jordan-rivera", name: "Jordan Rivera", role: null, organization: null,
   type: "student", bio: null, talkTitle: null, image: null, order: 7 },
 
 // AFTER (bio + headshot added):
 {
-  id: "kamryn-taylor",
-  name: "Kamryn Taylor",
+  id: "jordan-rivera",
+  name: "Jordan Rivera",
   role: "Junior, Shaker Heights High School",       // optional
   organization: "Shaker Heights High School",        // optional
   type: "student",
   bio: "Two to four sentences, the same medium length as the adult bios.",
   talkTitle: "The Night Shift Your Brain Runs Without You",  // when confirmed; else null
-  image: "/speakers/kamryn-taylor.jpg",              // null shows an initials avatar
+  image: "/speakers/jordan-rivera.jpg",              // null shows an initials avatar
   order: 7,
 },`}</CodeBlock>
           </Step>
 
           <Step number="3" title="Add the speaker's headshot">
             <p>Save the headshot image to:</p>
-            <CodeBlock>public/speakers/kamryn-taylor.jpg</CodeBlock>
+            <CodeBlock>public/speakers/jordan-rivera.jpg</CodeBlock>
             <p>Images in the <code className="bg-[#f0f0f0] px-1 py-0.5 rounded text-xs">public/</code> folder are served directly. The <code className="bg-[#f0f0f0] px-1 py-0.5 rounded text-xs">image</code> field in the speaker object should match the path starting with <code className="bg-[#f0f0f0] px-1 py-0.5 rounded text-xs">/</code>.</p>
             <p className="text-[#9a9a9a] text-xs">Image format: JPG or WebP. Recommended size: 600 to 800px wide, portrait or square. Every card uses object-fit cover, so any crop is centered automatically. Next.js handles resizing.</p>
           </Step>
@@ -360,7 +360,7 @@ INSTAGRAM_TOKEN=your_token_here              # if using Instagram API`}</CodeBlo
           <Step number="4" title="Deploy the update">
             <p>Save the file, commit, and push:</p>
             <CodeBlock>{`git add src/data/speakers.ts public/speakers/
-git commit -m "Add student speaker: Kamryn Taylor"
+git commit -m "Add student speaker: Jordan Rivera"
 git push`}</CodeBlock>
             <p>The site updates automatically within 60 seconds on Vercel.</p>
           </Step>
@@ -471,7 +471,7 @@ watchNotifyUrl: null,  // "notify me when talks publish" list`}</CodeBlock>
 │   ├── tedxhuntingvalley.ics    ← Add-to-calendar file (update if times change)
 │   ├── team/                    ← Organizer headshots
 │   └── speakers/                ← Speaker headshots (drop new files here)
-│       └── kamryn-taylor.jpg
+│       └── jordan-rivera.jpg
 └── src/
     ├── app/
     │   ├── layout.tsx            ← Root layout, metadata, fonts
@@ -489,7 +489,7 @@ watchNotifyUrl: null,  // "notify me when talks publish" list`}</CodeBlock>
     │                                AddToCalendar, CountdownTimer, FadeIn, AnimatedCounter
     └── data/                     ← ALL CONTENT LIVES HERE
         ├── site.ts               ← Event info, nav links, dates, launch config
-        ├── speakers.ts           ← 12 speakers (fill in student bios/photos)
+        ├── speakers.ts           ← 11 speakers (fill in student bios/photos)
         └── stats.ts              ← Numbers shown on home page`}</CodeBlock>
           </FadeIn>
         </section>

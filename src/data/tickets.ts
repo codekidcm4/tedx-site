@@ -88,3 +88,14 @@ export const sampleSold: Record<SessionId, string[]> = {
 export function seatId(sectionId: string, row: string, num: number): string {
   return `${sectionId}-${row}${num}`;
 }
+
+// Seats designated wheelchair-accessible / companion. These sit at the front of each side wing,
+// closest to an aisle and the stage-level entrance. Shown with a marker on the map; the checkout
+// also lets any buyer flag an accessibility need in case they aren't sitting in one of these.
+export const accessibleSeatIds = new Set<string>([
+  seatId("L", "B", 1),
+  seatId("L", "B", 2),
+  seatId("R", "B", 1),
+  seatId("R", "B", 2),
+]);
+

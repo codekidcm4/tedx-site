@@ -56,13 +56,14 @@ export const siteConfig = {
   watchNotifyUrl: null as string | null, // "notify me when talks publish" list URL
 
   description:
-    "TEDxHuntingValley is Cleveland's first independent community TEDx event in over a decade. Six adult speakers and six student speakers share one stage on August 22, 2026 at Gund Auditorium, University School in Hunting Valley, Ohio.",
+    "TEDxHuntingValley is Cleveland's first independent community TEDx event in over a decade. Six adult speakers and five student speakers share one stage on August 22, 2026 at Gund Auditorium, University School in Hunting Valley, Ohio.",
 };
 
 export const navLinks = [
   { label: "Home", href: "/" },
   { label: "About", href: "/about" },
   { label: "Speakers", href: "/speakers" },
+  { label: "Schedule", href: "/schedule" },
   { label: "Press", href: "/press" },
   { label: "Media", href: "/media" },
   { label: "Social", href: "/social" },

@@ -8,7 +8,7 @@ const GOOGLE_CAL_URL = (() => {
     text: "TEDxHuntingValley",
     dates: "20260822/20260823",
     details:
-      "The Invisible Engine: The Forces We Forget. Cleveland's first independent community TEDx in over a decade. Twelve voices on one stage. https://tedxhuntingvalley.com",
+      "The Invisible Engine: The Forces We Forget. Cleveland's first independent community TEDx in over a decade. Eleven voices on one stage. https://tedxhuntingvalley.com",
     location: `${siteConfig.venue}, ${siteConfig.addressFull}`,
   });
   return `https://calendar.google.com/calendar/render?${params.toString()}`;

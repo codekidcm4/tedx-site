@@ -166,7 +166,7 @@ export default function SocialPage() {
                 phase: "Now",
                 label: "The Lineup",
                 description:
-                  "Speaker reveals, theme breakdowns, and the stories behind the twelve voices taking our stage.",
+                  "Speaker reveals, theme breakdowns, and the stories behind the voices taking our stage.",
               },
               {
                 phase: "Summer",

@@ -19,12 +19,12 @@ import { speakers } from "@/data/speakers";
 export const metadata: Metadata = {
   title: "TEDxHuntingValley",
   description:
-    "Cleveland's first independent community TEDx in over a decade. Twelve voices, six adult speakers and six student speakers, on one stage at Gund Auditorium, University School on August 22, 2026.",
+    "Cleveland's first independent community TEDx in over a decade. Eleven voices, six adult speakers and five student speakers, on one stage at Gund Auditorium, University School on August 22, 2026.",
   alternates: { canonical: "/" },
   openGraph: {
     title: "TEDxHuntingValley | August 22, 2026",
     description:
-      "Cleveland's first independent community TEDx in over a decade. Twelve voices, one stage, no age qualifier. The full lineup is taking shape ahead of August 22, 2026.",
+      "Cleveland's first independent community TEDx in over a decade. Eleven voices, one stage, no age qualifier. The full lineup is taking shape ahead of August 22, 2026.",
     url: "https://tedxhuntingvalley.com",
     type: "website",
     images: [{ url: "/og-image.jpg", width: 1200, height: 630, alt: "TEDxHuntingValley | The Invisible Engine: The Forces We Forget" }],
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "TEDxHuntingValley | August 22, 2026",
     description:
-      "Cleveland's first independent community TEDx in over a decade. Twelve voices, one stage, no age qualifier. The full lineup is taking shape ahead of August 22, 2026.",
+      "Cleveland's first independent community TEDx in over a decade. Eleven voices, one stage, no age qualifier. The full lineup is taking shape ahead of August 22, 2026.",
     images: ["/og-image.jpg"],
   },
 };
@@ -43,7 +43,7 @@ const eventJsonLd = {
   "@type": "Event",
   name: "TEDxHuntingValley",
   description:
-    "The Invisible Engine: The Forces We Forget. Cleveland's first independent community TEDx in over a decade. Six adult speakers and six student speakers share one stage. Organized by two University School students.",
+    "The Invisible Engine: The Forces We Forget. Cleveland's first independent community TEDx in over a decade. Six adult speakers and five student speakers share one stage. Organized by two University School students.",
   // Date-only until doors/start times are confirmed (the visible UI says "time to be announced").
   // Restore time-precise start/end once siteConfig.doorsOpen/startTime are set.
   startDate: siteConfig.dateISO,

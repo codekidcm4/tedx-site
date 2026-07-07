@@ -4,6 +4,7 @@ import QRCode from "qrcode";
 import { getTicketByToken } from "@/lib/ticketsDb";
 import { sessionById } from "@/data/tickets";
 import type { SessionId } from "@/data/tickets";
+import { AddToCalendar } from "@/components/ui/AddToCalendar";
 
 export const metadata: Metadata = {
   title: "Your ticket",
@@ -68,6 +69,9 @@ export default async function TicketPage({ params }: { params: Promise<{ token: 
               <p className="mt-5 text-xs font-bold text-[#e62b1e] uppercase tracking-wider">Already checked in</p>
             )}
           </div>
+        </div>
+        <div className="flex justify-center mt-6">
+          <AddToCalendar theme="dark" />
         </div>
         <p className="text-center text-white/55 text-xs mt-5">Gund Auditorium, University School · Hunting Valley, OH</p>
       </div>

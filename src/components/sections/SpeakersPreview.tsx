@@ -4,7 +4,7 @@ import { SpeakerHeadshot } from "@/components/ui/SpeakerHeadshot";
 import { speakers } from "@/data/speakers";
 
 export function SpeakersPreview() {
-  // Show the full twelve-voice lineup as a compact roster, not a handful of cards.
+  // Show the full lineup as a compact roster, not a handful of cards.
   return (
     <section className="bg-white py-20 md:py-28" aria-labelledby="speakers-preview-heading">
       <div className="max-w-[1200px] mx-auto px-6 md:px-8 lg:px-12">
@@ -22,13 +22,13 @@ export function SpeakersPreview() {
                 className="font-extrabold text-[#0a0a0a]"
                 style={{ fontSize: "clamp(1.875rem, 4vw, 3rem)", letterSpacing: "-0.03em", lineHeight: 1.05 }}
               >
-                Twelve voices.
+                Eleven voices.
                 <br />
                 One stage.
               </h2>
             </div>
             <p className="text-[#555555] text-base leading-relaxed max-w-sm md:text-right">
-              Six adult speakers. Six student speakers. No age qualifier, no asterisk.
+              Six adult speakers. Five student speakers. No age qualifier, no asterisk.
               Bios and talks are revealed as each speaker is confirmed.
             </p>
           </div>

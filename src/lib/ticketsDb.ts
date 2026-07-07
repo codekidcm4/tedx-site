@@ -1,4 +1,5 @@
 import { createClient, type SupabaseClient } from "@supabase/supabase-js";
+import { totalSeats } from "@/data/tickets";
 
 // Server-only Supabase access with the service-role key (bypasses RLS). Never import this from a
 // client component. Every function no-ops gracefully when the DB isn't configured, so the site
@@ -54,10 +55,12 @@ export async function createOrderWithHolds(params: {
   email: string;
   names: Record<string, string>;
   amountCents: number;
+  accessibilityNote?: string | null;
   holdMinutes?: number;
 }): Promise<CreateResult> {
   if (!dbConfigured()) return { error: "db_error" };
   const { session, seats, email, names, amountCents } = params;
+  const accessibilityNote = params.accessibilityNote?.trim() || null;
   const phys = physicalSessions(session);
   const nowIso = new Date().toISOString();
   const expiresAt = new Date(Date.now() + (params.holdMinutes ?? 15) * 60_000).toISOString();
@@ -97,7 +100,7 @@ export async function createOrderWithHolds(params: {
 
   const { data: order, error: oErr } = await db()
     .from("orders")
-    .insert({ session, seats, email, names, amount_cents: amountCents, status: "pending" })
+    .insert({ session, seats, email, names, amount_cents: amountCents, status: "pending", accessibility_note: accessibilityNote })
     .select("id")
     .single();
   if (oErr || !order) return { error: "db_error" };
@@ -122,7 +125,7 @@ export type FulfilledTicket = { session: string; seat: string; token: string; na
 
 type FulfillResult =
   | { order: { session: string; email: string; amount_cents: number }; tickets: FulfilledTicket[]; alreadyFulfilled: boolean }
-  | { error: "db_error" | "no_order" | "seat_conflict" };
+  | { error: "db_error" | "no_order" | "seat_conflict" | "terminal" };
 
 /**
  * On payment success: mint a QR ticket per seat, mark the order paid, clear its holds. Safe against
@@ -134,6 +137,9 @@ export async function fulfillOrder(orderId: string): Promise<FulfillResult> {
   const { data: order } = await db().from("orders").select("*").eq("id", orderId).single();
   if (!order) return { error: "no_order" };
   const o = order as { id: string; session: string; seats: string[]; email: string; names: Record<string, string>; amount_cents: number; status: string };
+  // Terminal states: a refund (or a prior seat-conflict) already released these seats. Never
+  // re-mint tickets, or a redelivered payment_intent.succeeded would permanently re-lock them.
+  if (o.status === "refunded" || o.status === "needs_refund") return { error: "terminal" };
   const phys = physicalSessions(o.session);
   const expected = phys.length * o.seats.length;
 
@@ -166,4 +172,76 @@ export async function getTicketByToken(token: string) {
   if (!dbConfigured()) return null;
   const { data } = await db().from("tickets").select("session, seat, holder_name, checked_in").eq("qr_token", token).maybeSingle();
   return (data as { session: string; seat: string; holder_name: string | null; checked_in: boolean } | null) ?? null;
+}
+
+// ── Seat counts (live "X seats left") ───────────────────────────────────────
+/** How many seats are left for a (display) session. Returns the full count when the DB is off. */
+export async function getSeatCounts(session: string): Promise<{ total: number; taken: number; remaining: number }> {
+  const taken = (await getTakenSeats(session)).length;
+  return { total: totalSeats, taken, remaining: Math.max(0, totalSeats - taken) };
+}
+
+// ── Door check-in ───────────────────────────────────────────────────────────
+export type CheckInResult =
+  | { ok: true; seat: string; session: string; holder_name: string | null; alreadyCheckedIn: boolean }
+  | { ok: false; reason: "not_found" | "db_error" };
+
+/**
+ * Check a ticket in at the door. Atomic: the conditional update (checked_in false -> true) means
+ * only the first scan of a given ticket "claims" it; a second scan reports alreadyCheckedIn so staff
+ * can catch a duplicate/copied QR. Accepts the raw token (URL parsing happens in the API route).
+ */
+export async function checkInTicket(token: string): Promise<CheckInResult> {
+  if (!dbConfigured()) return { ok: false, reason: "db_error" };
+  const { data: claimed } = await db()
+    .from("tickets")
+    .update({ checked_in: true, checked_in_at: new Date().toISOString() })
+    .eq("qr_token", token)
+    .eq("checked_in", false)
+    .select("seat, session, holder_name")
+    .maybeSingle();
+  if (claimed) {
+    const c = claimed as { seat: string; session: string; holder_name: string | null };
+    return { ok: true, seat: c.seat, session: c.session, holder_name: c.holder_name, alreadyCheckedIn: false };
+  }
+  // No row claimed: either the token is unknown or it was already checked in. Read to distinguish.
+  const { data: existing } = await db()
+    .from("tickets")
+    .select("seat, session, holder_name")
+    .eq("qr_token", token)
+    .maybeSingle();
+  if (!existing) return { ok: false, reason: "not_found" };
+  const e = existing as { seat: string; session: string; holder_name: string | null };
+  return { ok: true, seat: e.seat, session: e.session, holder_name: e.holder_name, alreadyCheckedIn: true };
+}
+
+// ── Waitlist ────────────────────────────────────────────────────────────────
+/** Record an interested buyer for a (possibly sold-out) session. */
+export async function joinWaitlist(email: string, session: string, note?: string | null): Promise<{ ok: boolean }> {
+  if (!dbConfigured()) return { ok: false };
+  const { error } = await db().from("waitlist").insert({ email, session, note: note?.trim() || null });
+  return { ok: !error };
+}
+
+// ── Refunds ─────────────────────────────────────────────────────────────────
+/** Store a buyer's refund request (the organizer issues the actual refund in Stripe). */
+export async function createRefundRequest(email: string, session: string | null, reason: string): Promise<{ ok: boolean }> {
+  if (!dbConfigured()) return { ok: false };
+  const { error } = await db().from("refund_requests").insert({ email, session, reason: reason?.trim() || null });
+  return { ok: !error };
+}
+
+/**
+ * Called from the Stripe charge.refunded webhook: mark the order refunded and delete its tickets +
+ * holds so the seats become available again. Idempotent.
+ */
+export async function releaseOrderByPaymentIntent(paymentIntentId: string): Promise<{ released: boolean; session: string | null }> {
+  if (!dbConfigured()) return { released: false, session: null };
+  const { data: order } = await db().from("orders").select("id, session").eq("stripe_payment_intent", paymentIntentId).maybeSingle();
+  if (!order) return { released: false, session: null };
+  const o = order as { id: string; session: string };
+  await db().from("tickets").delete().eq("order_id", o.id);
+  await db().from("seat_holds").delete().eq("order_id", o.id);
+  await db().from("orders").update({ status: "refunded", refunded_at: new Date().toISOString() }).eq("id", o.id);
+  return { released: true, session: o.session };
 }

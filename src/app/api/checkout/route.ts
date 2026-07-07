@@ -28,11 +28,12 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "bad_request" }, { status: 400 });
   }
 
-  const { sessionId, seats, email, names } = (body ?? {}) as {
+  const { sessionId, seats, email, names, accessibilityNote } = (body ?? {}) as {
     sessionId?: string;
     seats?: unknown;
     email?: unknown;
     names?: unknown;
+    accessibilityNote?: unknown;
   };
 
   const rawSeats = Array.isArray(seats) ? (seats as unknown[]).filter((x): x is string => typeof x === "string") : [];
@@ -53,6 +54,7 @@ export async function POST(req: Request) {
   const amount = price * uniqueSeats.length;
   const nameMap = names && typeof names === "object" ? (names as Record<string, string>) : {};
   const buyerEmail = typeof email === "string" ? email : "";
+  const a11yNote = typeof accessibilityNote === "string" ? accessibilityNote.slice(0, 500) : null;
 
   const stripe = new Stripe(key);
 
@@ -60,7 +62,7 @@ export async function POST(req: Request) {
   let orderId: string | null = null;
   let reusedPi: string | null = null;
   if (dbConfigured()) {
-    const held = await createOrderWithHolds({ session: sessionId as string, seats: uniqueSeats, email: buyerEmail, names: nameMap, amountCents: amount });
+    const held = await createOrderWithHolds({ session: sessionId as string, seats: uniqueSeats, email: buyerEmail, names: nameMap, amountCents: amount, accessibilityNote: a11yNote });
     if ("error" in held) {
       if (held.error === "seat_taken") return NextResponse.json({ error: "seat_taken" }, { status: 409 });
       return NextResponse.json({ error: "db_error" }, { status: 500 });

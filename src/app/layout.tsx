@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist } from "next/font/google";
 import "./globals.css";
+import { Analytics } from "@vercel/analytics/next";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { siteConfig } from "@/data/site";
@@ -98,9 +99,6 @@ export default function RootLayout({
             }),
           }}
         />
-        {/* Google Analytics placeholder — replace GA_MEASUREMENT_ID with your ID */}
-        {/* <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID" /> */}
-        {/* <script dangerouslySetInnerHTML={{ __html: `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','GA_MEASUREMENT_ID');` }} /> */}
       </head>
       <body className="min-h-screen flex flex-col bg-white text-[#0a0a0a]">
         <Navbar />
@@ -108,6 +106,9 @@ export default function RootLayout({
           {children}
         </main>
         <Footer />
+        {/* Vercel Analytics: privacy-friendly page views + web vitals. No cookie banner needed.
+            Data appears in the Vercel dashboard once deployed. */}
+        <Analytics />
       </body>
     </html>
   );

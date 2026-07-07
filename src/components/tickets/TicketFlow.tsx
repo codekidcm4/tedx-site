@@ -6,12 +6,15 @@ import {
   ticketConfig,
   sampleSections,
   sampleSold,
+  accessibleSeatIds,
+  totalSeats,
   formatPrice,
   sessionById,
 } from "@/data/tickets";
 import type { SessionId } from "@/data/tickets";
 import { SeatMap } from "@/components/tickets/SeatMap";
 import { StripePayment, stripeConfigured } from "@/components/tickets/StripePayment";
+import { WaitlistForm } from "@/components/tickets/WaitlistForm";
 import { verifyPresaleCode } from "@/app/tickets/actions";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -48,8 +51,9 @@ function Gate({ onUnlock }: { onUnlock: () => void }) {
         Tickets aren&apos;t public yet.
       </h2>
       <p className="text-[#555555] leading-relaxed mb-8">
-        Seating at Gund Auditorium is capped at 100, so tickets open first to our pre-sale list. Enter
-        your pre-sale code to choose your seats, or join the list below and we will send you a code.
+        Seating at Gund Auditorium is capped at 100, so tickets open first to our pre-sale list.
+        Pre-sale buyers get first pick of every seat. Enter your code to choose seats, or join the
+        list below and we will send you one.
       </p>
       <form onSubmit={submit} className="flex flex-col sm:flex-row gap-3 justify-center">
         <label htmlFor="presale-code" className="sr-only">Pre-sale code</label>
@@ -70,7 +74,7 @@ function Gate({ onUnlock }: { onUnlock: () => void }) {
         </button>
       </form>
       {state === "error" && (
-        <p className="mt-3 text-xs text-[#e62b1e] font-semibold" role="alert">
+        <p className="mt-3 text-xs text-[#c9231a] font-semibold" role="alert">
           That code didn&apos;t work. Check it and try again.
         </p>
       )}
@@ -83,11 +87,29 @@ function Gate({ onUnlock }: { onUnlock: () => void }) {
   );
 }
 
-function LegendDot({ className, label }: { className: string; label: string }) {
+function LegendDot({ className, label, dot }: { className: string; label: string; dot?: string }) {
   return (
     <span className="inline-flex items-center gap-2">
-      <span className={`inline-block w-3.5 h-3.5 rounded-[3px] ${className}`} aria-hidden="true" />
+      <span className={`relative inline-block w-3.5 h-3.5 rounded-[3px] ${className}`} aria-hidden="true">
+        {dot && <span className="absolute inset-0 m-auto w-1.5 h-1.5 rounded-full" style={{ background: dot }} />}
+      </span>
       <span className="text-xs text-[#555555]">{label}</span>
+    </span>
+  );
+}
+
+/** Small live "seats left" pill. */
+function SeatsLeft({ remaining, total }: { remaining: number; total: number }) {
+  const low = remaining > 0 && remaining <= 12;
+  const sold = remaining <= 0;
+  return (
+    <span
+      className={`inline-flex items-center gap-1.5 text-xs font-semibold ${
+        sold ? "text-[#c9231a]" : low ? "text-[#b45309]" : "text-[#555555]"
+      }`}
+    >
+      <span className={`w-1.5 h-1.5 rounded-full ${sold ? "bg-[#c9231a]" : low ? "bg-[#b45309]" : "bg-[#16794a]"}`} aria-hidden="true" />
+      {sold ? "Sold out" : `${remaining} of ${total} seats left`}
     </span>
   );
 }
@@ -122,19 +144,44 @@ export function TicketFlow() {
   const [substep, setSubstep] = useState<"info" | "payment">("info");
   const [names, setNames] = useState<Record<string, string>>({});
   const [email, setEmail] = useState("");
+  const [a11yNeeded, setA11yNeeded] = useState(false);
+  const [a11yNote, setA11yNote] = useState("");
   const [formError, setFormError] = useState<string | null>(null);
   const [paid, setPaid] = useState(false);
   const [taken, setTaken] = useState<string[]>([]);
+  const [remaining, setRemaining] = useState<number | null>(null);
+  const [summary, setSummary] = useState<Record<string, { remaining: number; total: number }>>({});
 
-  // Live seat availability from the database (stays empty until the DB is connected).
+  // Live availability across all sessions, for the session cards. Refreshes every 25s.
   useEffect(() => {
-    if (!sessionId) { setTaken([]); return; }
     let active = true;
-    fetch(`/api/seats?session=${sessionId}`)
-      .then((r) => r.json())
-      .then((d) => { if (active && Array.isArray(d.taken)) setTaken(d.taken); })
-      .catch(() => {});
-    return () => { active = false; };
+    const load = () =>
+      fetch("/api/seats?summary")
+        .then((r) => r.json())
+        .then((d) => { if (active && d.sessions) setSummary(d.sessions); })
+        .catch(() => {});
+    load();
+    const t = setInterval(load, 25000);
+    return () => { active = false; clearInterval(t); };
+  }, []);
+
+  // Live availability for the chosen session (seat map + counter). Refreshes every 20s.
+  useEffect(() => {
+    if (!sessionId) { setTaken([]); setRemaining(null); return; }
+    setTaken([]); setRemaining(null); // clear the previous session's data so it can't flash
+    let active = true;
+    const load = () =>
+      fetch(`/api/seats?session=${sessionId}`)
+        .then((r) => r.json())
+        .then((d) => {
+          if (!active) return;
+          if (Array.isArray(d.taken)) setTaken(d.taken);
+          if (typeof d.remaining === "number") setRemaining(d.remaining);
+        })
+        .catch(() => {});
+    load();
+    const t = setInterval(load, 20000);
+    return () => { active = false; clearInterval(t); };
   }, [sessionId]);
 
   const soldSet = useMemo(
@@ -145,6 +192,8 @@ export function TicketFlow() {
   const price = sessionId ? sessionById(sessionId).price : 0;
   const total = selected.length * price;
   const maxReached = selected.length >= ticketConfig.maxPerOrder;
+  const soldOut = remaining !== null && remaining <= 0;
+  const accessibilityNote = a11yNeeded ? (a11yNote.trim() || "Wheelchair-accessible or companion seating requested") : "";
 
   function resetToSeats() {
     setStep("select");
@@ -153,6 +202,7 @@ export function TicketFlow() {
     setFormError(null);
   }
   function pickSession(id: SessionId) {
+    if (id === sessionId) return; // re-clicking the active session must not wipe the selection
     setSessionId(id);
     setSelected([]);
     resetToSeats();
@@ -225,12 +275,14 @@ export function TicketFlow() {
               </>
             ) : substep === "payment" ? (
               <>
-                <p className="text-[0.65rem] font-bold tracking-[0.18em] uppercase text-[#6b6b6b] mb-4">4 · Payment</p>
+                <p className="text-[0.65rem] font-bold tracking-[0.18em] uppercase text-[#6b6b6b] mb-1">4 · Payment</p>
+                <p className="text-xs text-[#6b6b6b] mb-4">Your seats are held while you finish checkout. A hold releases automatically after about 15 minutes.</p>
                 <StripePayment
                   sessionId={sessionId}
                   seats={selected}
                   email={email}
                   names={names}
+                  accessibilityNote={accessibilityNote}
                   amount={total}
                   onSuccess={() => setPaid(true)}
                 />
@@ -273,6 +325,28 @@ export function TicketFlow() {
                       />
                       <p className="text-xs text-[#6b6b6b] mt-1.5">Your tickets, one QR code per seat, are sent here.</p>
                     </div>
+                    <div className="pt-1">
+                      <label className="flex items-start gap-3 cursor-pointer">
+                        <input
+                          type="checkbox"
+                          checked={a11yNeeded}
+                          onChange={(e) => setA11yNeeded(e.target.checked)}
+                          className="mt-0.5 w-4 h-4 accent-[#e62b1e]"
+                        />
+                        <span className="text-sm text-[#333333] leading-relaxed">
+                          I or a guest needs wheelchair-accessible or companion seating. We&apos;ll reach out to arrange it.
+                        </span>
+                      </label>
+                      {a11yNeeded && (
+                        <textarea
+                          value={a11yNote}
+                          onChange={(e) => setA11yNote(e.target.value)}
+                          rows={2}
+                          placeholder="Anything we should know (optional)"
+                          className="mt-3 w-full px-4 py-3 text-sm rounded-sm border border-[#e0e0e0] outline-none focus:border-[#e62b1e] transition-colors"
+                        />
+                      )}
+                    </div>
                   </div>
                   {formError && <p id="details-error" className="mt-4 text-xs text-[#c9231a] font-semibold" role="alert">{formError}</p>}
                   <button
@@ -310,6 +384,7 @@ export function TicketFlow() {
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-12">
           {ticketConfig.sessions.map((s) => {
             const active = sessionId === s.id;
+            const info = summary[s.id];
             return (
               <button
                 key={s.id}
@@ -327,6 +402,11 @@ export function TicketFlow() {
                   <span className="font-extrabold text-[#e62b1e]">{formatPrice(s.price)}</span>
                 </div>
                 <p className="text-xs text-[#777777] mt-1">{s.detail}</p>
+                {info && (
+                  <p className="mt-2">
+                    <SeatsLeft remaining={info.remaining} total={info.total} />
+                  </p>
+                )}
               </button>
             );
           })}
@@ -336,27 +416,39 @@ export function TicketFlow() {
       {sessionId && (
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-10">
           <div>
-            <p className="text-[0.65rem] font-bold tracking-[0.18em] uppercase text-[#6b6b6b] mb-4">
-              2 · Pick your seats (up to {ticketConfig.maxPerOrder})
-            </p>
-            <div className="flex flex-wrap gap-x-5 gap-y-2 mb-5">
-              <LegendDot className="bg-white border border-[#c4c4c4]" label="Available" />
-              <LegendDot className="bg-[#e62b1e]" label="Selected" />
-              <LegendDot className="bg-[#dcdcdc]" label="Taken" />
+            <div className="flex flex-wrap items-center justify-between gap-2 mb-4">
+              <p className="text-[0.65rem] font-bold tracking-[0.18em] uppercase text-[#6b6b6b]">
+                2 · Pick your seats (up to {ticketConfig.maxPerOrder})
+              </p>
+              {remaining !== null && <SeatsLeft remaining={remaining} total={totalSeats} />}
             </div>
-            <div className="border border-[#e8e8e8] rounded-sm p-4 bg-[#fbfbfb]">
-              <SeatMap
-                sections={sampleSections}
-                soldSet={soldSet}
-                selectedSet={selectedSet}
-                maxReached={maxReached}
-                onToggle={toggleSeat}
-              />
-            </div>
-            <p className="text-xs text-[#6b6b6b] mt-3">
-              Modeled on the Gund Auditorium layout (Center section plus front wing seats). Scroll
-              sideways on the map if it runs off the screen.
-            </p>
+
+            {soldOut ? (
+              <WaitlistForm session={sessionId} sessionName={sessionById(sessionId).name} />
+            ) : (
+              <>
+                <div className="flex flex-wrap gap-x-5 gap-y-2 mb-5">
+                  <LegendDot className="bg-white border border-[#767676]" label="Available" />
+                  <LegendDot className="bg-[#e62b1e]" label="Selected" />
+                  <LegendDot className="bg-[#d0d0d0] border border-[#a8a8a8]" label="Taken" />
+                  <LegendDot className="bg-white border border-[#767676]" dot="#2563eb" label="Accessible" />
+                </div>
+                <div className="border border-[#e8e8e8] rounded-sm p-4 bg-[#fbfbfb]">
+                  <SeatMap
+                    sections={sampleSections}
+                    soldSet={soldSet}
+                    selectedSet={selectedSet}
+                    accessibleSet={accessibleSeatIds}
+                    maxReached={maxReached}
+                    onToggle={toggleSeat}
+                  />
+                </div>
+                <p className="text-xs text-[#6b6b6b] mt-3">
+                  Modeled on the Gund Auditorium layout (Center section plus front wing seats). Blue-dot
+                  seats are wheelchair-accessible. Scroll sideways on the map if it runs off the screen.
+                </p>
+              </>
+            )}
           </div>
 
           <aside className="lg:sticky lg:top-24 h-fit">
@@ -367,7 +459,7 @@ export function TicketFlow() {
 
               {selected.length === 0 ? (
                 <p className="text-sm text-[#6b6b6b] py-4 border-t border-[#f0f0f0]">
-                  Select up to {ticketConfig.maxPerOrder} seats to continue.
+                  {soldOut ? "This session is sold out. Join the waitlist on the left." : `Select up to ${ticketConfig.maxPerOrder} seats to continue.`}
                 </p>
               ) : (
                 <ul className="border-t border-[#f0f0f0] divide-y divide-[#f0f0f0] mb-4">

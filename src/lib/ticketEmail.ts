@@ -3,6 +3,7 @@ import { Resend } from "resend";
 import type { FulfilledTicket } from "@/lib/ticketsDb";
 import { sessionById } from "@/data/tickets";
 import type { SessionId } from "@/data/tickets";
+import { siteConfig } from "@/data/site";
 
 const SITE = process.env.NEXT_PUBLIC_SITE_URL || "https://tedxhuntingvalley.com";
 
@@ -10,6 +11,11 @@ function seatLabel(id: string): string {
   const [section, rest] = id.split("-");
   const names: Record<string, string> = { L: "Left", C: "Center", R: "Right" };
   return `${names[section] ?? section} ${rest}`;
+}
+
+/** Escape any user-supplied value before putting it inside email HTML. */
+function esc(s: string): string {
+  return (s || "").replace(/[&<>"]/g, (c) => (c === "&" ? "&amp;" : c === "<" ? "&lt;" : c === ">" ? "&gt;" : "&quot;"));
 }
 
 /** Emails the buyer their tickets: one QR code per seat (attached), each linking to a scannable page. */
@@ -30,8 +36,8 @@ export async function sendTicketEmail(email: string, tickets: FulfilledTicket[],
     attachments.push({ filename: `ticket-${t.seat}-${t.session}.png`, content: png.toString("base64") });
     rows.push(
       `<tr><td style="padding:12px 0;border-top:1px solid #eee">
-        <div style="font-weight:700;color:#0a0a0a">Seat ${seatLabel(t.seat)}${t.name ? " · " + t.name : ""}</div>
-        <div style="font-size:13px;color:#777">${sessionById(displaySession as SessionId)?.name ?? displaySession}</div>
+        <div style="font-weight:700;color:#0a0a0a">Seat ${seatLabel(t.seat)}${t.name ? " · " + esc(t.name) : ""}</div>
+        <div style="font-size:13px;color:#777">${esc(sessionById(displaySession as SessionId)?.name ?? displaySession)}</div>
         <a href="${url}" style="color:#e62b1e;font-weight:700;font-size:13px">View &amp; scan this ticket &rarr;</a>
       </td></tr>`
     );
@@ -54,4 +60,39 @@ export async function sendTicketEmail(email: string, tickets: FulfilledTicket[],
     html,
     attachments,
   });
+}
+
+/**
+ * Notifies the organizer that a buyer asked for a refund. Best-effort: returns false (and sends
+ * nothing) if Resend isn't configured, so the caller can fall back to the stored request row.
+ */
+export async function sendRefundRequestEmail(
+  buyerEmail: string,
+  session: string | null,
+  reason: string
+): Promise<boolean> {
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey) return false;
+  const resend = new Resend(apiKey);
+  const from = process.env.TICKETS_FROM_EMAIL || "TEDxHuntingValley <tickets@tedxhuntingvalley.com>";
+  const to = process.env.TICKETS_ORG_EMAIL || siteConfig.email;
+  const sessionName = session ? sessionById(session as SessionId)?.name ?? session : "Not specified";
+
+  const html = `<div style="font-family:system-ui,sans-serif;max-width:560px;color:#0a0a0a">
+    <h2 style="font-size:18px">Refund request</h2>
+    <p><strong>Buyer:</strong> ${esc(buyerEmail)}</p>
+    <p><strong>Session:</strong> ${esc(sessionName)}</p>
+    <p><strong>Reason:</strong><br>${esc(reason || "(none given)")}</p>
+    <p style="color:#777;font-size:13px">Issue the refund in Stripe (Payments -> the order -> Refund). The
+    site will automatically free the seats when Stripe reports the refund.</p>
+  </div>`;
+
+  await resend.emails.send({
+    from,
+    to,
+    replyTo: buyerEmail,
+    subject: "TEDxHuntingValley refund request",
+    html,
+  });
+  return true;
 }
