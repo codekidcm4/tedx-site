@@ -69,11 +69,12 @@ behold-widget {
 
 /* Seat map (tickets page) */
 .seat {
+  stroke-width: 1;
   transition: fill 0.12s ease, stroke 0.12s ease;
 }
 .seat-available {
   fill: #ffffff;
-  stroke: #c4c4c4;
+  stroke: #767676;
   cursor: pointer;
 }
 .seat-available:hover {
@@ -86,17 +87,20 @@ behold-widget {
   cursor: pointer;
 }
 .seat-sold {
-  fill: #dcdcdc;
-  stroke: #dcdcdc;
+  fill: #d0d0d0;
+  stroke: #a8a8a8;
   cursor: not-allowed;
 }
 .seat-disabled {
   fill: #ffffff;
-  stroke: #e5e5e5;
-  opacity: 0.5;
+  stroke: #cfcfcf;
+  opacity: 0.55;
   cursor: not-allowed;
 }
 .seat:focus-visible {
   outline: 2px solid #e62b1e;
   outline-offset: 1px;
+  /* Safari ignores outline on SVG; stroke ring is the fallback */
+  stroke: #e62b1e;
+  stroke-width: 2.5;
 }

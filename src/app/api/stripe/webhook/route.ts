@@ -27,7 +27,17 @@ export async function POST(req: Request) {
     const orderId = pi.metadata?.order_id;
     if (orderId) {
       const result = await fulfillOrder(orderId);
-      if (!("error" in result)) {
+      if ("error" in result) {
+        // A seat was lost between hold and payment: refund automatically, don't email tickets.
+        if (result.error === "seat_conflict") {
+          try {
+            await stripe.refunds.create({ payment_intent: pi.id });
+          } catch (err) {
+            console.error("Auto-refund failed for seat conflict; needs manual review", pi.id, err);
+          }
+        }
+      } else if (!result.alreadyFulfilled) {
+        // Email only on the first successful delivery (Stripe can redeliver the event).
         try {
           await sendTicketEmail(result.order.email, result.tickets, result.order.session);
         } catch (err) {

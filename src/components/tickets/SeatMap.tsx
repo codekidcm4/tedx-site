@@ -96,7 +96,7 @@ export function SeatMap({ sections, soldSet, selectedSet, maxReached, onToggle }
             textAnchor="end"
             fontSize={9}
             fontWeight={700}
-            fill="#b0b0b0"
+            fill="#6f6f6f"
           >
             {rl.text}
           </text>
@@ -115,29 +115,39 @@ export function SeatMap({ sections, soldSet, selectedSet, maxReached, onToggle }
             ? "seat seat-disabled"
             : "seat seat-available";
           return (
-            <rect
-              key={s.id}
-              x={s.x}
-              y={s.y}
-              width={SEAT}
-              height={SEAT}
-              rx={4}
-              className={cls}
-              onClick={sold || disabled ? undefined : () => onToggle(s.id)}
-              tabIndex={sold || disabled ? -1 : 0}
-              role="button"
-              aria-pressed={selected}
-              aria-disabled={sold || disabled}
-              aria-label={`${s.label}${sold ? ", unavailable" : selected ? ", selected" : ""}`}
-              onKeyDown={(e) => {
-                if ((e.key === "Enter" || e.key === " ") && !sold && !disabled) {
-                  e.preventDefault();
-                  onToggle(s.id);
-                }
-              }}
-            >
-              <title>{s.label}</title>
-            </rect>
+            <g key={s.id}>
+              <rect
+                x={s.x}
+                y={s.y}
+                width={SEAT}
+                height={SEAT}
+                rx={4}
+                className={cls}
+                onClick={sold || disabled ? undefined : () => onToggle(s.id)}
+                tabIndex={sold || disabled ? -1 : 0}
+                role="button"
+                aria-pressed={selected}
+                aria-disabled={sold || disabled}
+                aria-label={`${s.label}${sold ? ", unavailable" : selected ? ", selected" : ""}`}
+                onKeyDown={(e) => {
+                  if ((e.key === "Enter" || e.key === " ") && !sold && !disabled) {
+                    e.preventDefault();
+                    onToggle(s.id);
+                  }
+                }}
+              >
+                <title>{s.label}</title>
+              </rect>
+              {sold && (
+                <path
+                  d={`M${s.x + 6} ${s.y + 6} L${s.x + SEAT - 6} ${s.y + SEAT - 6} M${s.x + SEAT - 6} ${s.y + 6} L${s.x + 6} ${s.y + SEAT - 6}`}
+                  stroke="#8a8a8a"
+                  strokeWidth={1.6}
+                  strokeLinecap="round"
+                  pointerEvents="none"
+                />
+              )}
+            </g>
           );
         })}
       </svg>

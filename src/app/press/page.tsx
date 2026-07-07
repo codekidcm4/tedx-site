@@ -157,7 +157,7 @@ export default function PressPage() {
                     with the guidance of licensed organizer Dr. Tyler Yoder.
                   </p>
                   <p>
-                    The event follows the full standard TEDx format: live speakers, talks 12
+                    The event follows the full standard TEDx format: live speakers, talks 18
                     minutes or under, no panels, no PowerPoints. Student and adult speakers
                     share the same stage with identical introductions. No age qualifier.
                   </p>

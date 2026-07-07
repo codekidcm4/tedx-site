@@ -47,7 +47,7 @@ function PayForm({ amount, onSuccess }: { amount: number; onSuccess: () => void 
       >
         {submitting ? "Processing…" : `Pay ${formatPrice(amount)}`}
       </button>
-      <p className="text-[0.65rem] text-[#9a9a9a] mt-3">
+      <p className="text-[0.65rem] text-[#6b6b6b] mt-3">
         Payments are secured by Stripe. Test mode: use card 4242 4242 4242 4242, any future date and CVC.
       </p>
     </form>
@@ -94,7 +94,7 @@ export function StripePayment({ sessionId, seats, email, names, amount, onSucces
 
   if (err) return <p className="text-sm text-[#e62b1e] font-semibold" role="alert">{err}</p>;
   if (!stripePromise) return null;
-  if (!clientSecret) return <p className="text-sm text-[#9a9a9a]">Loading secure payment…</p>;
+  if (!clientSecret) return <p className="text-sm text-[#6b6b6b]">Loading secure payment…</p>;
 
   return (
     <Elements

@@ -2,6 +2,7 @@ import QRCode from "qrcode";
 import { Resend } from "resend";
 import type { FulfilledTicket } from "@/lib/ticketsDb";
 import { sessionById } from "@/data/tickets";
+import type { SessionId } from "@/data/tickets";
 
 const SITE = process.env.NEXT_PUBLIC_SITE_URL || "https://tedxhuntingvalley.com";
 
@@ -30,7 +31,7 @@ export async function sendTicketEmail(email: string, tickets: FulfilledTicket[],
     rows.push(
       `<tr><td style="padding:12px 0;border-top:1px solid #eee">
         <div style="font-weight:700;color:#0a0a0a">Seat ${seatLabel(t.seat)}${t.name ? " · " + t.name : ""}</div>
-        <div style="font-size:13px;color:#777">${sessionById(t.session as never)?.name ?? t.session}</div>
+        <div style="font-size:13px;color:#777">${sessionById(displaySession as SessionId)?.name ?? displaySession}</div>
         <a href="${url}" style="color:#e62b1e;font-weight:700;font-size:13px">View &amp; scan this ticket &rarr;</a>
       </td></tr>`
     );

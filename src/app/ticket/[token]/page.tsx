@@ -49,18 +49,18 @@ export default async function TicketPage({ params }: { params: Promise<{ token: 
           <div className="p-8 text-center">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={qr} alt="Ticket QR code" width={220} height={220} className="mx-auto mb-6" />
-            <p className="text-[0.6rem] font-bold tracking-[0.15em] uppercase text-[#9a9a9a] mb-1">Seat</p>
-            <p className="text-2xl font-extrabold text-[#0a0a0a] mb-4">{seatLabel(ticket.seat)}</p>
+            <p className="text-[0.6rem] font-bold tracking-[0.15em] uppercase text-[#6b6b6b] mb-1">Seat</p>
+            <h1 className="text-2xl font-extrabold text-[#0a0a0a] mb-4">{seatLabel(ticket.seat)}</h1>
             {ticket.holder_name && (
               <p className="text-[#555555] mb-4">{ticket.holder_name}</p>
             )}
             <div className="border-t border-[#eee] pt-4 grid grid-cols-2 gap-3 text-left">
               <div>
-                <p className="text-[0.6rem] font-bold tracking-[0.12em] uppercase text-[#9a9a9a]">Session</p>
+                <p className="text-[0.6rem] font-bold tracking-[0.12em] uppercase text-[#6b6b6b]">Session</p>
                 <p className="text-sm font-semibold text-[#0a0a0a]">{sessionById(ticket.session as SessionId)?.name ?? ticket.session}</p>
               </div>
               <div>
-                <p className="text-[0.6rem] font-bold tracking-[0.12em] uppercase text-[#9a9a9a]">Date</p>
+                <p className="text-[0.6rem] font-bold tracking-[0.12em] uppercase text-[#6b6b6b]">Date</p>
                 <p className="text-sm font-semibold text-[#0a0a0a]">Aug 22, 2026</p>
               </div>
             </div>
@@ -69,7 +69,7 @@ export default async function TicketPage({ params }: { params: Promise<{ token: 
             )}
           </div>
         </div>
-        <p className="text-center text-white/40 text-xs mt-5">Gund Auditorium, University School · Hunting Valley, OH</p>
+        <p className="text-center text-white/55 text-xs mt-5">Gund Auditorium, University School · Hunting Valley, OH</p>
       </div>
     </section>
   );
