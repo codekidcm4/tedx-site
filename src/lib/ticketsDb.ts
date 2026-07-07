@@ -55,12 +55,10 @@ export async function createOrderWithHolds(params: {
   email: string;
   names: Record<string, string>;
   amountCents: number;
-  accessibilityNote?: string | null;
   holdMinutes?: number;
 }): Promise<CreateResult> {
   if (!dbConfigured()) return { error: "db_error" };
   const { session, seats, email, names, amountCents } = params;
-  const accessibilityNote = params.accessibilityNote?.trim() || null;
   const phys = physicalSessions(session);
   const nowIso = new Date().toISOString();
   const expiresAt = new Date(Date.now() + (params.holdMinutes ?? 15) * 60_000).toISOString();
@@ -100,7 +98,7 @@ export async function createOrderWithHolds(params: {
 
   const { data: order, error: oErr } = await db()
     .from("orders")
-    .insert({ session, seats, email, names, amount_cents: amountCents, status: "pending", accessibility_note: accessibilityNote })
+    .insert({ session, seats, email, names, amount_cents: amountCents, status: "pending" })
     .select("id")
     .single();
   if (oErr || !order) return { error: "db_error" };

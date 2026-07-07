@@ -45,8 +45,8 @@ export type SeatRow = { row: string; seats: number };
 export type SeatSection = { id: string; name: string; rows: SeatRow[] };
 
 // The real Gund Auditorium plan for TEDxHuntingValley. Row A (front row) is NOT used, so the
-// first row in use is B. Center block is filled first; the two side wings add 2 seats per row.
-// Total = 98 (Center 74 + Left 12 + Right 12), inside the 100 cap.
+// first row in use is B. Center block is filled first; the two side wings add seats per row.
+// Total = 100 (Center 74 + Left 13 + Right 13), at the 100 cap.
 const centerRows: SeatRow[] = [
   { row: "B", seats: 10 },
   { row: "C", seats: 12 },
@@ -56,9 +56,10 @@ const centerRows: SeatRow[] = [
   { row: "G", seats: 14 },
 ];
 
-// Side sections: 7 physical rows, front row (A) unused, so 2 seats each across rows B–G.
+// Side sections: front row (A) unused. The first row in use (B) has 3 seats per wing; rows C–G
+// have 2. That is 13 seats per side (one extra chair added to each wing's first row).
 const wingRows: SeatRow[] = [
-  { row: "B", seats: 2 },
+  { row: "B", seats: 3 },
   { row: "C", seats: 2 },
   { row: "D", seats: 2 },
   { row: "E", seats: 2 },
@@ -88,14 +89,4 @@ export const sampleSold: Record<SessionId, string[]> = {
 export function seatId(sectionId: string, row: string, num: number): string {
   return `${sectionId}-${row}${num}`;
 }
-
-// Seats designated wheelchair-accessible / companion. These sit at the front of each side wing,
-// closest to an aisle and the stage-level entrance. Shown with a marker on the map; the checkout
-// also lets any buyer flag an accessibility need in case they aren't sitting in one of these.
-export const accessibleSeatIds = new Set<string>([
-  seatId("L", "B", 1),
-  seatId("L", "B", 2),
-  seatId("R", "B", 1),
-  seatId("R", "B", 2),
-]);
 

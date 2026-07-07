@@ -178,7 +178,7 @@ export default function AboutPage() {
                     { label: "Audience", value: "100 attendees (TED licensing cap)" },
                     { label: "Theme", value: "\"The Invisible Engine: The Forces We Forget\"" },
                     { label: "Organizers", value: "Charlie Martin and Jack Nelson\nUniversity School, Class of 2027" },
-                    { label: "Licensed Organizer", value: "Dr. Tyler Yoder, University School" },
+                    { label: "Licensed Organizers", value: "Charlie Martin and Dr. Tyler Yoder\nUniversity School" },
                     { label: "Contact", value: "tedxhuntingvalley@gmail.com" },
                   ].map((item) => (
                     <div key={item.label}>
@@ -260,7 +260,7 @@ export default function AboutPage() {
             {[
               {
                 name: "Charlie Martin",
-                role: "Co-Organizer",
+                role: "Co-Organizer & Licensed Organizer",
                 school: "University School, Class of 2027",
                 photo: "/team/charlie-martin.jpg",
                 quote:

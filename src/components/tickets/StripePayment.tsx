@@ -59,12 +59,11 @@ interface StripePaymentProps {
   seats: string[];
   email: string;
   names: Record<string, string>;
-  accessibilityNote?: string;
   amount: number;
   onSuccess: () => void;
 }
 
-export function StripePayment({ sessionId, seats, email, names, accessibilityNote, amount, onSuccess }: StripePaymentProps) {
+export function StripePayment({ sessionId, seats, email, names, amount, onSuccess }: StripePaymentProps) {
   const [clientSecret, setClientSecret] = useState<string | null>(null);
   const [err, setErr] = useState<string | null>(null);
   const seatsKey = seats.join(",");
@@ -74,7 +73,7 @@ export function StripePayment({ sessionId, seats, email, names, accessibilityNot
     fetch("/api/checkout", {
       method: "POST",
       headers: { "content-type": "application/json" },
-      body: JSON.stringify({ sessionId, seats, email, names, accessibilityNote }),
+      body: JSON.stringify({ sessionId, seats, email, names }),
     })
       .then(async (r) => {
         const d = await r.json().catch(() => ({}));

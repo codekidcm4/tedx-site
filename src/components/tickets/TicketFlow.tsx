@@ -6,7 +6,6 @@ import {
   ticketConfig,
   sampleSections,
   sampleSold,
-  accessibleSeatIds,
   totalSeats,
   formatPrice,
   sessionById,
@@ -144,8 +143,6 @@ export function TicketFlow() {
   const [substep, setSubstep] = useState<"info" | "payment">("info");
   const [names, setNames] = useState<Record<string, string>>({});
   const [email, setEmail] = useState("");
-  const [a11yNeeded, setA11yNeeded] = useState(false);
-  const [a11yNote, setA11yNote] = useState("");
   const [formError, setFormError] = useState<string | null>(null);
   const [paid, setPaid] = useState(false);
   const [taken, setTaken] = useState<string[]>([]);
@@ -193,7 +190,6 @@ export function TicketFlow() {
   const total = selected.length * price;
   const maxReached = selected.length >= ticketConfig.maxPerOrder;
   const soldOut = remaining !== null && remaining <= 0;
-  const accessibilityNote = a11yNeeded ? (a11yNote.trim() || "Wheelchair-accessible or companion seating requested") : "";
 
   function resetToSeats() {
     setStep("select");
@@ -282,7 +278,6 @@ export function TicketFlow() {
                   seats={selected}
                   email={email}
                   names={names}
-                  accessibilityNote={accessibilityNote}
                   amount={total}
                   onSuccess={() => setPaid(true)}
                 />
@@ -324,28 +319,6 @@ export function TicketFlow() {
                         className="w-full px-4 py-3 text-sm rounded-sm border border-[#e0e0e0] outline-none focus:border-[#e62b1e] transition-colors"
                       />
                       <p className="text-xs text-[#6b6b6b] mt-1.5">Your tickets, one QR code per seat, are sent here.</p>
-                    </div>
-                    <div className="pt-1">
-                      <label className="flex items-start gap-3 cursor-pointer">
-                        <input
-                          type="checkbox"
-                          checked={a11yNeeded}
-                          onChange={(e) => setA11yNeeded(e.target.checked)}
-                          className="mt-0.5 w-4 h-4 accent-[#e62b1e]"
-                        />
-                        <span className="text-sm text-[#333333] leading-relaxed">
-                          I or a guest needs wheelchair-accessible or companion seating. We&apos;ll reach out to arrange it.
-                        </span>
-                      </label>
-                      {a11yNeeded && (
-                        <textarea
-                          value={a11yNote}
-                          onChange={(e) => setA11yNote(e.target.value)}
-                          rows={2}
-                          placeholder="Anything we should know (optional)"
-                          className="mt-3 w-full px-4 py-3 text-sm rounded-sm border border-[#e0e0e0] outline-none focus:border-[#e62b1e] transition-colors"
-                        />
-                      )}
                     </div>
                   </div>
                   {formError && <p id="details-error" className="mt-4 text-xs text-[#c9231a] font-semibold" role="alert">{formError}</p>}
@@ -431,21 +404,19 @@ export function TicketFlow() {
                   <LegendDot className="bg-white border border-[#767676]" label="Available" />
                   <LegendDot className="bg-[#e62b1e]" label="Selected" />
                   <LegendDot className="bg-[#d0d0d0] border border-[#a8a8a8]" label="Taken" />
-                  <LegendDot className="bg-white border border-[#767676]" dot="#2563eb" label="Accessible" />
                 </div>
                 <div className="border border-[#e8e8e8] rounded-sm p-4 bg-[#fbfbfb]">
                   <SeatMap
                     sections={sampleSections}
                     soldSet={soldSet}
                     selectedSet={selectedSet}
-                    accessibleSet={accessibleSeatIds}
                     maxReached={maxReached}
                     onToggle={toggleSeat}
                   />
                 </div>
                 <p className="text-xs text-[#6b6b6b] mt-3">
-                  Modeled on the Gund Auditorium layout (Center section plus front wing seats). Blue-dot
-                  seats are wheelchair-accessible. Scroll sideways on the map if it runs off the screen.
+                  Modeled on the Gund Auditorium layout (Center section plus front wing seats). Scroll
+                  sideways on the map if it runs off the screen.
                 </p>
               </>
             )}

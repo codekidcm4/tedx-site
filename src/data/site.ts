@@ -40,7 +40,7 @@ export const siteConfig = {
 
   // People
   organizers: ["Charlie Martin", "Jack Nelson"],
-  licensedOrganizer: "Dr. Tyler Yoder",
+  licensedOrganizer: "Charlie Martin and Dr. Tyler Yoder",
 
   url: "https://tedxhuntingvalley.com",
 

@@ -8,7 +8,6 @@ interface SeatMapProps {
   sections: SeatSection[];
   soldSet: Set<string>;
   selectedSet: Set<string>;
-  accessibleSet?: Set<string>;
   maxReached: boolean;
   onToggle: (id: string) => void;
 }
@@ -24,7 +23,7 @@ const BOTTOM_PAD = 20;
 
 type PositionedSeat = { id: string; x: number; y: number; label: string };
 
-export function SeatMap({ sections, soldSet, selectedSet, accessibleSet, maxReached, onToggle }: SeatMapProps) {
+export function SeatMap({ sections, soldSet, selectedSet, maxReached, onToggle }: SeatMapProps) {
   const { seats, width, height, rowLabels, stage } = useMemo(() => {
     const seats: PositionedSeat[] = [];
     const rowLabels: { x: number; y: number; text: string }[] = [];
@@ -107,7 +106,6 @@ export function SeatMap({ sections, soldSet, selectedSet, accessibleSet, maxReac
         {seats.map((s) => {
           const sold = soldSet.has(s.id);
           const selected = selectedSet.has(s.id);
-          const accessible = accessibleSet?.has(s.id) ?? false;
           const disabled = !selected && !sold && maxReached;
           const cls = sold
             ? "seat seat-sold"
@@ -148,17 +146,6 @@ export function SeatMap({ sections, soldSet, selectedSet, accessibleSet, maxReac
                   strokeLinecap="round"
                   pointerEvents="none"
                 />
-              )}
-              {accessible && !sold && (
-                <circle
-                  cx={s.x + SEAT / 2}
-                  cy={s.y + SEAT / 2}
-                  r={3}
-                  fill={selected ? "#ffffff" : "#2563eb"}
-                  pointerEvents="none"
-                >
-                  <title>Wheelchair-accessible seat</title>
-                </circle>
               )}
             </g>
           );
