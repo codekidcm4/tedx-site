@@ -38,8 +38,18 @@ export const speakers: Speaker[] = [
     image: "/speakers/nic-barlage.jpg",
     order: 1,
   },
+  {
+    id: "fred-nance",
+    name: "Fred Nance",
+    role: "Senior Partner, Squire Patton Boggs",
+    organization: "Squire Patton Boggs",
+    type: "adult",
+    bio: "Fred Nance is a Senior Partner and Executive Group member at the global law firm Squire Patton Boggs, where he has served a term as Global Managing Partner and co-leads the Sports and Entertainment Practice. An accomplished trial lawyer, he is nationally known for his long-term representation of LeBron James and Dave Chappelle, and he was one of five finalists in the contest to become NFL Commissioner. His high-stakes work for the City of Cleveland is broadly known, from the 1990s battle that kept the Browns in the city to ending its decades-old school desegregation case and developing the half-billion-dollar Cleveland Convention Center. A fixture of the city's civic life, he chaired the Greater Cleveland Partnership, has served on the boards of the Cleveland Foundation and the Cleveland Clinic, and in 2015 became just the seventh lawyer in Cleveland's history inducted into the Northeast Ohio Business Hall of Fame.",
+    talkTitle: null,
+    image: "/speakers/fred-nance.jpg",
+    order: 2,
+  },
   // Not yet revealed (name only until their bios/photos are provided).
-  { id: "fred-nance", name: "Fred Nance", role: null, organization: null, type: "adult", bio: null, talkTitle: null, image: null, order: 2 },
   { id: "laila-edwards", name: "Laila Edwards", role: null, organization: null, type: "adult", bio: null, talkTitle: null, image: null, order: 3 },
   {
     id: "marc-byrnes",
