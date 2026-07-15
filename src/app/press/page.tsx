@@ -29,7 +29,7 @@ const stats = [
   { number: "8B+", label: "Total TEDx talk views" },
   { number: "10+", label: "Years since Cleveland's last independent community TEDx" },
   { number: "100", label: "Seats (TED licensing cap)" },
-  { number: "11", label: "Voices on one stage, six adult and five student" },
+  { number: "12", label: "Voices on one stage, six adult and six student" },
   { number: "18 min", label: "Maximum talk length" },
 ];
 
@@ -37,7 +37,7 @@ const storyAngles = [
   {
     number: "01",
     title: "Students on the Same Stage",
-    body: "Five student speakers earned their spots on a globally distributed platform through an open competition, judged on ideas rather than credentials. They share the stage with six accomplished adults, introduced exactly the same way. What are teenagers in Cleveland thinking about in 2026?",
+    body: "Six student speakers earned their spots on a globally distributed platform through an open competition, judged on ideas rather than credentials. They share the stage with six accomplished adults, introduced exactly the same way. What are teenagers in Cleveland thinking about in 2026?",
   },
   {
     number: "02",

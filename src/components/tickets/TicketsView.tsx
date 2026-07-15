@@ -32,7 +32,7 @@ export function TicketsView() {
           <p className="text-white/65 text-lg leading-relaxed max-w-2xl">
             {isPost
               ? "TEDxHuntingValley 2026 has ended. Thank you to everyone who joined us at Gund Auditorium."
-              : `August 22, 2026 at ${siteConfig.venueName}, ${siteConfig.school}. Two sessions, intimate seating, eleven voices on one stage.`}
+              : `August 22, 2026 at ${siteConfig.venueName}, ${siteConfig.school}. Two sessions, intimate seating, twelve voices on one stage.`}
           </p>
         </div>
       </div>

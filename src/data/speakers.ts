@@ -62,7 +62,17 @@ export const speakers: Speaker[] = [
     image: "/speakers/marc-byrnes.jpg",
     order: 4,
   },
-  { id: "brandon-chrostowski", name: "Brandon Chrostowski", role: null, organization: null, type: "adult", bio: null, talkTitle: null, image: null, order: 5 },
+  {
+    id: "brandon-chrostowski",
+    name: "Brandon Chrostowski",
+    role: "Founder, President & CEO, EDWINS Leadership & Restaurant Institute",
+    organization: "EDWINS Leadership & Restaurant Institute",
+    type: "adult",
+    bio: "Brandon Chrostowski is the founder, president, and CEO of EDWINS Leadership and Restaurant Institute, a Cleveland nonprofit that gives formerly incarcerated adults a second chance through free culinary and hospitality training. Classically trained as a chef and sommelier in Paris, New York, and Chicago, he built EDWINS around a French restaurant where students learn the trade, backed by wraparound support that includes housing, a fitness center, free childcare, and a butcher shop, bakery, and diner that employ graduates. The program trains more than one hundred people a year and reports a recidivism rate of just three percent, setting a national standard for re-entry. He has been named a CNN Hero and a 2025 James Beard Impact Award honoree, and was featured in the Academy Award-nominated documentary Knife Skills.",
+    talkTitle: null,
+    image: "/speakers/brandon-chrostowski.jpg",
+    order: 5,
+  },
   {
     id: "india-birdsong-terry",
     name: "India L. Birdsong Terry",
@@ -75,7 +85,7 @@ export const speakers: Speaker[] = [
     order: 6,
   },
 
-  // ── Student speakers (5) ────────────────────────────────────────────
+  // ── Student speakers (6) ────────────────────────────────────────────
   // To add another student, drop a headshot into public/speakers/ and fill in bio + image.
   {
     id: "jackson-sarver",
@@ -132,6 +142,7 @@ export const speakers: Speaker[] = [
     image: "/speakers/priyasha-ghosal.jpg",
     order: 11,
   },
+  { id: "gage-martin", name: "Gage Martin", role: null, organization: null, type: "student", bio: null, talkTitle: null, image: null, order: 12 },
 ];
 
 const byOrder = (a: Speaker, b: Speaker) => a.order - b.order;

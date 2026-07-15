@@ -26,7 +26,7 @@ export type ScheduleSession = {
 /** Flip to true once real times and titles are in below. */
 export const scheduleReady = false;
 
-// Talk slots below (the lineup is 6 adults + 5 students, 11 total). Titles/speakers left blank
+// Talk slots below (the lineup is 6 adults + 6 students, 12 total). Titles/speakers left blank
 // until confirmed. Adjust the number of "Talk N" rows per session to match your final running order.
 export const schedule: ScheduleSession[] = [
   {
@@ -58,6 +58,7 @@ export const schedule: ScheduleSession[] = [
       { time: null, title: "Short break", kind: "break" },
       { time: null, title: "Talk 10", speaker: null, kind: "talk" },
       { time: null, title: "Talk 11", speaker: null, kind: "talk" },
+      { time: null, title: "Talk 12", speaker: null, kind: "talk" },
       { time: null, title: "Closing remarks", kind: "closing" },
     ],
   },

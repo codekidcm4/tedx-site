@@ -39,11 +39,11 @@ export const globalStats: Stat[] = [
 
 export const localStats: Stat[] = [
   {
-    value: "11",
-    numericValue: 11,
+    value: "12",
+    numericValue: 12,
     suffix: "",
     label: "Voices on one stage",
-    description: "Six adult speakers and five student speakers, no age qualifier",
+    description: "Six adult speakers and six student speakers, no age qualifier",
   },
   {
     value: "10",

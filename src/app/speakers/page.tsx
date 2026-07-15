@@ -7,12 +7,12 @@ import { adultSpeakers, studentSpeakers } from "@/data/speakers";
 export const metadata: Metadata = {
   title: "Speakers",
   description:
-    "Meet the TEDxHuntingValley speakers. Six adult speakers and five student speakers sharing one stage on August 22, 2026.",
+    "Meet the TEDxHuntingValley speakers. Six adult speakers and six student speakers sharing one stage on August 22, 2026.",
   alternates: { canonical: "/speakers" },
   openGraph: {
     title: "Speakers | TEDxHuntingValley",
     description:
-      "Eleven voices, one stage, no age qualifier. Six adult speakers and five student speakers introduced the same way and held to the same standard on August 22, 2026.",
+      "Twelve voices, one stage, no age qualifier. Six adult speakers and six student speakers introduced the same way and held to the same standard on August 22, 2026.",
     url: "https://tedxhuntingvalley.com/speakers",
     type: "website",
     images: [{ url: "/og-image.jpg", width: 1200, height: 630, alt: "TEDxHuntingValley speakers" }],
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Speakers | TEDxHuntingValley",
-    description: "Eleven voices, one stage, no age qualifier. August 22, 2026.",
+    description: "Twelve voices, one stage, no age qualifier. August 22, 2026.",
     images: ["/og-image.jpg"],
   },
 };
@@ -53,10 +53,10 @@ export default function SpeakersPage() {
               className="text-white font-extrabold mb-6 max-w-3xl"
               style={{ fontSize: "clamp(2.5rem, 6vw, 5rem)", letterSpacing: "-0.03em", lineHeight: 1.0 }}
             >
-              Eleven voices. One stage. No asterisk.
+              Twelve voices. One stage. No asterisk.
             </h1>
             <p className="text-white/65 text-xl leading-relaxed max-w-2xl">
-              Six adult speakers and five student speakers. Each one introduced the same way.
+              Six adult speakers and six student speakers. Each one introduced the same way.
               Each one held to the same standard. The full lineup is taking shape ahead of August 22.
             </p>
           </FadeIn>
@@ -125,7 +125,7 @@ export default function SpeakersPage() {
                 Student Speakers
               </h2>
               <p className="text-[#555555] mt-3 max-w-xl leading-relaxed">
-                Five student speakers selected from across the greater Cleveland area through an open
+                Six student speakers selected from across the greater Cleveland area through an open
                 competition. Their bios and talks are added here as each is confirmed.
               </p>
             </div>

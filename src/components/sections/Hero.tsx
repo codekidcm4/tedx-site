@@ -69,7 +69,7 @@ export function Hero() {
               </>
             ) : (
               <>
-                Cleveland&apos;s first independent community TEDx in over a decade. Eleven voices, one
+                Cleveland&apos;s first independent community TEDx in over a decade. Twelve voices, one
                 stage, ideas that reach 44 million people.
               </>
             )}

@@ -37,7 +37,7 @@ const differentiators = [
   },
   {
     label: "An open student competition",
-    body: "The student lineup came from an open competition across the greater Cleveland area, with no GPA requirement, no prior experience needed, and no extracurricular list to submit. Five student speakers were selected entirely on the strength and clarity of their idea.",
+    body: "The student lineup came from an open competition across the greater Cleveland area, with no GPA requirement, no prior experience needed, and no extracurricular list to submit. Six student speakers were selected entirely on the strength and clarity of their idea.",
   },
   {
     label: "A globally distributed platform",

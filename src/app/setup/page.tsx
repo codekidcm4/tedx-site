@@ -327,7 +327,7 @@ INSTAGRAM_TOKEN=your_token_here              # if using Instagram API`}</CodeBlo
 
           <Step number="1" title="Open the speakers data file">
             <CodeBlock>src/data/speakers.ts</CodeBlock>
-            <p>There are 11 speaker objects: 6 adults and 5 students. Students that are not yet revealed have a name only. When a student is ready, you fill in their <code className="bg-[#f0f0f0] px-1 py-0.5 rounded text-xs">bio</code> and <code className="bg-[#f0f0f0] px-1 py-0.5 rounded text-xs">image</code>. A talk title is added to any speaker (adult or student) once it is confirmed.</p>
+            <p>There are 12 speaker objects: 6 adults and 6 students. Students that are not yet revealed have a name only. When a student is ready, you fill in their <code className="bg-[#f0f0f0] px-1 py-0.5 rounded text-xs">bio</code> and <code className="bg-[#f0f0f0] px-1 py-0.5 rounded text-xs">image</code>. A talk title is added to any speaker (adult or student) once it is confirmed.</p>
           </Step>
 
           <Step number="2" title="Fill in the speaker's details">
@@ -489,7 +489,7 @@ watchNotifyUrl: null,  // "notify me when talks publish" list`}</CodeBlock>
     │                                AddToCalendar, CountdownTimer, FadeIn, AnimatedCounter
     └── data/                     ← ALL CONTENT LIVES HERE
         ├── site.ts               ← Event info, nav links, dates, launch config
-        ├── speakers.ts           ← 11 speakers (fill in student bios/photos)
+        ├── speakers.ts           ← 12 speakers (fill in student bios/photos)
         └── stats.ts              ← Numbers shown on home page`}</CodeBlock>
           </FadeIn>
         </section>
