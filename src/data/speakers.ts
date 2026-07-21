@@ -49,8 +49,19 @@ export const speakers: Speaker[] = [
     image: "/speakers/fred-nance.jpg",
     order: 2,
   },
-  // Not yet revealed (name only until their bios/photos are provided).
-  { id: "laila-edwards", name: "Laila Edwards", role: null, organization: null, type: "adult", bio: null, talkTitle: null, image: null, order: 3 },
+  {
+    id: "laila-edwards",
+    name: "Laila Edwards",
+    role: "Olympic gold medalist, U.S. Women's National Ice Hockey Team",
+    organization: "USA Hockey / PWHL San Jose",
+    // Compiled from public reporting (see the sources noted when this was added), not written by
+    // Laila. Replace with her own bio if she sends one.
+    type: "adult",
+    bio: "Laila Edwards is an Olympic gold medalist and a Cleveland Heights native who, on her debut in 2023, became the first Black woman to play for the United States women's national hockey team. At the 2026 Milan Cortina Games she became the first Black woman to play hockey for Team USA at an Olympics and the first Black American woman to win Olympic gold in the sport, assisting on the tying goal in a 2-1 overtime win over Canada. She won three NCAA national championships at the University of Wisconsin, and at age 20 she was named MVP of the 2024 World Championship, the youngest player ever to receive the honor. In June 2026 she was selected fourth overall by PWHL San Jose, the highest a Black woman has ever been drafted in the league.",
+    talkTitle: null,
+    image: "/speakers/laila-edwards.jpg",
+    order: 3,
+  },
   {
     id: "marc-byrnes",
     name: "Marc Byrnes",
