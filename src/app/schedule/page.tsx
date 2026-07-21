@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { schedule, scheduleReady, type ScheduleItem } from "@/data/schedule";
+import { schedule, scheduleTentative, type ScheduleItem } from "@/data/schedule";
 import { siteConfig } from "@/data/site";
 
 export const metadata: Metadata = {
   title: "Schedule",
   description:
-    "The day-of schedule for TEDxHuntingValley on August 22, 2026 at Gund Auditorium, University School: two sessions of talks.",
+    "The day-of schedule for TEDxHuntingValley on August 22, 2026 at Gund Auditorium, University School. A student session and an adult session, twelve talks in all.",
   alternates: { canonical: "/schedule" },
 };
 
@@ -19,11 +19,11 @@ const KIND_LABEL: Record<ScheduleItem["kind"], string> = {
 };
 
 function ItemRow({ item }: { item: ScheduleItem }) {
-  const muted = item.kind === "break";
+  const muted = item.kind !== "talk";
   return (
     <li className="flex gap-4 md:gap-6 py-4 border-t border-[#eee]">
-      <div className="w-20 md:w-28 shrink-0">
-        <span className={`text-sm font-semibold ${item.time ? "text-[#0a0a0a]" : "text-[#9a9a9a]"}`}>
+      <div className="w-24 md:w-32 shrink-0">
+        <span className={`text-sm font-semibold tabular-nums ${item.time ? "text-[#0a0a0a]" : "text-[#9a9a9a]"}`}>
           {item.time ?? "TBA"}
         </span>
       </div>
@@ -34,9 +34,7 @@ function ItemRow({ item }: { item: ScheduleItem }) {
             {KIND_LABEL[item.kind]}
           </span>
         </div>
-        {item.kind === "talk" && (
-          <p className="text-sm text-[#777777] mt-0.5">{item.speaker ?? "Speaker to be announced"}</p>
-        )}
+        {item.detail && <p className="text-sm text-[#777777] mt-0.5 italic">&ldquo;{item.detail}&rdquo;</p>}
       </div>
     </li>
   );
@@ -59,20 +57,20 @@ export default function SchedulePage() {
             The day, hour by hour.
           </h1>
           <p className="text-white/65 text-lg leading-relaxed max-w-2xl">
-            {siteConfig.date} at {siteConfig.venueName}, {siteConfig.school}. Two sessions of talks
-            with a break in between.
+            {siteConfig.date} at {siteConfig.venueName}, {siteConfig.school}. Doors at 12:30, six
+            student talks, an intermission and reception, then six adult talks. All times PM.
           </p>
         </div>
       </div>
 
       <section className="bg-white py-16 md:py-24">
         <div className="max-w-3xl mx-auto px-6 md:px-8 lg:px-12">
-          {!scheduleReady && (
+          {scheduleTentative && (
             <div className="mb-10 flex items-start gap-3 rounded-sm border border-[#f0d9d6] bg-[#fdf3f2] p-4">
               <span className="mt-1 w-2 h-2 rounded-full bg-[#e62b1e] shrink-0" aria-hidden="true" />
               <p className="text-sm text-[#7a2b25] leading-relaxed">
-                Exact times and talk titles are being finalized. This is the shape of the day; check
-                back closer to August 22 for the full lineup and timings.
+                This is the draft running order. Times may shift slightly before August 22, and talk
+                titles are added here as each speaker confirms.
               </p>
             </div>
           )}
@@ -80,12 +78,13 @@ export default function SchedulePage() {
           <div className="space-y-14">
             {schedule.map((session) => (
               <div key={session.id}>
-                <div className="flex flex-wrap items-baseline justify-between gap-2 mb-2">
+                <div className="flex flex-wrap items-baseline justify-between gap-2">
                   <h2 className="text-2xl font-extrabold text-[#0a0a0a]">{session.name}</h2>
-                  <span className="text-sm font-semibold text-[#777777]">
+                  <span className="text-sm font-semibold text-[#777777] tabular-nums">
                     {session.window ?? "Time to be announced"}
                   </span>
                 </div>
+                <p className="text-xs text-[#9a9a9a] mb-2">Admission: {session.ticket}</p>
                 <ul>
                   {session.items.map((item, i) => (
                     <ItemRow key={`${session.id}-${i}`} item={item} />

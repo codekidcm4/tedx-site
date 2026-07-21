@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { CountdownTimer } from "@/components/ui/CountdownTimer";
 import { useEventPhase } from "@/lib/eventPhaseClient";
+import { siteConfig } from "@/data/site";
 
 export function Hero() {
   const phase = useEventPhase();
@@ -102,7 +103,7 @@ export function Hero() {
                 <span className="text-sm font-semibold text-white/80">That&apos;s a wrap. Thank you, Cleveland.</span>
               </span>
             ) : (
-              <CountdownTimer targetDate="2026-08-22T09:00:00" variant="hero" expiredMessage="Today is the day." />
+              <CountdownTimer targetDate={siteConfig.startDateTimeISO} variant="hero" expiredMessage="Today is the day." />
             )}
           </motion.div>
 

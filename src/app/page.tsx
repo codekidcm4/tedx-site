@@ -44,9 +44,8 @@ const eventJsonLd = {
   name: "TEDxHuntingValley",
   description:
     "The Invisible Engine: The Forces We Forget. Cleveland's first independent community TEDx in over a decade. Six adult speakers and six student speakers share one stage. Organized by two University School students.",
-  // Date-only until doors/start times are confirmed (the visible UI says "time to be announced").
-  // Restore time-precise start/end once siteConfig.doorsOpen/startTime are set.
-  startDate: siteConfig.dateISO,
+  startDate: siteConfig.startDateTimeISO,
+  endDate: siteConfig.endDateTimeISO,
   eventStatus: "https://schema.org/EventScheduled",
   eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
   location: {

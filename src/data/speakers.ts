@@ -142,7 +142,17 @@ export const speakers: Speaker[] = [
     image: "/speakers/priyasha-ghosal.jpg",
     order: 11,
   },
-  { id: "gage-martin", name: "Gage Martin", role: null, organization: null, type: "student", bio: null, talkTitle: null, image: null, order: 12 },
+  {
+    id: "gage-martin",
+    name: "Gage Martin",
+    role: "Senior, Louisville High School",
+    organization: "Louisville High School",
+    type: "student",
+    bio: "Gage Martin is a senior at Louisville High School and a member of the Teen Wellness Team for the Ohio Department of Health, where he helps shape Stark County's Community Health Improvement Plan. He is president of his school's Speech and Debate team, which he has competed on for seven years, making him one of the top competitors in the Ohio Speech and Debate Association. Gage is an alumnus of Hugh O'Brian Youth Leadership, an NSDA Academic All American, and the creator of the nationally recognized Duck Game used in schools. Outside of that he enjoys pickleball, rock climbing, and taking care of his lawn, and his talk digs into corporate influences on our culture and what we might do to minimize them.",
+    talkTitle: null,
+    image: "/speakers/gage-martin.jpg",
+    order: 12,
+  },
 ];
 
 const byOrder = (a: Speaker, b: Speaker) => a.order - b.order;

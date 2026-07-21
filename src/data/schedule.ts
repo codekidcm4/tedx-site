@@ -1,65 +1,65 @@
-// Day-of schedule for TEDxHuntingValley. Everything is "to be announced" until you fill it in.
+// Day-of running order for TEDxHuntingValley (August 22, 2026).
 //
-// HOW TO PUBLISH THE REAL SCHEDULE:
-//   1. Set `scheduleReady = true`.
-//   2. Fill in each session's `window` (e.g. "9:00 AM – 12:00 PM") and each item's `time`,
-//      `title`, and `speaker`. Add or remove items freely.
-// While `scheduleReady` is false, the /schedule page shows the framework with "To be announced"
-// placeholders, so the page is useful even before times are locked.
+// HOW TO UPDATE:
+//   - Edit the times and names below; the /schedule page follows automatically.
+//   - Add a talk title once confirmed by setting `detail` on that item.
+//   - When the running order is locked, set `scheduleTentative = false` to drop the draft notice.
+// All times are PM.
 
 export type ScheduleKind = "opening" | "talk" | "performance" | "break" | "closing";
 
 export type ScheduleItem = {
-  time: string | null; // e.g. "9:15 AM"; null shows as "TBA"
-  title: string;
-  speaker?: string | null;
+  time: string | null; // e.g. "1:05 – 1:25"; null shows as "TBA"
+  title: string; // the speaker's name for talks, otherwise the segment name
+  detail?: string | null; // optional second line, e.g. the talk title once announced
   kind: ScheduleKind;
 };
 
 export type ScheduleSession = {
   id: "s1" | "s2";
   name: string;
-  window: string | null; // e.g. "9:00 AM – 12:00 PM"; null shows as "Time to be announced"
+  window: string | null; // null shows as "Time to be announced"
+  ticket: string; // which ticket admits you to this session
   items: ScheduleItem[];
 };
 
-/** Flip to true once real times and titles are in below. */
-export const scheduleReady = false;
+/** Real times are published (false would show TBA placeholders instead). */
+export const scheduleReady = true;
+/** Still a draft: shows a "times may shift" notice on /schedule. */
+export const scheduleTentative = true;
 
-// Talk slots below (the lineup is 6 adults + 6 students, 12 total). Titles/speakers left blank
-// until confirmed. Adjust the number of "Talk N" rows per session to match your final running order.
 export const schedule: ScheduleSession[] = [
   {
     id: "s1",
-    name: "Session 1",
-    window: null,
+    name: "Student Session",
+    window: "1:00 – 3:05 PM",
+    ticket: "Session 1 ticket or the All-Day Pass",
     items: [
-      { time: null, title: "Doors open", kind: "opening" },
-      { time: null, title: "Welcome and opening remarks", kind: "opening" },
-      { time: null, title: "Talk 1", speaker: null, kind: "talk" },
-      { time: null, title: "Talk 2", speaker: null, kind: "talk" },
-      { time: null, title: "Talk 3", speaker: null, kind: "talk" },
-      { time: null, title: "Short break", kind: "break" },
-      { time: null, title: "Talk 4", speaker: null, kind: "talk" },
-      { time: null, title: "Talk 5", speaker: null, kind: "talk" },
-      { time: null, title: "Talk 6", speaker: null, kind: "talk" },
-      { time: null, title: "Intermission", kind: "break" },
+      { time: "12:30 – 1:00", title: "Guest arrival and check-in", kind: "opening" },
+      { time: "1:00 – 1:05", title: "Opening remarks", kind: "opening" },
+      { time: "1:05 – 1:25", title: "Ethan Shneyderman", kind: "talk" },
+      { time: "1:25 – 1:45", title: "Jackson Sarver", kind: "talk" },
+      { time: "1:45 – 2:05", title: "Claire Witalec", kind: "talk" },
+      { time: "2:05 – 2:25", title: "Priyasha Ghosal", kind: "talk" },
+      { time: "2:25 – 2:45", title: "Gage Martin", kind: "talk" },
+      { time: "2:45 – 3:05", title: "James Mason Jr.", kind: "talk" },
+      { time: "3:05 – 3:40", title: "Intermission and reception", kind: "break" },
     ],
   },
   {
     id: "s2",
-    name: "Session 2",
-    window: null,
+    name: "Adult Session",
+    window: "3:40 – 5:55 PM",
+    ticket: "Session 2 ticket or the All-Day Pass",
     items: [
-      { time: null, title: "Session 2 doors", kind: "opening" },
-      { time: null, title: "Talk 7", speaker: null, kind: "talk" },
-      { time: null, title: "Talk 8", speaker: null, kind: "talk" },
-      { time: null, title: "Talk 9", speaker: null, kind: "talk" },
-      { time: null, title: "Short break", kind: "break" },
-      { time: null, title: "Talk 10", speaker: null, kind: "talk" },
-      { time: null, title: "Talk 11", speaker: null, kind: "talk" },
-      { time: null, title: "Talk 12", speaker: null, kind: "talk" },
-      { time: null, title: "Closing remarks", kind: "closing" },
+      { time: "3:40 – 3:45", title: "Adult session introduction", kind: "opening" },
+      { time: "3:45 – 4:05", title: "Nic Barlage", kind: "talk" },
+      { time: "4:05 – 4:25", title: "Brandon Chrostowski", kind: "talk" },
+      { time: "4:25 – 4:45", title: "Laila Edwards", kind: "talk" },
+      { time: "4:45 – 5:05", title: "India L. Birdsong Terry", kind: "talk" },
+      { time: "5:05 – 5:25", title: "Marc Byrnes", kind: "talk" },
+      { time: "5:25 – 5:45", title: "Fred Nance", kind: "talk" },
+      { time: "5:45 – 5:55", title: "Closing remarks", kind: "closing" },
     ],
   },
 ];

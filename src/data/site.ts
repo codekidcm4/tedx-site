@@ -5,13 +5,13 @@ export const siteConfig = {
   // Event date and timing
   date: "August 22, 2026",
   dateISO: "2026-08-22",
-  // Doors / start times are not finalized yet. Set these to real values (e.g. "5:30 PM")
-  // to surface them in the event-essentials card; while null, the card shows "Time to be announced".
-  doorsOpen: null as string | null,
-  startTime: null as string | null,
-  // Used by the home-page event countdown and JSON-LD. Update if the start time is confirmed.
-  startDateTimeISO: "2026-08-22T09:00:00-04:00",
-  endDateTimeISO: "2026-08-22T17:00:00-04:00",
+  // From the draft running order (see src/data/schedule.ts). Update both places together if the
+  // times shift. Set either to null to show "Time to be announced" in the event-essentials card.
+  doorsOpen: "12:30 PM" as string | null,
+  startTime: "1:00 PM" as string | null,
+  // Drives the countdown, the Event JSON-LD, and the pre/live/post event phase.
+  startDateTimeISO: "2026-08-22T13:00:00-04:00",
+  endDateTimeISO: "2026-08-22T17:55:00-04:00",
 
   // Venue + address
   venue: "Gund Auditorium, University School",
