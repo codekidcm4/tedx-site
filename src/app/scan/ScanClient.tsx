@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from "react";
 import type { Html5Qrcode as Html5QrcodeInstance } from "html5-qrcode";
-import { verifyStaffCode } from "./actions";
 import { sessionById } from "@/data/tickets";
 import type { SessionId } from "@/data/tickets";
 
@@ -16,14 +15,7 @@ type ScanResult =
   | { kind: "status"; status: string; seat?: string; session?: string; holder_name?: string | null }
   | { kind: "error"; message: string };
 
-const STORAGE_KEY = "tedx_scan_code";
-
 export function ScanClient() {
-  const [authed, setAuthed] = useState(false);
-  const [codeInput, setCodeInput] = useState("");
-  const [gateState, setGateState] = useState<"idle" | "checking" | "error">("idle");
-  const codeRef = useRef("");
-
   const [scanning, setScanning] = useState(false);
   const [cameraError, setCameraError] = useState<string | null>(null);
   const [manualToken, setManualToken] = useState("");
@@ -35,15 +27,6 @@ export function ScanClient() {
   const cancelledRef = useRef(false);
   const lastRef = useRef<{ token: string; at: number }>({ token: "", at: 0 });
 
-  // Restore a validated code within the same tab so a refresh at the door doesn't lock staff out.
-  useEffect(() => {
-    const saved = sessionStorage.getItem(STORAGE_KEY);
-    if (saved) {
-      codeRef.current = saved;
-      setAuthed(true);
-    }
-  }, []);
-
   // Stop the camera if the component unmounts mid-scan (even while start() is still initializing).
   useEffect(() => {
     return () => {
@@ -52,23 +35,6 @@ export function ScanClient() {
       if (inst) inst.stop().catch(() => {});
     };
   }, []);
-
-  async function unlock(e: React.FormEvent) {
-    e.preventDefault();
-    setGateState("checking");
-    try {
-      const r = await verifyStaffCode(codeInput);
-      if (r.ok) {
-        codeRef.current = codeInput.trim();
-        sessionStorage.setItem(STORAGE_KEY, codeInput.trim());
-        setAuthed(true);
-      } else {
-        setGateState("error");
-      }
-    } catch {
-      setGateState("error");
-    }
-  }
 
   async function submitToken(raw: string) {
     const token = (raw || "").trim();
@@ -81,16 +47,9 @@ export function ScanClient() {
       const res = await fetch("/api/scan", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ code: codeRef.current, token }),
+        body: JSON.stringify({ token }),
       });
       const d = await res.json().catch(() => ({}));
-      if (res.status === 401) {
-        sessionStorage.removeItem(STORAGE_KEY);
-        await stopCamera();
-        setAuthed(false);
-        setResult({ kind: "error", message: "Staff code was rejected. Enter it again." });
-        return;
-      }
       setResult({ kind: "status", status: d.status, seat: d.seat, session: d.session, holder_name: d.holder_name });
       if (d.status === "checked_in") setCount((c) => c + 1);
     } catch {
@@ -112,7 +71,7 @@ export function ScanClient() {
         (decoded) => submitToken(decoded),
         () => {} // ignore per-frame "no code in view" errors
       );
-      // If we were torn down (unmount / Stop / de-auth) while the camera was starting, stop it now.
+      // If we were torn down (unmount / Stop) while the camera was starting, stop it now.
       // Only record the running instance AFTER start resolves, so stop() is never called too early.
       if (cancelledRef.current) { try { await inst.stop(); } catch {} return; }
       scannerRef.current = inst;
@@ -132,35 +91,6 @@ export function ScanClient() {
       scannerRef.current = null;
     }
     setScanning(false);
-  }
-
-  // ── Gate ──
-  if (!authed) {
-    return (
-      <form onSubmit={unlock} className="bg-white rounded-sm p-6">
-        <label htmlFor="staff-code" className="block text-sm font-semibold text-[#0a0a0a] mb-2">Staff code</label>
-        <input
-          id="staff-code"
-          type="password"
-          autoComplete="off"
-          value={codeInput}
-          onChange={(e) => { setCodeInput(e.target.value); setGateState("idle"); }}
-          placeholder="Enter staff code"
-          className="w-full px-4 py-3 text-sm rounded-sm border border-[#e0e0e0] outline-none focus:border-[#e62b1e] transition-colors"
-          aria-invalid={gateState === "error"}
-        />
-        {gateState === "error" && (
-          <p className="mt-2 text-xs text-[#c9231a] font-semibold" role="alert">That code didn&apos;t work.</p>
-        )}
-        <button
-          type="submit"
-          disabled={gateState === "checking" || codeInput.trim().length === 0}
-          className="mt-4 w-full inline-flex items-center justify-center px-6 py-3 bg-[#e62b1e] text-white font-bold text-sm rounded-sm hover:bg-[#c9231a] transition-colors disabled:opacity-50"
-        >
-          {gateState === "checking" ? "Checking…" : "Unlock scanner"}
-        </button>
-      </form>
-    );
   }
 
   // ── Scanner ──

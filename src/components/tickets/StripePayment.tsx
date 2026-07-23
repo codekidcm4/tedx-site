@@ -8,6 +8,8 @@ import type { SessionId } from "@/data/tickets";
 
 const pk = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY;
 export const stripeConfigured = Boolean(pk);
+// Only a pk_test_ key is a sandbox. On a live key we must never show the test-card hint to buyers.
+const isTestMode = (pk || "").startsWith("pk_test_");
 const stripePromise = pk ? loadStripe(pk) : null;
 
 function PayForm({ amount, onSuccess }: { amount: number; onSuccess: () => void }) {
@@ -48,7 +50,7 @@ function PayForm({ amount, onSuccess }: { amount: number; onSuccess: () => void 
         {submitting ? "Processing…" : `Pay ${formatPrice(amount)}`}
       </button>
       <p className="text-[0.65rem] text-[#6b6b6b] mt-3">
-        Payments are secured by Stripe. Test mode: use card 4242 4242 4242 4242, any future date and CVC.
+        Payments are secured by Stripe.{isTestMode ? " Test mode: use card 4242 4242 4242 4242, any future date and CVC." : ""}
       </p>
     </form>
   );

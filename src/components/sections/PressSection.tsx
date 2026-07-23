@@ -23,7 +23,7 @@ export const pressItems = [
     headline:
       "Students revive Cleveland-area TEDx, open speaker applications to local teens",
     quote:
-      "Two University School juniors are organizing TEDxHuntingValley — the first independent, community-led TEDx in Cleveland since 2015.",
+      "Two University School juniors are organizing TEDxHuntingValley, the first independent, community-led TEDx in Cleveland since 2015.",
     url: "https://www.cleveland.com/brunswicksun/2026/04/students-revive-cleveland-area-tedx-open-speaker-applications-to-local-teens.html",
     date: "April 2026",
   },
@@ -39,7 +39,7 @@ export const pressItems = [
     outlet: "WFMJ",
     headline: "Mahoning Valley students sought for TED event in Cleveland area",
     quote:
-      "Two University School juniors are organizing TEDxHuntingValley — the first independent, community-led TEDx in Cleveland since 2015.",
+      "Two University School juniors are organizing TEDxHuntingValley, the first independent, community-led TEDx in Cleveland since 2015.",
     url: "https://www.wfmj.com/news/local-news/mahoning-valley-students-sought-for-ted-event-in-cleveland-area/article_94320327-cafc-4cc7-9f00-0920b055a921.html",
     date: "April 2026",
   },

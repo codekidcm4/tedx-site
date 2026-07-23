@@ -6,8 +6,8 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-// Staff-only door check-in scanner. Not linked from the site; share the URL + staff code with door
-// volunteers. The staff code (TICKETS_SCAN_CODE) is required to unlock and on every check-in.
+// Staff-only door check-in scanner. Not linked from the site; the URL is unguessable and is shared
+// with door volunteers directly, which is the only gate. Robots are told not to index it.
 export default function ScanPage() {
   return (
     <section className="min-h-[90vh] bg-[#0a0a0a] py-12 md:py-16">
@@ -21,7 +21,7 @@ export default function ScanPage() {
             Door check-in
           </h1>
           <p className="text-white/55 text-sm mt-2 leading-relaxed">
-            Scan each attendee&apos;s QR code at the door. Enter the staff code to begin.
+            Scan each attendee&apos;s QR code at the door. Tap Start camera to begin.
           </p>
         </div>
         <ScanClient />

@@ -40,7 +40,7 @@ export function Hero() {
           >
             <span className="inline-block w-8 h-0.5 bg-[#e62b1e]" aria-hidden="true" />
             <span className="text-[0.65rem] font-bold tracking-[0.18em] uppercase text-[#e62b1e]">
-              TEDxHuntingValley &mdash; August 22, 2026
+              TEDxHuntingValley, August 22, 2026
             </span>
           </motion.div>
 

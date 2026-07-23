@@ -1,9 +1,9 @@
 import { NextResponse } from "next/server";
 import { checkInTicket } from "@/lib/ticketsDb";
-import { isValidStaffCode } from "@/lib/scanAuth";
 
-// Door check-in. Staff POST { code, token } where token is either a raw QR token or the full
-// /ticket/<token> URL that the QR encodes. The staff code is required on every request.
+// Door check-in. POST { token } where token is either a raw QR token or the full /ticket/<token>
+// URL that the QR encodes. The /scan page itself is the gate: the URL is unguessable and is shared
+// with door staff directly, so no separate staff code is required.
 function extractToken(raw: string): string {
   const s = (raw || "").trim();
   const marker = "/ticket/";
@@ -19,11 +19,7 @@ export async function POST(req: Request) {
   } catch {
     return NextResponse.json({ error: "bad_request" }, { status: 400 });
   }
-  const { code, token } = (body ?? {}) as { code?: unknown; token?: unknown };
-
-  if (!isValidStaffCode(code)) {
-    return NextResponse.json({ error: "unauthorized" }, { status: 401 });
-  }
+  const { token } = (body ?? {}) as { token?: unknown };
 
   const parsed = extractToken(typeof token === "string" ? token : "");
   if (!parsed) return NextResponse.json({ status: "invalid" }, { status: 400 });

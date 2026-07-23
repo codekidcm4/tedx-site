@@ -254,19 +254,23 @@ export function TicketFlow() {
               <>
                 <p className="text-[0.65rem] font-bold tracking-[0.18em] uppercase text-[#6b6b6b] mb-4">Confirmation</p>
                 <div className="max-w-lg border border-[#e0e0e0] rounded-sm p-6 bg-[#f9f9f9]">
-                  <div className="inline-flex items-center gap-2 mb-3 px-2.5 py-1 rounded-full bg-[#0a0a0a]">
-                    <span className="text-[0.55rem] font-bold tracking-[0.16em] uppercase text-[#e62b1e]">Test mode</span>
-                  </div>
-                  <p className="font-bold text-[#0a0a0a] mb-2">
-                    {stripeConfigured ? "Payment received." : "Your details look good."}
-                  </p>
-                  <p className="text-sm text-[#555555] leading-relaxed">
-                    {stripeConfigured
-                      ? "In test mode no real charge is made. The final step (emailing a QR code per seat and reserving the seats) connects with the database next."
-                      : "Once Stripe is connected, this step charges the card and emails your tickets."}{" "}
-                    Your {selected.length} ticket{selected.length > 1 ? "s" : ""} would go to{" "}
-                    <span className="font-semibold text-[#0a0a0a]">{email}</span>.
-                  </p>
+                  {stripeConfigured ? (
+                    <>
+                      <p className="font-bold text-[#0a0a0a] mb-2">You&apos;re in. Payment received.</p>
+                      <p className="text-sm text-[#555555] leading-relaxed">
+                        Your seats for {sessionById(sessionId).name} are confirmed, and your QR ticket{selected.length > 1 ? "s have" : " has"} been emailed to{" "}
+                        <span className="font-semibold text-[#0a0a0a]">{email}</span> (one code per seat). Show the QR at the door. If it is not in your inbox within a few minutes, please check your spam folder.
+                      </p>
+                    </>
+                  ) : (
+                    <>
+                      <p className="font-bold text-[#0a0a0a] mb-2">Your details look good.</p>
+                      <p className="text-sm text-[#555555] leading-relaxed">
+                        Card payments are not enabled on this deploy yet. Your {selected.length} seat{selected.length > 1 ? "s" : ""} would be emailed to{" "}
+                        <span className="font-semibold text-[#0a0a0a]">{email}</span>.
+                      </p>
+                    </>
+                  )}
                 </div>
               </>
             ) : substep === "payment" ? (

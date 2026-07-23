@@ -47,7 +47,7 @@ const storyAngles = [
   {
     number: "03",
     title: "The Equal Stage Model",
-    body: "At TEDxHuntingValley, a student speaker is not introduced as a student. They are introduced as a TEDxHuntingValley speaker — identical to every adult on the same stage. No age qualifier. No asterisk. An idea is an idea.",
+    body: "At TEDxHuntingValley, a student speaker is not introduced as a student. They are introduced as a TEDxHuntingValley speaker, identical to every adult on the same stage. No age qualifier. No asterisk. An idea is an idea.",
   },
   {
     number: "04",
@@ -101,7 +101,7 @@ export default function PressPage() {
               Press Kit
             </h1>
             <p className="text-white/65 text-xl leading-relaxed max-w-2xl mb-10">
-              TEDxHuntingValley — August 22, 2026. Cleveland&apos;s first independent community
+              TEDxHuntingValley, August 22, 2026. Cleveland&apos;s first independent community
               TEDx in over a decade, organized by two high school juniors.
             </p>
             {/* Downloads */}
@@ -162,7 +162,7 @@ export default function PressPage() {
                     share the same stage with identical introductions. No age qualifier.
                   </p>
                   <p>
-                    All talks are filmed and published to the TEDx YouTube channel — 44 million
+                    All talks are filmed and published to the TEDx YouTube channel, 44 million
                     subscribers, more than 8 billion total views. A local idea, if it&apos;s good
                     enough, reaches a global audience for free, forever.
                   </p>

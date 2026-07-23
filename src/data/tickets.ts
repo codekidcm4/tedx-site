@@ -56,7 +56,7 @@ const centerRows: SeatRow[] = [
   { row: "G", seats: 14 },
 ];
 
-// Side sections: front row (A) unused. The first row in use (B) has 3 seats per wing; rows C–G
+// Side sections: front row (A) unused. The first row in use (B) has 3 seats per wing; rows C-G
 // have 2. That is 13 seats per side (one extra chair added to each wing's first row).
 const wingRows: SeatRow[] = [
   { row: "B", seats: 3 },

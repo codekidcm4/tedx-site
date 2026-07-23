@@ -21,7 +21,7 @@ export function Footer() {
             <p className="text-[#9a9a9a] text-sm leading-relaxed max-w-xs">
               The Invisible Engine: The Forces We Forget.
               <br />
-              August 22, 2026 &mdash; Gund Auditorium, University School, Hunting Valley, Ohio.
+              August 22, 2026, Gund Auditorium, University School, Hunting Valley, Ohio.
             </p>
             {/* Social links */}
             <div className="flex gap-4 mt-6">

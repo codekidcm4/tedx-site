@@ -4,7 +4,7 @@ import { FadeIn, StaggerContainer, StaggerItem } from "@/components/ui/FadeIn";
 
 export const metadata: Metadata = {
   title: "Site Setup Guide",
-  description: "Complete setup instructions for TEDxHuntingValley — Google Analytics, social feeds, Vercel deployment, and content updates.",
+  description: "Complete setup instructions for TEDxHuntingValley, Google Analytics, social feeds, Vercel deployment, and content updates.",
   robots: { index: false, follow: false },
 };
 
@@ -165,7 +165,7 @@ npm install</CodeBlock>
           <Step number="2" title="Start the development server">
             <CodeBlock>npm run dev</CodeBlock>
             <p>The site will be available at <strong className="text-[#0a0a0a]">http://localhost:3000</strong></p>
-            <p>The dev server hot-reloads — any file you save is reflected in the browser immediately without a restart.</p>
+            <p>The dev server hot-reloads, any file you save is reflected in the browser immediately without a restart.</p>
           </Step>
 
           <Step number="3" title="Build for production (optional local check)">
@@ -193,19 +193,19 @@ npm start</CodeBlock>
             <p>Click Admin (bottom left gear icon), then Create Property.</p>
             <p>Name it &ldquo;TEDxHuntingValley&rdquo;, set the time zone to Eastern Time, currency to USD.</p>
             <p>Select &ldquo;Web&rdquo; as the platform, enter your domain (or tedxhuntingvalley.com), and create the data stream.</p>
-            <p>Copy the Measurement ID — it looks like: <code className="bg-[#f0f0f0] px-1 py-0.5 rounded text-xs font-mono">G-XXXXXXXXXX</code></p>
+            <p>Copy the Measurement ID, it looks like: <code className="bg-[#f0f0f0] px-1 py-0.5 rounded text-xs font-mono">G-XXXXXXXXXX</code></p>
           </Step>
 
           <Step number="2" title="Add your Measurement ID to the instrumentation file">
             <p>Open this file in your code editor:</p>
             <CodeBlock>instrumentation-client.ts  {/* in the project root */}</CodeBlock>
             <p>Replace <code className="bg-[#f0f0f0] px-1 py-0.5 rounded text-xs font-mono">G-XXXXXXXXXX</code> with your real ID on line 15.</p>
-            <p>Then uncomment the code blocks marked with &ldquo;UNCOMMENT BELOW&rdquo; — there are two of them (one in <code className="bg-[#f0f0f0] px-1 py-0.5 rounded text-xs">register()</code> and one in <code className="bg-[#f0f0f0] px-1 py-0.5 rounded text-xs">onRouteChange()</code>).</p>
+            <p>Then uncomment the code blocks marked with &ldquo;UNCOMMENT BELOW&rdquo;, there are two of them (one in <code className="bg-[#f0f0f0] px-1 py-0.5 rounded text-xs">register()</code> and one in <code className="bg-[#f0f0f0] px-1 py-0.5 rounded text-xs">onRouteChange()</code>).</p>
           </Step>
 
           <Step number="3" title="Verify it's working">
             <p>Deploy the site (see Vercel section below), then go to your GA4 property.</p>
-            <p>Click Reports, then Realtime. Visit the live site — your session should appear within a few seconds.</p>
+            <p>Click Reports, then Realtime. Visit the live site, your session should appear within a few seconds.</p>
           </Step>
 
           <div className="mt-6 p-5 bg-[#f9f9f9] border border-[#e0e0e0]">
@@ -226,7 +226,7 @@ npm start</CodeBlock>
             posts. To replace them with real, live posts, you have two options:
           </p>
 
-          <Step number="A" title="Option A — Embed a third-party widget (fastest, no code)">
+          <Step number="A" title="Option A: Embed a third-party widget (fastest, no code)">
             <p>Services like <strong className="text-[#0a0a0a]">Elfsight</strong>, <strong className="text-[#0a0a0a]">SnapWidget</strong>, or <strong className="text-[#0a0a0a]">Behold.so</strong> generate an embed code that pulls your real Instagram posts and renders them on any website.</p>
             <p><strong className="text-[#0a0a0a]">Steps:</strong></p>
             <p>1. Sign up for one of those services and connect your @tedxhuntingvalley Instagram account.</p>
@@ -236,7 +236,7 @@ npm start</CodeBlock>
             <p className="text-[#9a9a9a] text-xs">Most of these have a free tier with a small logo. Paid tiers remove branding.</p>
           </Step>
 
-          <Step number="B" title="Option B — Instagram Basic Display API (real integration, requires review)">
+          <Step number="B" title="Option B: Instagram Basic Display API (real integration, requires review)">
             <p>Instagram&apos;s official API lets you pull your own posts programmatically. This is more work but gives you full control over layout and no third-party branding.</p>
             <p><strong className="text-[#0a0a0a]">Steps (high-level):</strong></p>
             <p>1. Go to <strong className="text-[#0a0a0a]">developers.facebook.com</strong>, create an App, and add the Instagram Basic Display product.</p>
@@ -257,7 +257,7 @@ export async function GET() {
 }`}</CodeBlock>
           </Step>
 
-          <Step number="C" title="Option C — X (Twitter) embed">
+          <Step number="C" title="Option C: X (Twitter) embed">
             <p>Twitter/X no longer offers a free API for timeline embeds. The simplest approach:</p>
             <p>1. Go to <strong className="text-[#0a0a0a]">publish.twitter.com</strong>, enter your @tedxhuntingvalley handle, and select &ldquo;Embedded Timeline.&rdquo;</p>
             <p>2. Click Set customization options, set a dark theme or light theme, and copy the generated HTML.</p>
@@ -281,13 +281,13 @@ export async function GET() {
             <p>If you haven&apos;t already, create a repository on github.com and push the project:</p>
             <CodeBlock>{`git init
 git add .
-git commit -m "Initial commit — TEDxHuntingValley site"
+git commit -m "Initial commit, TEDxHuntingValley site"
 git remote add origin https://github.com/YOUR_USERNAME/tedx-site.git
 git push -u origin main`}</CodeBlock>
           </Step>
 
           <Step number="2" title="Import the project into Vercel">
-            <p>Go to <strong className="text-[#0a0a0a]">vercel.com</strong> and sign in (or sign up — it&apos;s free).</p>
+            <p>Go to <strong className="text-[#0a0a0a]">vercel.com</strong> and sign in (or sign up, it&apos;s free).</p>
             <p>Click &ldquo;Add New Project,&rdquo; then &ldquo;Import Git Repository.&rdquo;</p>
             <p>Select your GitHub repository. Vercel will auto-detect that it&apos;s a Next.js project.</p>
             <p>Click Deploy. Your site will be live at a <code className="bg-[#f0f0f0] px-1 py-0.5 rounded text-xs">*.vercel.app</code> URL within about 60 seconds.</p>
@@ -305,7 +305,7 @@ git push -u origin main`}</CodeBlock>
             <CodeBlock>{`# Variables to add in Vercel dashboard:
 NEXT_PUBLIC_GA_MEASUREMENT_ID=G-XXXXXXXXXX   # for Google Analytics
 INSTAGRAM_TOKEN=your_token_here              # if using Instagram API`}</CodeBlock>
-            <p>After adding variables, redeploy (push any commit to GitHub — Vercel deploys automatically).</p>
+            <p>After adding variables, redeploy (push any commit to GitHub, Vercel deploys automatically).</p>
           </Step>
 
           <Step number="5" title="Automatic deploys going forward">
@@ -423,7 +423,7 @@ watchNotifyUrl: null,  // "notify me when talks publish" list`}</CodeBlock>
             <Step number="6" title="Update the OG image (social share preview)">
               <p>When the site URL is shared on iMessage, Twitter, Slack, etc., it shows a preview image. The current one is a placeholder:</p>
               <CodeBlock>public/og-image.jpg</CodeBlock>
-              <p>Replace it with a 1200x630 image — ideally a branded graphic with the event name and date. Keep the filename the same.</p>
+              <p>Replace it with a 1200x630 image, ideally a branded graphic with the event name and date. Keep the filename the same.</p>
             </Step>
 
             <Step number="7" title="Add event photos and talk videos after August 22">
@@ -434,7 +434,7 @@ watchNotifyUrl: null,  // "notify me when talks publish" list`}</CodeBlock>
   src="https://www.youtube.com/embed/VIDEO_ID"
   className="w-full aspect-video"
   allowFullScreen
-  title="Speaker Name — Talk Title"
+  title="Speaker Name, Talk Title"
 />`}</CodeBlock>
             </Step>
           </div>
