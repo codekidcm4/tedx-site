@@ -24,8 +24,8 @@ export const ticketConfig = {
   // Set to true only after Stripe + the seat database are connected and tested.
   checkoutLive: false,
   sessions: [
-    { id: "s1", name: "Session 1", detail: "Single session", price: 2500 },
-    { id: "s2", name: "Session 2", detail: "Single session", price: 2500 },
+    { id: "s1", name: "Session 1", detail: "Student speakers · 1:00 PM", price: 2500 },
+    { id: "s2", name: "Session 2", detail: "Adult speakers · 3:40 PM", price: 2500 },
     { id: "all-day", name: "All-Day Pass", detail: "Both sessions · best value", price: 5000 },
   ] as TicketSession[],
 };
