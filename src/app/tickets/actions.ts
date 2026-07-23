@@ -15,8 +15,9 @@ function normalize(s: string): string {
 }
 
 export async function verifyPresaleCode(code: string): Promise<{ ok: boolean }> {
-  const allowed = (process.env.TICKETS_PRESALE_CODE || FALLBACK_CODE)
-    .split(",")
+  // The known live code (FALLBACK_CODE) is ALWAYS accepted, plus any comma-separated codes set in
+  // TICKETS_PRESALE_CODE. This way the gate still works even if the env var is unset or mistyped.
+  const allowed = [FALLBACK_CODE, ...(process.env.TICKETS_PRESALE_CODE || "").split(",")]
     .map(normalize)
     .filter(Boolean);
   const given = normalize(code);
