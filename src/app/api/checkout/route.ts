@@ -79,7 +79,8 @@ export async function POST(req: Request) {
     const intent = await stripe.paymentIntents.create({
       amount,
       currency: ticketConfig.currency,
-      automatic_payment_methods: { enabled: true },
+      // Card only: no Stripe Link "save your info for faster checkout" prompt, no wallet upsell.
+      payment_method_types: ["card"],
       receipt_email: buyerEmail || undefined,
       metadata: {
         event: "TEDxHuntingValley",
