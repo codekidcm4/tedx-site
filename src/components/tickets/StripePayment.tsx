@@ -38,7 +38,8 @@ function PayForm({ amount, onSuccess }: { amount: number; onSuccess: () => void 
 
   return (
     <form onSubmit={handlePay} className="max-w-lg">
-      <PaymentElement options={{ layout: "tabs" }} />
+      {/* Keep Apple Pay / Google Pay, but hide the Link "save your info" upsell. */}
+      <PaymentElement options={{ layout: "tabs", wallets: { link: "never" } }} />
       {error && (
         <p className="mt-3 text-xs text-[#e62b1e] font-semibold" role="alert">{error}</p>
       )}

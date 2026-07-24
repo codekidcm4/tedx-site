@@ -79,8 +79,9 @@ export async function POST(req: Request) {
     const intent = await stripe.paymentIntents.create({
       amount,
       currency: ticketConfig.currency,
-      // Card only: no Stripe Link "save your info for faster checkout" prompt, no wallet upsell.
-      payment_method_types: ["card"],
+      // Dynamic methods: card + Apple Pay + Google Pay. Link is hidden client-side (Payment
+      // Element `wallets: { link: "never" }`) so buyers keep the wallets but not the Link upsell.
+      automatic_payment_methods: { enabled: true },
       receipt_email: buyerEmail || undefined,
       metadata: {
         event: "TEDxHuntingValley",
