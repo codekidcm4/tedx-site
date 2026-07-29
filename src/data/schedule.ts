@@ -25,8 +25,8 @@ export type ScheduleSession = {
 
 /** Real times are published (false would show TBA placeholders instead). */
 export const scheduleReady = true;
-/** Still a draft: shows a "times may shift" notice on /schedule. */
-export const scheduleTentative = true;
+/** Final running order. Set true to show a "times may shift" draft notice on /schedule. */
+export const scheduleTentative = false;
 
 export const schedule: ScheduleSession[] = [
   {
