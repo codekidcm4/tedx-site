@@ -20,9 +20,7 @@ export const ticketConfig = {
   maxPerOrder: 2,
   // While true, the public sees the pre-sale gate; a valid code unlocks buying. Flip to false for
   // a public on-sale. The code itself is validated server-side (see app/tickets/actions.ts).
-  presaleActive: true,
-  // Set to true only after Stripe + the seat database are connected and tested.
-  checkoutLive: false,
+  presaleActive: false,
   sessions: [
     { id: "s1", name: "Session 1", detail: "Student speakers · 1:00 PM", price: 1500 },
     { id: "s2", name: "Session 2", detail: "Adult speakers · 3:40 PM", price: 1500 },

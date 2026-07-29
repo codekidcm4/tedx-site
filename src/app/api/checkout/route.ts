@@ -52,7 +52,14 @@ export async function POST(req: Request) {
   const price = sessionById(sessionId as SessionId).price;
   const amount = price * uniqueSeats.length;
   const nameMap = names && typeof names === "object" ? (names as Record<string, string>) : {};
-  const buyerEmail = typeof email === "string" ? email : "";
+  const buyerEmail = (typeof email === "string" ? email : "").trim();
+
+  // Validate the email server-side too (the client checks it). We must never create a paid order
+  // we can't deliver a ticket to.
+  const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!EMAIL_RE.test(buyerEmail)) {
+    return NextResponse.json({ error: "invalid_email" }, { status: 400 });
+  }
 
   const stripe = new Stripe(key);
 

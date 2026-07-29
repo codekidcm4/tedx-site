@@ -27,8 +27,8 @@ export function CTASection() {
               Be in the room when the lights go up.
             </h2>
             <p className="text-white/80 text-lg leading-relaxed mb-10 max-w-xl mx-auto">
-              Twelve voices, one stage, and an intentionally intimate room. Join the list and you will be the
-              first to know the moment seats are released.
+              Twelve voices, one stage, and an intentionally intimate room. Seats are limited, so
+              reserve yours before they are gone.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">

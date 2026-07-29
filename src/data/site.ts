@@ -50,7 +50,7 @@ export const siteConfig = {
 
   // Swappable launch config. Each value is null until the real thing exists; setting a value
   // flips the matching section from its "coming soon" state to live, with no other code change.
-  ticketsUrl: null as string | null, // real ticket / registration link when seats are released
+  ticketsUrl: "/tickets" as string | null, // live box office (tickets are on sale to everyone)
   interestFormUrl: null as string | null, // seat-interest / notify list (e.g. a Google Form URL)
   livestreamUrl: null as string | null, // event-day livestream link
   watchNotifyUrl: null as string | null, // "notify me when talks publish" list URL

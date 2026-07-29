@@ -133,8 +133,8 @@ export function Footer() {
               </li>
               <li>
                 <span className="text-[#9a9a9a] text-xs uppercase tracking-wider block mb-0.5">Tickets</span>
-                <Link href="/#tickets" className="hover:text-white transition-colors duration-200">
-                  Coming soon. Join the interest list.
+                <Link href="/tickets" className="hover:text-white transition-colors duration-200">
+                  On sale now. Get your seats.
                 </Link>
               </li>
             </ul>
