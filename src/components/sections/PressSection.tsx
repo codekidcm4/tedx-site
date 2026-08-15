@@ -3,6 +3,14 @@ import Link from "next/link";
 
 export const pressItems = [
   {
+    outlet: "Cleveland.com",
+    headline: "Meet some real Chagrin Falls characters (Valley Views)",
+    quote:
+      "TEDxHuntingValley got a shoutout in cleveland.com's Valley Views community column ahead of the August 22 event at Gund Auditorium.",
+    url: "https://www.cleveland.com/community/2026/08/meet-some-real-chagrin-falls-characters-valley-views.html",
+    date: "August 2026",
+  },
+  {
     outlet: "Signal Cleveland",
     headline: "Greater Cleveland students invited to apply to give Ted Talks",
     quote:
@@ -69,7 +77,7 @@ export function PressSection() {
           <div className="divide-y divide-[#e8e8e8]">
             {pressItems.map((item) => (
               <a
-                key={item.outlet}
+                key={item.url}
                 href={item.url}
                 target="_blank"
                 rel="noopener noreferrer"

@@ -238,7 +238,7 @@ export default function PressPage() {
             <div className="divide-y divide-[#e8e8e8]">
               {pressItems.map((item) => (
                 <a
-                  key={item.outlet}
+                  key={item.url}
                   href={item.url}
                   target="_blank"
                   rel="noopener noreferrer"
