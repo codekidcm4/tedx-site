@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { FadeIn } from "@/components/ui/FadeIn";
+import { pressItems } from "@/components/sections/PressSection";
 import { siteConfig } from "@/data/site";
 import Link from "next/link";
 
@@ -52,6 +53,79 @@ export default function MediaPage() {
         </div>
       </div>
 
+      {/* In the media — every outlet that has covered the event so far */}
+      <section className="py-20 md:py-28 bg-[#f9f9f9]" aria-labelledby="in-the-media-heading">
+        <div className="max-w-[1200px] mx-auto px-6 md:px-8 lg:px-12">
+          <FadeIn>
+            <div className="mb-10">
+              <span className="inline-flex items-center gap-3 mb-4">
+                <span className="inline-block w-8 h-0.5 bg-[#e62b1e]" aria-hidden="true" />
+                <span className="text-[0.65rem] font-bold tracking-[0.18em] uppercase text-[#e62b1e]">
+                  In the media
+                </span>
+              </span>
+              <h2
+                id="in-the-media-heading"
+                className="font-extrabold text-[#0a0a0a] mb-4"
+                style={{ fontSize: "clamp(1.75rem, 3.5vw, 2.5rem)", letterSpacing: "-0.03em", lineHeight: 1.05 }}
+              >
+                Every story written about us
+              </h2>
+              <p className="text-[#555555] max-w-xl leading-relaxed">
+                {pressItems.length} pieces of coverage across Northeast Ohio, from the first
+                announcement through event week. Newest first.
+              </p>
+            </div>
+          </FadeIn>
+
+          <div className="divide-y divide-[#e8e8e8] border-t border-[#e8e8e8]">
+            {pressItems.map((item, i) => (
+              <FadeIn key={item.url} delay={Math.min(i, 6) * 0.04}>
+                <a
+                  href={item.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group grid grid-cols-1 md:grid-cols-12 gap-2 md:gap-8 py-6"
+                >
+                  <div className="md:col-span-3 flex md:flex-col md:justify-start gap-3 md:gap-1 items-baseline md:items-start">
+                    <p className="text-[0.65rem] font-bold tracking-[0.14em] uppercase text-[#e62b1e] flex-shrink-0">
+                      {item.outlet}
+                    </p>
+                    <p className="text-[0.65rem] text-[#b0b0b0]">{item.date}</p>
+                  </div>
+                  <div className="md:col-span-9">
+                    <p className="text-sm font-semibold text-[#0a0a0a] leading-snug mb-1.5 group-hover:text-[#e62b1e] transition-colors duration-200">
+                      {item.headline}
+                    </p>
+                    <p className="text-xs text-[#777777] leading-relaxed mb-3">{item.quote}</p>
+                    <span className="inline-flex items-center gap-1 text-[0.65rem] font-bold tracking-wide uppercase text-[#e62b1e]">
+                      Read article
+                      <svg className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24" aria-hidden="true">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                      </svg>
+                    </span>
+                  </div>
+                </a>
+              </FadeIn>
+            ))}
+          </div>
+
+          <FadeIn>
+            <div className="pt-8">
+              <Link
+                href="/press"
+                className="inline-flex items-center gap-2 text-[0.65rem] font-bold tracking-wide uppercase text-[#9a9a9a] hover:text-[#e62b1e] transition-colors duration-200"
+              >
+                Full press kit &amp; story angles
+                <svg className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24" aria-hidden="true">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </Link>
+            </div>
+          </FadeIn>
+        </div>
+      </section>
+
       {/* Coming soon / TBD */}
       <section className="py-20 md:py-28 bg-white" aria-labelledby="media-heading">
         <div className="max-w-[1200px] mx-auto px-6 md:px-8 lg:px-12">
@@ -94,7 +168,7 @@ export default function MediaPage() {
                     {[
                       { label: "Talk recordings", status: "Available after August 22, 2026" },
                       { label: "Event photography", status: "Available after August 22, 2026" },
-                      { label: "Speaker bios and summaries", status: "As the lineup is confirmed" },
+                      { label: "Speaker bios and summaries", status: "Available now \u2014 full lineup announced" },
                       { label: "Press credentials", status: "Contact us to request" },
                       { label: "Organizer interviews", status: "Available now" },
                     ].map((item) => (
@@ -151,10 +225,10 @@ export default function MediaPage() {
                 <ul className="space-y-2.5">
                   {[
                     "Interviews with Charlie Martin and Jack Nelson (phone, email, or in person)",
-                    "Interviews with announced speakers as each is confirmed",
+                    "Interviews with any of the twelve announced speakers",
                     "Behind-the-scenes access through rehearsals and summer coaching",
                     "Press credentials for August 22",
-                    "Speaker bios and talk summaries as the lineup is finalized",
+                    "Speaker bios and talk summaries for the full twelve-speaker lineup",
                     "High-resolution event photos after August 22",
                   ].map((item, i) => (
                     <li key={i} className="flex items-start gap-2.5 text-sm text-[#555555]">

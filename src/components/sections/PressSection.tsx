@@ -3,6 +3,39 @@ import Link from "next/link";
 
 export const pressItems = [
   {
+    outlet: "Canton Repository",
+    headline: "Louisville High School senior to take part in Cleveland-area TED Talk",
+    quote:
+      "Louisville High School senior Gage Martin will be among six high schoolers slated to speak at a Cleveland-area TED Talk.",
+    url: "https://www.cantonrep.com/story/news/education/2026/08/19/tedxhuntingvalley-will-feature-louisville-high-senior-gage-martin/91367328007/",
+    date: "August 19, 2026",
+  },
+  {
+    outlet: "WKYC 3News",
+    headline:
+      "17-year-old University School seniors bring TEDxHuntingValley to Greater Cleveland",
+    quote:
+      "Charlie Martin and Jack Nelson spent two years organizing the independent TEDx event, overcoming two rejections along the way.",
+    url: "https://www.wkyc.com/article/news/education/education-station/tedxhuntingvalley-17-year-old-university-school-seniors-greater-cleveland/95-c641f0ba-ea71-4251-98bc-1e43b44ddbb4",
+    date: "August 18, 2026",
+  },
+  {
+    outlet: "Cleveland.com",
+    headline: "How 2 NE Ohio high school students organized a high-powered TEDx program",
+    quote:
+      "A simple sticker on the side of a computer sparked two high school students to organize a TEDx Talk at University School.",
+    url: "https://www.cleveland.com/entertainment/2026/08/how-2-ne-ohio-high-school-students-organized-a-high-powered-tedx-program.html",
+    date: "August 18, 2026",
+  },
+  {
+    outlet: "Akron Beacon Journal",
+    headline: "What I learned about the power of a handwritten letter (Opinion)",
+    quote:
+      "A guest column by TEDxHuntingValley student speaker Ethan Shneyderman, selected to speak after years of exchanging handwritten letters with world leaders, diplomats, and organizations across the globe.",
+    url: "https://www.beaconjournal.com/story/opinion/columns/guest/2026/08/15/what-i-learned-power-of-handwritten-letter-opinion/91274296007/",
+    date: "August 15, 2026",
+  },
+  {
     outlet: "Cleveland.com",
     headline: "Meet some real Chagrin Falls characters (Valley Views)",
     quote:
@@ -37,7 +70,7 @@ export const pressItems = [
   },
   {
     outlet: "Cleveland Jewish News",
-    headline: "Applications deadline for TEDxHuntingValley: May 11",
+    headline: "Applications deadline for TEDxHunting Valley May 25",
     quote:
       "Two University School juniors are organizing TEDxHuntingValley, the first independent, community-led TED event in Cleveland since 2015.",
     url: "https://www.clevelandjewishnews.com/news/briefs/applications-deadline-for-tedxhunting-valley-may-11/article_5c7cdbbc-b807-48e9-8327-53f12fd29c3e.html",

@@ -2,7 +2,16 @@ import Link from "next/link";
 
 // Outlets that have covered the event. The detailed press cards live lower on the page and on
 // /press; this top-of-page strip is about instant credibility for a first-time visitor.
-const outlets = ["Axios Cleveland", "Signal Cleveland", "Cleveland.com", "Cleveland Jewish News", "WFMJ"];
+const outlets = [
+  "Cleveland.com",
+  "WKYC 3News",
+  "Axios Cleveland",
+  "Signal Cleveland",
+  "Akron Beacon Journal",
+  "Canton Repository",
+  "Cleveland Jewish News",
+  "WFMJ",
+];
 
 export function MediaBar() {
   return (
@@ -11,7 +20,7 @@ export function MediaBar() {
         <Link
           href="/press"
           className="group flex flex-col sm:flex-row sm:items-center gap-x-8 gap-y-3"
-          aria-label="As seen in Axios Cleveland, Signal Cleveland, Cleveland.com, Cleveland Jewish News, and WFMJ. View press coverage."
+          aria-label={`As seen in ${outlets.slice(0, -1).join(", ")}, and ${outlets[outlets.length - 1]}. View press coverage.`}
         >
           <span className="text-[0.6rem] font-bold tracking-[0.18em] uppercase text-[#9a9a9a] flex-shrink-0">
             As seen in
