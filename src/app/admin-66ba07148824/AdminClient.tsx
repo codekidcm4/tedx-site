@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { sampleSections, ADMIN_ROW_SEATS, seatId } from "@/data/tickets";
+import { sampleSections, ADMIN_ROW_SEATS, ADMIN_ROW_GROUPS, seatId } from "@/data/tickets";
 import { ADMIN_KEY } from "@/lib/adminKey";
 
 type AdminTicket = {
@@ -202,15 +202,36 @@ export function AdminClient() {
                 <span className="w-4 text-[0.6rem] font-bold text-white/30">{r.row}</span>
               </div>
             ))}
-            {/* Organizer Row H — never shown on the public site */}
+            {/* Organizer Row H — never shown on the public site. Three separated blocks
+                matching the physical setup: 9 left, 6 center-right, 5 far right. */}
             <div className="pt-3 mt-3 border-t border-white/10">
-              <div className="flex items-center gap-4 justify-center">
+              <div className="flex items-center gap-4">
                 <span className="w-4 text-right text-[0.6rem] font-bold text-[#e62b1e]">H</span>
-                <div className="flex gap-1">{ADMIN_ROW_SEATS.map((id) => seatBox(id, true))}</div>
+                <div className="flex flex-1 items-center min-w-0">
+                  {(() => {
+                    const groups: string[][] = [];
+                    let start = 0;
+                    for (const n of ADMIN_ROW_GROUPS) {
+                      groups.push(ADMIN_ROW_SEATS.slice(start, start + n));
+                      start += n;
+                    }
+                    const [g1, g2, g3] = groups;
+                    return (
+                      <>
+                        <div className="flex gap-1">{g1.map((id) => seatBox(id, true))}</div>
+                        {/* bigger spacer first so the middle block sits slightly right of center */}
+                        <div className="flex-[1.3] min-w-8" />
+                        <div className="flex gap-1">{g2.map((id) => seatBox(id, true))}</div>
+                        <div className="flex-[0.7] min-w-8" />
+                        <div className="flex gap-1">{g3.map((id) => seatBox(id, true))}</div>
+                      </>
+                    );
+                  })()}
+                </div>
                 <span className="w-4 text-[0.6rem] font-bold text-[#e62b1e]">H</span>
               </div>
               <p className="text-center text-[0.6rem] text-white/35 mt-2">
-                Row H · 19 organizer seats · not visible or sellable on the public site
+                Row H · {ADMIN_ROW_SEATS.length} organizer seats in three blocks (9 · 6 · 5) · not visible or sellable on the public site
               </p>
             </div>
           </div>

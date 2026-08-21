@@ -92,8 +92,13 @@ export function seatId(sectionId: string, row: string, num: number): string {
 }
 
 // ── Organizer-only Row H ────────────────────────────────────────────────────
-// One extra row behind Row G: 19 seats that are NEVER shown or sold on the public site
-// (they are not in sampleSections, so /tickets and /api/checkout don't know they exist).
-// They live only in the /admin dashboard, where the organizers assign them by hand.
-export const ADMIN_ROW_SEATS = Array.from({ length: 19 }, (_, i) => `H-${i + 1}`);
+// One extra row behind Row G: organizer seats that are NEVER shown or sold on the public
+// site (they are not in sampleSections, so /tickets and /api/checkout don't know they
+// exist). They live only in the admin dashboard, where the organizers assign them by hand.
+// Physically arranged as three separated blocks: 9 on the left, 6 center-right, 5 far right.
+export const ADMIN_ROW_GROUPS = [9, 6, 5];
+export const ADMIN_ROW_SEATS = Array.from(
+  { length: ADMIN_ROW_GROUPS.reduce((a, b) => a + b, 0) },
+  (_, i) => `H-${i + 1}`
+);
 
