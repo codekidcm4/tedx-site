@@ -4,6 +4,7 @@ import Link from "next/link";
 import { TicketFlow } from "@/components/tickets/TicketFlow";
 import { useEventPhase } from "@/lib/eventPhaseClient";
 import { siteConfig } from "@/data/site";
+import { ticketConfig } from "@/data/tickets";
 
 // The whole tickets page, phase-aware. Before/at the event it shows the seat-picking flow; once the
 // event has passed it flips to a closed / watch-the-talks state (no code change needed on the day;
@@ -27,12 +28,14 @@ export function TicketsView() {
             className="text-white font-extrabold mb-5 max-w-3xl"
             style={{ fontSize: "clamp(2.5rem, 6vw, 5rem)", letterSpacing: "-0.03em", lineHeight: 1.0 }}
           >
-            {isPost ? "That's a wrap." : "Reserve your seat."}
+            {isPost ? "That's a wrap." : ticketConfig.salesClosed ? "Sales have closed." : "Reserve your seat."}
           </h1>
           <p className="text-white/65 text-lg leading-relaxed max-w-2xl">
             {isPost
               ? "TEDxHuntingValley 2026 has ended. Thank you to everyone who joined us at Gund Auditorium."
-              : `August 22, 2026 at ${siteConfig.venueName}, ${siteConfig.school}. Two sessions, intimate seating, twelve voices on one stage.`}
+              : ticketConfig.salesClosed
+                ? `Online sales for August 22 at ${siteConfig.venueName} have ended. Ticket holders: your QR ticket was emailed to you.`
+                : `August 22, 2026 at ${siteConfig.venueName}, ${siteConfig.school}. Two sessions, intimate seating, twelve voices on one stage.`}
           </p>
         </div>
       </div>
@@ -52,6 +55,28 @@ export function TicketsView() {
                 </Link>
                 <Link href="/media" className="inline-flex items-center gap-2 px-6 py-3 border border-[#e0e0e0] text-[#0a0a0a] font-semibold text-sm rounded-sm hover:border-[#0a0a0a] transition-colors">
                   Watch &amp; media
+                </Link>
+              </div>
+            </div>
+          ) : ticketConfig.salesClosed ? (
+            <div className="max-w-lg">
+              <p className="text-[0.65rem] font-bold tracking-[0.18em] uppercase text-[#6b6b6b] mb-4">
+                Online sales have closed
+              </p>
+              <p className="text-[#333333] leading-relaxed mb-6">
+                Online ticket sales for TEDxHuntingValley have ended ahead of the event. If you
+                already have a ticket, your QR code was emailed to you and gets you in the door on
+                August 22. For any last-minute seat requests, email us and we will do our best.
+              </p>
+              <div className="flex flex-wrap gap-3">
+                <a
+                  href={`mailto:${siteConfig.email}?subject=Last-minute seat request - TEDxHuntingValley`}
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-[#e62b1e] text-white font-bold text-sm rounded-sm hover:bg-[#c9231a] transition-colors"
+                >
+                  Email us
+                </a>
+                <Link href="/schedule" className="inline-flex items-center gap-2 px-6 py-3 border border-[#e0e0e0] text-[#0a0a0a] font-semibold text-sm rounded-sm hover:border-[#0a0a0a] transition-colors">
+                  Event schedule
                 </Link>
               </div>
             </div>

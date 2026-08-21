@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 
 function seatLabel(id: string): string {
   const [section, rest] = id.split("-");
-  const names: Record<string, string> = { L: "Left", C: "Center", R: "Right" };
+  const names: Record<string, string> = { L: "Left", C: "Center", R: "Right", H: "Row H" };
   return `${names[section] ?? section} ${rest}`;
 }
 

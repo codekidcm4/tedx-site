@@ -243,3 +243,108 @@ export async function releaseOrderByPaymentIntent(paymentIntentId: string): Prom
   await db().from("orders").update({ status: "refunded", refunded_at: new Date().toISOString() }).eq("id", o.id);
   return { released: true, session: o.session };
 }
+
+// ── Organizer admin (live check-in dashboard + hand-assigned seats) ─────────
+
+export type AdminTicket = {
+  seat: string;
+  holder: string | null;
+  email: string;
+  pass: string; // what the order bought: s1 | s2 | all-day (comp orders included)
+  checkedIn: boolean;
+  checkedInAt: string | null;
+};
+
+/** Everything the live dashboard needs for one physical session: sold/comp tickets + active holds. */
+export async function getAdminState(physSession: "s1" | "s2"): Promise<{
+  tickets: AdminTicket[];
+  holds: { seat: string; expiresAt: string }[];
+} | null> {
+  if (!dbConfigured()) return null;
+  const nowIso = new Date().toISOString();
+  const [{ data: tks }, { data: holds }] = await Promise.all([
+    db()
+      .from("tickets")
+      .select("seat, holder_name, checked_in, checked_in_at, orders!inner(email, session, status)")
+      .eq("session", physSession)
+      .in("orders.status", ["paid", "comp"]),
+    db().from("seat_holds").select("seat, expires_at").eq("session", physSession).gt("expires_at", nowIso),
+  ]);
+  const tickets = (tks ?? []).map((t) => {
+    const row = t as unknown as {
+      seat: string;
+      holder_name: string | null;
+      checked_in: boolean;
+      checked_in_at: string | null;
+      orders: { email: string; session: string; status: string };
+    };
+    return {
+      seat: row.seat,
+      holder: row.holder_name,
+      email: row.orders.email,
+      pass: row.orders.session,
+      checkedIn: row.checked_in,
+      checkedInAt: row.checked_in_at,
+    };
+  });
+  return {
+    tickets,
+    holds: (holds ?? []).map((h) => {
+      const row = h as { seat: string; expires_at: string };
+      return { seat: row.seat, expiresAt: row.expires_at };
+    }),
+  };
+}
+
+/**
+ * Organizer hand-assigns a seat: creates a $0 "comp" order plus real scannable tickets (one per
+ * physical session). Used for Row H and for re-issuing freed seats. The unique (session, seat)
+ * constraint on tickets makes double-assignment impossible.
+ */
+export async function assignCompTickets(params: {
+  seat: string;
+  name: string;
+  email?: string;
+  session: "s1" | "s2" | "all-day";
+}): Promise<{ tickets: { session: string; token: string }[] } | { error: "seat_taken" | "db_error" }> {
+  if (!dbConfigured()) return { error: "db_error" };
+  const { randomBytes } = await import("node:crypto");
+  const phys = params.session === "all-day" ? ["s1", "s2"] : [params.session];
+
+  const { data: order, error: oErr } = await db()
+    .from("orders")
+    .insert({
+      session: params.session,
+      seats: [params.seat],
+      email: params.email || "tedxhuntingvalley@gmail.com",
+      names: { [params.seat]: params.name },
+      amount_cents: 0,
+      status: "comp",
+    })
+    .select("id")
+    .single();
+  if (oErr || !order) return { error: "db_error" };
+  const orderId = (order as { id: string }).id;
+
+  const rows = phys.map((ps) => ({
+    order_id: orderId,
+    session: ps,
+    seat: params.seat,
+    holder_name: params.name,
+    qr_token: randomBytes(16).toString("hex"),
+    checked_in: false,
+  }));
+  const { data: inserted, error: tErr } = await db().from("tickets").insert(rows).select("session, qr_token");
+  if (tErr || !inserted) {
+    await db().from("orders").delete().eq("id", orderId); // cascade removes any partial tickets
+    return { error: "seat_taken" };
+  }
+  // Clear any organizer hold on this seat now that a real ticket owns it.
+  await db().from("seat_holds").delete().in("session", phys).eq("seat", params.seat);
+  return {
+    tickets: (inserted as { session: string; qr_token: string }[]).map((t) => ({
+      session: t.session,
+      token: t.qr_token,
+    })),
+  };
+}

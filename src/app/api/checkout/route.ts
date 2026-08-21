@@ -13,6 +13,11 @@ const VALID_SEAT_IDS = new Set(
 // Stripe PaymentIntent. The amount is recomputed here from trusted config and validated seats, so
 // the client can't set its own price or seats. Fulfillment happens in the Stripe webhook on success.
 export async function POST(req: Request) {
+  // Hard lock: no new public orders while sales are closed (organizer-assigned seats only).
+  if (ticketConfig.salesClosed) {
+    return NextResponse.json({ error: "sales_closed" }, { status: 403 });
+  }
+
   const key = process.env.STRIPE_SECRET_KEY;
   if (!key) return NextResponse.json({ error: "not_configured" }, { status: 503 });
 

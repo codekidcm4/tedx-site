@@ -16,6 +16,9 @@ export type TicketSession = {
 export const ticketConfig = {
   currency: "usd",
   currencySymbol: "$",
+  // Hard lock on public ticket sales (event-week: remaining seats are organizer-assigned only).
+  // Enforced server-side in /api/checkout and reflected on the /tickets page.
+  salesClosed: true,
   // Max tickets (seats) per order. Enforced in the UI now, and server-side once checkout is wired.
   maxPerOrder: 2,
   // While true, the public sees the pre-sale gate; a valid code unlocks buying. Flip to false for
@@ -87,4 +90,10 @@ export const sampleSold: Record<SessionId, string[]> = {
 export function seatId(sectionId: string, row: string, num: number): string {
   return `${sectionId}-${row}${num}`;
 }
+
+// ── Organizer-only Row H ────────────────────────────────────────────────────
+// One extra row behind Row G: 19 seats that are NEVER shown or sold on the public site
+// (they are not in sampleSections, so /tickets and /api/checkout don't know they exist).
+// They live only in the /admin dashboard, where the organizers assign them by hand.
+export const ADMIN_ROW_SEATS = Array.from({ length: 19 }, (_, i) => `H-${i + 1}`);
 
