@@ -2,16 +2,16 @@ import { NextResponse } from "next/server";
 import { timingSafeEqual } from "node:crypto";
 import { getAdminState, assignCompTickets } from "@/lib/ticketsDb";
 import { sampleSections, seatId, ADMIN_ROW_SEATS } from "@/data/tickets";
+import { ADMIN_KEY } from "@/lib/adminKey";
 
 export const dynamic = "force-dynamic";
 
-// Organizer dashboard API. Gated by TICKETS_SCAN_CODE (same code the door staff use), checked
-// server-side on every request — the /admin page is useless without it.
+// Organizer dashboard API. The dashboard's unguessable URL slug doubles as the key, sent with
+// every request and checked server-side, so the bare API path can't be scraped or driven blind.
 function codeOk(code: string | null): boolean {
-  const expected = process.env.TICKETS_SCAN_CODE;
-  if (!expected || !code) return false;
+  if (!code) return false;
   const a = Buffer.from(code);
-  const b = Buffer.from(expected);
+  const b = Buffer.from(ADMIN_KEY);
   return a.length === b.length && timingSafeEqual(a, b);
 }
 

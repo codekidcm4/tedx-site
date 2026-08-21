@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { sampleSections, ADMIN_ROW_SEATS, seatId } from "@/data/tickets";
+import { ADMIN_KEY } from "@/lib/adminKey";
 
 type AdminTicket = {
   seat: string;
@@ -15,7 +16,6 @@ type AdminState = { tickets: AdminTicket[]; holds: { seat: string; expiresAt: st
 type Phys = "s1" | "s2";
 
 const PASS_LABEL: Record<string, string> = { s1: "Session 1", s2: "Session 2", "all-day": "All-Day" };
-const CODE_KEY = "tedx-admin-code";
 
 // Rows B..G as [leftWing, center, rightWing] seat-id arrays, plus organizer Row H.
 function buildRows() {
@@ -33,9 +33,7 @@ function buildRows() {
 }
 
 export function AdminClient() {
-  const [code, setCode] = useState<string | null>(null);
-  const [codeInput, setCodeInput] = useState("");
-  const [authFailed, setAuthFailed] = useState(false);
+  const code = ADMIN_KEY; // the page's unguessable URL slug doubles as the API key
   const [session, setSession] = useState<Phys>("s1");
   const [state, setState] = useState<AdminState | null>(null);
   const [updatedAt, setUpdatedAt] = useState<Date | null>(null);
@@ -47,20 +45,9 @@ export function AdminClient() {
   const [assignError, setAssignError] = useState<string | null>(null);
   const timer = useRef<ReturnType<typeof setInterval> | null>(null);
 
-  useEffect(() => {
-    const saved = window.localStorage.getItem(CODE_KEY);
-    if (saved) setCode(saved);
-  }, []);
-
   const refresh = useCallback(async (c: string, s: Phys) => {
     try {
       const res = await fetch(`/api/admin?code=${encodeURIComponent(c)}&session=${s}`, { cache: "no-store" });
-      if (res.status === 401) {
-        window.localStorage.removeItem(CODE_KEY);
-        setCode(null);
-        setAuthFailed(true);
-        return;
-      }
       if (!res.ok) return;
       const data = (await res.json()) as AdminState;
       setState(data);
@@ -72,7 +59,6 @@ export function AdminClient() {
 
   // Live polling: refresh every 4s while the tab is visible.
   useEffect(() => {
-    if (!code) return;
     refresh(code, session);
     timer.current = setInterval(() => {
       if (document.visibilityState === "visible") refresh(code, session);
@@ -94,7 +80,7 @@ export function AdminClient() {
   const arrived = state?.tickets.filter((t) => t.checkedIn).length ?? 0;
 
   async function submitAssign() {
-    if (!code || !assigning || !assignName.trim()) return;
+    if (!assigning || !assignName.trim()) return;
     setAssignError(null);
     const res = await fetch("/api/admin", {
       method: "POST",
@@ -111,37 +97,6 @@ export function AdminClient() {
     setAssignName("");
     setAssignEmail("");
     refresh(code, session);
-  }
-
-  // ── Login gate ──
-  if (!code) {
-    return (
-      <div className="max-w-sm">
-        <p className="text-white/60 text-sm mb-4">Enter the staff code to open the live dashboard.</p>
-        {authFailed && <p className="text-[#ff8f88] text-xs mb-3">That code was not accepted.</p>}
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            if (!codeInput.trim()) return;
-            window.localStorage.setItem(CODE_KEY, codeInput.trim());
-            setAuthFailed(false);
-            setCode(codeInput.trim());
-          }}
-          className="flex gap-2"
-        >
-          <input
-            type="password"
-            value={codeInput}
-            onChange={(e) => setCodeInput(e.target.value)}
-            placeholder="Staff code"
-            className="flex-1 bg-white/5 border border-white/15 rounded-sm px-4 py-3 text-white text-sm focus:outline-none focus:border-[#e62b1e]"
-          />
-          <button type="submit" className="px-5 py-3 bg-[#e62b1e] text-white font-bold text-sm rounded-sm hover:bg-[#c9231a]">
-            Open
-          </button>
-        </form>
-      </div>
-    );
   }
 
   const seatBox = (id: string, organizerRow = false) => {

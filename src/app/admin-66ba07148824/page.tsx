@@ -7,7 +7,7 @@ export const metadata: Metadata = {
 };
 
 // Organizer-only live dashboard: seat map with real-time check-in state, hover details per seat,
-// and hand-assignment of comp seats (including organizer Row H). Gated by the staff code, which is
+// and hand-assignment of comp seats (including organizer Row H). Reached only by its unguessable URL; the slug is
 // verified server-side in /api/admin on every request.
 export default function AdminPage() {
   return (
