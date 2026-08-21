@@ -102,6 +102,10 @@ export function AdminClient() {
   const seatBox = (id: string, organizerRow = false) => {
     const t = bySeat.get(id);
     const held = heldSeats.has(id);
+    // Front rows: pop the hover card BELOW the seat — above it would be clipped by the
+    // scroll container's top edge (there's only the stage bar up there).
+    const row = organizerRow ? "H" : (id.split("-")[1]?.[0] ?? "");
+    const tipPos = row === "B" || row === "C" ? "top-full mt-2" : "bottom-full mb-2";
     const cls = t
       ? t.checkedIn
         ? "bg-[#2e9e44] border-[#2e9e44] text-white"
@@ -127,7 +131,7 @@ export function AdminClient() {
           {id.replace(/^[A-Z]+-/, "")}
         </button>
         {/* Hover card */}
-        <div className="pointer-events-none absolute z-20 hidden group-hover:block bottom-full left-1/2 -translate-x-1/2 mb-2 w-52 bg-[#111] border border-white/20 rounded-sm p-3 text-left shadow-xl">
+        <div className={`pointer-events-none absolute z-20 hidden group-hover:block ${tipPos} left-1/2 -translate-x-1/2 w-52 bg-[#111] border border-white/20 rounded-sm p-3 text-left shadow-xl`}>
           <p className="text-[0.6rem] font-bold tracking-widest uppercase text-[#e62b1e] mb-1">{id}</p>
           {t ? (
             <>
