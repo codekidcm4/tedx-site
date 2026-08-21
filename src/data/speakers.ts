@@ -85,14 +85,15 @@ export const speakers: Speaker[] = [
     order: 5,
   },
   {
-    id: "india-birdsong-terry",
-    name: "India L. Birdsong Terry",
-    role: "General Manager and CEO, Greater Cleveland Regional Transit Authority",
-    organization: "Greater Cleveland Regional Transit Authority",
+    id: "jeff-epstein",
+    name: "Jeff Epstein",
+    role: "President and CEO, Port of Cleveland",
+    organization: "Port of Cleveland",
     type: "adult",
-    bio: "India L. Birdsong Terry is the General Manager and CEO of the Greater Cleveland Regional Transit Authority, Ohio's largest transit system, where she leads more than 2,200 employees and a $342.5 million budget that delivers over 24 million rides a year across the county's 457 square miles. Since joining RTA in 2019 she has guided the agency through a pivotal period, working to modernize an aging rail fleet, secure sustainable funding, and expand the service that connects people to opportunity. A nationally respected transit leader with more than 15 years in the industry, she serves on boards from the United Way of Greater Cleveland to the American Public Transportation Foundation.",
+    // Condensed from the bio Jeff provided (see "JE Port Bio.docx").
+    bio: "Jeff Epstein is the President and CEO of the Port of Cleveland, one of the largest ports on the Great Lakes, where he leads the maritime and economic development finance work of an organization that supports more than 23,000 jobs and generates over $7 billion in economic impact each year. He came to the Port after serving as Chief of Integrated Development for the City of Cleveland, overseeing Planning, Economic Development, Community Development, and Building & Housing under Mayor Justin Bibb, where he launched new financing tools and helped create the North Coast Waterfront Development Authority. Before that, as Executive Director of MidTown Cleveland and Director of the Cleveland Health-Tech Corridor, he guided more than $230 million in transformative real estate development over seven years. He holds a J.D. from Georgetown University Law Center and a B.S. in Public Policy Studies from Duke University, and began his legal career clerking for Judge Solomon Oliver Jr. of the U.S. District Court for the Northern District of Ohio.",
     talkTitle: null,
-    image: "/speakers/india-birdsong-terry.jpg",
+    image: "/speakers/jeff-epstein.jpg",
     order: 6,
   },
 

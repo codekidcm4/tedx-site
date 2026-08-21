@@ -57,7 +57,7 @@ export const schedule: ScheduleSession[] = [
       { time: "4:05 - 4:25", title: "Brandon Chrostowski", kind: "talk" },
       { time: "4:25 - 4:45", title: "Marc Byrnes", kind: "talk" },
       { time: "4:45 - 5:05", title: "Laila Edwards", kind: "talk" },
-      { time: "5:05 - 5:25", title: "India L. Birdsong Terry", kind: "talk" },
+      { time: "5:05 - 5:25", title: "Jeff Epstein", kind: "talk" },
       { time: "5:25 - 5:45", title: "Fred Nance", kind: "talk" },
       { time: "5:45 - 5:55", title: "Closing remarks", kind: "closing" },
     ],
