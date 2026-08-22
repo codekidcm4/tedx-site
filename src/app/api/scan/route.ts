@@ -1,5 +1,17 @@
 import { NextResponse } from "next/server";
-import { checkInTicket } from "@/lib/ticketsDb";
+import { checkInTicket, searchTicketsByName } from "@/lib/ticketsDb";
+
+export const dynamic = "force-dynamic";
+
+// Name lookup for the door: GET /api/scan?q=<partial name> returns matching live tickets (one per
+// seat per session) so staff can check someone in without a QR code. Same trust model as the
+// rest of /scan (the page URL is the gate).
+export async function GET(req: Request) {
+  const q = new URL(req.url).searchParams.get("q") ?? "";
+  const hits = await searchTicketsByName(q);
+  if (hits === null) return NextResponse.json({ status: "unavailable" }, { status: 503 });
+  return NextResponse.json({ hits });
+}
 
 // Door check-in. POST { token } where token is either a raw QR token or the full /ticket/<token>
 // URL that the QR encodes. The /scan page itself is the gate: the URL is unguessable and is shared

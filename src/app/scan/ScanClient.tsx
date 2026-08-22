@@ -27,6 +27,41 @@ export function ScanClient() {
   const cancelledRef = useRef(false);
   const lastRef = useRef<{ token: string; at: number }>({ token: "", at: 0 });
 
+  // ── Find by name ──
+  type Hit = { token: string; seat: string; session: string; holder: string | null; checkedIn: boolean; pass: string };
+  const [query, setQuery] = useState("");
+  const [hits, setHits] = useState<Hit[]>([]);
+  const [searching, setSearching] = useState(false);
+  const searchSeq = useRef(0);
+
+  async function runSearch(q: string) {
+    const seq = ++searchSeq.current;
+    if (q.trim().length < 2) { setHits([]); setSearching(false); return; }
+    setSearching(true);
+    try {
+      const res = await fetch(`/api/scan?q=${encodeURIComponent(q.trim())}`, { cache: "no-store" });
+      const d = await res.json().catch(() => ({}));
+      if (seq !== searchSeq.current) return; // a newer keystroke superseded this request
+      setHits(Array.isArray(d.hits) ? d.hits : []);
+    } catch {
+      if (seq === searchSeq.current) setHits([]);
+    } finally {
+      if (seq === searchSeq.current) setSearching(false);
+    }
+  }
+
+  // Debounced live search as the name is typed.
+  useEffect(() => {
+    const t = setTimeout(() => runSearch(query), 220);
+    return () => clearTimeout(t);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [query]);
+
+  async function checkInHit(h: Hit) {
+    await submitToken(h.token);
+    runSearch(query); // refresh so the row flips to "Checked in"
+  }
+
   // Stop the camera if the component unmounts mid-scan (even while start() is still initializing).
   useEffect(() => {
     return () => {
@@ -131,6 +166,57 @@ export function ScanClient() {
           Stop camera
         </button>
       )}
+
+      {/* Name lookup: type a name, pick the person + session, check them in */}
+      <div className="mt-6 pt-6 border-t border-white/10">
+        <label htmlFor="name-search" className="block text-white/60 text-xs font-semibold uppercase tracking-wider mb-2">
+          Or find by name
+        </label>
+        <input
+          id="name-search"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          placeholder="Start typing a name…"
+          autoComplete="off"
+          className="w-full px-4 py-3 text-sm rounded-sm bg-white/5 text-white border border-white/15 outline-none focus:border-[#e62b1e] transition-colors placeholder:text-white/30"
+        />
+        {query.trim().length >= 2 && (
+          <div className="mt-2 rounded-sm border border-white/10 divide-y divide-white/10 overflow-hidden">
+            {searching && hits.length === 0 && (
+              <p className="px-4 py-3 text-white/40 text-xs">Searching…</p>
+            )}
+            {!searching && hits.length === 0 && (
+              <p className="px-4 py-3 text-white/40 text-xs">No ticket holder matches “{query.trim()}”.</p>
+            )}
+            {hits.map((h) => {
+              const sessionName = sessionById(h.session as SessionId)?.name ?? h.session;
+              return (
+                <div key={h.token} className="flex items-center gap-3 px-4 py-3 bg-white/[0.03]">
+                  <div className="flex-1 min-w-0">
+                    <p className="text-white text-sm font-bold truncate">{h.holder || "(no name)"}</p>
+                    <p className="text-white/50 text-xs">
+                      Seat {seatLabel(h.seat)} · {sessionName}
+                      {h.pass === "all-day" && <span className="text-white/30"> · All-Day pass</span>}
+                    </p>
+                  </div>
+                  {h.checkedIn ? (
+                    <span className="text-[#4ade80] text-[0.65rem] font-bold uppercase tracking-wider flex-shrink-0">Checked in</span>
+                  ) : (
+                    <button
+                      type="button"
+                      disabled={busy}
+                      onClick={() => checkInHit(h)}
+                      className="flex-shrink-0 px-4 py-2 bg-[#e62b1e] text-white font-bold text-xs rounded-sm hover:bg-[#c9231a] transition-colors disabled:opacity-50"
+                    >
+                      Check in
+                    </button>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        )}
+      </div>
 
       {/* Manual entry fallback */}
       <form

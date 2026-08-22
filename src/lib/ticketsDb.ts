@@ -348,3 +348,47 @@ export async function assignCompTickets(params: {
     })),
   };
 }
+
+// ── Door: look up tickets by holder name (for check-in without a QR code) ──
+
+export type TicketSearchHit = {
+  token: string;
+  seat: string;
+  session: string; // physical session this ticket admits to: s1 | s2
+  holder: string | null;
+  checkedIn: boolean;
+  pass: string; // what the order bought: s1 | s2 | all-day
+};
+
+/** Case-insensitive substring match on holder name across live (paid/comp) tickets. */
+export async function searchTicketsByName(q: string, limit = 12): Promise<TicketSearchHit[] | null> {
+  if (!dbConfigured()) return null;
+  const needle = q.trim().replace(/[%_,]/g, "");
+  if (needle.length < 2) return [];
+  const { data } = await db()
+    .from("tickets")
+    .select("qr_token, seat, session, holder_name, checked_in, orders!inner(session, status)")
+    .ilike("holder_name", `%${needle}%`)
+    .in("orders.status", ["paid", "comp"])
+    .order("holder_name")
+    .order("session")
+    .limit(limit);
+  return (data ?? []).map((t) => {
+    const row = t as unknown as {
+      qr_token: string;
+      seat: string;
+      session: string;
+      holder_name: string | null;
+      checked_in: boolean;
+      orders: { session: string; status: string };
+    };
+    return {
+      token: row.qr_token,
+      seat: row.seat,
+      session: row.session,
+      holder: row.holder_name,
+      checkedIn: row.checked_in,
+      pass: row.orders.session,
+    };
+  });
+}
