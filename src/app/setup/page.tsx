@@ -481,10 +481,10 @@ watchNotifyUrl: null,  // "notify me when talks publish" list`}</CodeBlock>
     │   └── setup/page.tsx        ← This page (not in main nav, noindex)
     ├── components/
     │   ├── layout/               ← Navbar.tsx, Footer.tsx
-    │   ├── sections/             ← Hero, MediaBar, EventEssentials, TicketsSection,
+    │   ├── sections/             ← Hero, MediaBar, TalksSection, StatsSection,
     │   │                            StatsSection, PressSection, ThemeSection,
     │   │                            SpeakersPreview, OrganizersSection, TimelineSection,
-    │   │                            WatchOnlineSection, SocialSection, CTASection
+    │   │                            TimelineSection, SocialSection, CTASection
     │   └── ui/                   ← SpeakerCard, SpeakerHeadshot, NotifyForm,
     │                                AddToCalendar, CountdownTimer, FadeIn, AnimatedCounter
     └── data/                     ← ALL CONTENT LIVES HERE

@@ -2,7 +2,7 @@ import Link from "next/link";
 
 // Outlets that have covered the event. The detailed press cards live lower on the page and on
 // /press; this top-of-page strip is about instant credibility for a first-time visitor.
-const outlets = [
+const outlets = ["FOX 8", 
   "Cleveland.com",
   "WKYC 3News",
   "Axios Cleveland",

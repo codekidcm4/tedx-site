@@ -1,33 +1,26 @@
 import { FadeIn } from "@/components/ui/FadeIn";
 import { SpeakerHeadshot } from "@/components/ui/SpeakerHeadshot";
 
-// ── ORGANIZER STUBS ─────────────────────────────────────────────────────────
-// Supply the exact bio text and (optionally) a new headshot path for each organizer.
-// Keep each bio to roughly two to four sentences, the same medium length as the speaker bios.
-// `photo` points at an existing image in /public/team (swap the path to replace it).
-// `bio: null` renders a clean "Short bio coming soon" placeholder until you paste real text.
 const organizers: {
   name: string;
   role: string;
   detail: string;
   photo: string | null;
-  bio: string | null;
+  bio: string;
 }[] = [
   {
     name: "Charlie Martin",
-    role: "Co-Organizer",
-    detail: "University School, Class of 2027",
+    role: "Co-Organizer & Licensed Organizer",
+    detail: "University School, Class of 2027 · Pepper Pike",
     photo: "/team/charlie-martin.jpg",
-    // TODO(organizer bio): paste Charlie's 2 to 4 sentence bio here.
-    bio: null,
+    bio: "Charlie set out to find whether a high school student could bring an independent, non-university TEDx back to Cleveland after more than a decade. He applied for and holds the TED license, and with Jack built the event from the venue to the speaker competition to the stage.",
   },
   {
     name: "Jack Nelson",
     role: "Co-Organizer",
-    detail: "University School, Class of 2027",
+    detail: "University School, Class of 2027 · Twinsburg",
     photo: "/team/jack-nelson.jpg",
-    // TODO(organizer bio): paste Jack's 2 to 4 sentence bio here.
-    bio: null,
+    bio: "Jack co-organized and co-hosted TEDxHuntingValley, running the speaker search across Greater Cleveland, the summer coaching program for the six student speakers, and the day itself alongside Charlie.",
   },
 ];
 
@@ -59,8 +52,9 @@ export function OrganizersSection() {
                   else to bring it back.
                 </p>
                 <p>
-                  They applied for the TED license themselves, found a venue, and built a stage where a high
-                  schooler&apos;s idea is held to the exact same standard as anyone else&apos;s. This is that event.
+                  They applied for the TED license themselves, found a venue, ran a city-wide speaker
+                  competition, and built a stage where a high schooler&apos;s idea was held to the exact same
+                  standard as anyone else&apos;s. On August 22, 2026, it happened. This was that event.
                 </p>
               </div>
             </div>
@@ -79,11 +73,7 @@ export function OrganizersSection() {
                     {person.role}
                   </p>
                   <p className="text-[#9a9a9a] text-xs mb-3">{person.detail}</p>
-                  {person.bio ? (
-                    <p className="text-[#555555] text-sm leading-relaxed">{person.bio}</p>
-                  ) : (
-                    <p className="text-[#9a9a9a] text-sm italic">Short bio coming soon.</p>
-                  )}
+                  <p className="text-[#555555] text-sm leading-relaxed">{person.bio}</p>
                 </div>
               ))}
             </div>

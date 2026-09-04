@@ -1,30 +1,11 @@
 import { FadeIn } from "@/components/ui/FadeIn";
 import Link from "next/link";
-
-const themeExamples = [
-  {
-    title: "The gut-brain axis",
-    description:
-      "How the microbiome shapes mood, cognition, and identity in ways medicine is only beginning to map.",
-  },
-  {
-    title: "Algorithmic redlining",
-    description:
-      "How recommendation systems replicate and amplify historical housing discrimination in ways their designers never intended.",
-  },
-  {
-    title: "The compound effect of small advantages",
-    description:
-      "Why a 1% edge, repeated daily, produces outcomes that look like talent, and why it matters who starts with it.",
-  },
-  {
-    title: "Institutional memory",
-    description:
-      "How organizations forget what they know, and the hidden mechanisms that determine what gets remembered and what gets erased.",
-  },
-];
+import { speakers } from "@/data/speakers";
+import { talks } from "@/data/talks";
 
 export function ThemeSection() {
+  const nameOf = (id: string) => speakers.find((s) => s.id === id)?.name ?? id;
+
   return (
     <section
       className="bg-[#0a0a0a] py-20 md:py-28 overflow-hidden relative"
@@ -56,15 +37,16 @@ export function ThemeSection() {
               </h2>
 
               <p className="text-white/65 text-lg leading-relaxed mb-6">
-                The most powerful forces in our lives are the ones we never consciously
-                acknowledge. The algorithm quietly narrowing what you think is possible. Gut
-                bacteria influencing your mood in ways your brain does not control. Compound
-                interest running silently behind every financial decision.
+                The theme came from one question: what is your why? Nobody ever answers with the
+                trophy, the title, or the money. It is always something you would never see from the
+                outside.
               </p>
 
               <p className="text-white/65 text-lg leading-relaxed mb-10">
-                Something powerful is running in the background of everything. The talk&apos;s job
-                is to make it visible.
+                Twelve speakers took that question somewhere different: a lawn, a port, a prison
+                kitchen, a gold-medal game, a gerrymandered map, six hundred letters. Something
+                powerful was running in the background of every one of them. The talk&apos;s job was
+                to make it visible.
               </p>
 
               <p className="text-white/40 text-sm leading-relaxed italic border-l-2 border-[#e62b1e]/50 pl-4">
@@ -77,41 +59,40 @@ export function ThemeSection() {
             </div>
           </FadeIn>
 
-          {/* Right: example talks */}
+          {/* Right: the twelve talks */}
           <FadeIn direction="left" delay={0.15}>
             <div>
               <p className="text-[0.65rem] font-bold tracking-[0.18em] uppercase text-[#9a9a9a] mb-6">
-                Example talks this theme could generate
+                Twelve talks, one theme
               </p>
 
-              <div className="space-y-px">
-                {themeExamples.map((example, i) => (
-                  <div
-                    key={i}
-                    className="bg-[#111111] p-6 border-l-2 border-transparent hover:border-[#e62b1e] transition-all duration-300 group"
-                  >
-                    <h3 className="text-white font-semibold text-sm mb-2 group-hover:text-[#e62b1e] transition-colors duration-200">
-                      {example.title}
-                    </h3>
-                    <p className="text-white/50 text-sm leading-relaxed">
-                      {example.description}
-                    </p>
-                  </div>
+              <ol className="space-y-px">
+                {talks.map((talk) => (
+                  <li key={talk.videoId}>
+                    <Link
+                      href={`/talks#${talk.speakerId}`}
+                      className="flex items-baseline gap-4 bg-[#111111] px-5 py-4 border-l-2 border-transparent hover:border-[#e62b1e] transition-all duration-300 group"
+                    >
+                      <span className="text-[0.6rem] font-bold tabular-nums text-white/30 w-5 flex-shrink-0">
+                        {String(talk.order).padStart(2, "0")}
+                      </span>
+                      <span className="min-w-0">
+                        <span className="block text-white font-semibold text-sm leading-snug group-hover:text-[#e62b1e] transition-colors duration-200">
+                          {talk.title}
+                        </span>
+                        <span className="block text-white/45 text-xs mt-0.5">{nameOf(talk.speakerId)}</span>
+                      </span>
+                    </Link>
+                  </li>
                 ))}
-              </div>
-
-              <p className="text-white/30 text-xs mt-6 leading-relaxed">
-                The theme is broad by design. It works across biology, economics, psychology,
-                technology, and social systems. The connecting thread is always the same: what&apos;s
-                the invisible force, and why does it matter that most people never see it?
-              </p>
+              </ol>
 
               <div className="mt-8">
                 <Link
-                  href="/speakers"
+                  href="/talks"
                   className="inline-flex items-center gap-2 px-6 py-3 border border-[#e62b1e] text-[#e62b1e] text-sm font-semibold rounded-sm hover:bg-[#e62b1e] hover:text-white transition-all duration-200"
                 >
-                  Meet the twelve speakers
+                  Watch all twelve
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24" aria-hidden="true">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
                   </svg>

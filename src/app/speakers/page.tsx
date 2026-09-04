@@ -3,11 +3,12 @@ import { SpeakerCard } from "@/components/ui/SpeakerCard";
 import { FadeIn, StaggerContainer, StaggerItem } from "@/components/ui/FadeIn";
 import { CTASection } from "@/components/sections/CTASection";
 import { adultSpeakers, studentSpeakers } from "@/data/speakers";
+import { talkForSpeaker } from "@/data/talks";
 
 export const metadata: Metadata = {
   title: "Speakers",
   description:
-    "Meet the TEDxHuntingValley speakers. Six adult speakers and six student speakers sharing one stage on August 22, 2026.",
+    "Meet the TEDxHuntingValley speakers. Six adult speakers and six student speakers who shared one stage on August 22, 2026. Every talk is now online.",
   alternates: { canonical: "/speakers" },
   openGraph: {
     title: "Speakers | TEDxHuntingValley",
@@ -20,7 +21,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Speakers | TEDxHuntingValley",
-    description: "Twelve voices, one stage, no age qualifier. August 22, 2026.",
+    description: "Twelve voices, one stage, no age qualifier. Every talk is now online.",
     images: ["/og-image.jpg"],
   },
 };
@@ -56,8 +57,8 @@ export default function SpeakersPage() {
               Twelve voices. One stage. No asterisk.
             </h1>
             <p className="text-white/65 text-xl leading-relaxed max-w-2xl">
-              Six adult speakers and six student speakers. Each one introduced the same way.
-              Each one held to the same standard. The full lineup is taking shape ahead of August 22.
+              Six adult speakers and six student speakers. Each one introduced the same way. Each one
+              held to the same standard. On August 22, 2026, every one of them delivered.
             </p>
           </FadeIn>
         </div>
@@ -91,17 +92,26 @@ export default function SpeakersPage() {
                 Adult Speakers
               </h2>
               <p className="text-[#555555] mt-3 max-w-xl leading-relaxed">
-                Six leaders from across Cleveland and beyond, sharing the same stage as our student speakers.
+                Six leaders from across Cleveland and beyond, who shared the same stage as our student speakers.
               </p>
             </div>
           </FadeIn>
 
           <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
-            {adultSpeakers.map((speaker) => (
-              <StaggerItem key={speaker.id} className="h-full">
-                <SpeakerCard speaker={speaker} variant="full" className="h-full" />
-              </StaggerItem>
-            ))}
+            {adultSpeakers.map((speaker) => {
+              const talk = talkForSpeaker(speaker.id);
+              return (
+                <StaggerItem key={speaker.id} className="h-full">
+                  <SpeakerCard
+                    speaker={speaker}
+                    variant="full"
+                    className="h-full"
+                    watchHref={talk ? `/talks#${speaker.id}` : undefined}
+                    watchDuration={talk?.duration}
+                  />
+                </StaggerItem>
+              );
+            })}
           </StaggerContainer>
         </div>
       </section>
@@ -125,24 +135,33 @@ export default function SpeakersPage() {
                 Student Speakers
               </h2>
               <p className="text-[#555555] mt-3 max-w-xl leading-relaxed">
-                Six student speakers selected from across the greater Cleveland area through an open
-                competition. Their bios and talks are added here as each is confirmed.
+                Six students from six schools across Greater Cleveland, selected through an open
+                competition on the strength of the idea alone, and coached through the summer to the
+                stage.
               </p>
             </div>
           </FadeIn>
 
           <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
-            {studentSpeakers.map((speaker) => (
-              <StaggerItem key={speaker.id} className="h-full">
-                <SpeakerCard speaker={speaker} variant="full" className="h-full" />
-              </StaggerItem>
-            ))}
+            {studentSpeakers.map((speaker) => {
+              const talk = talkForSpeaker(speaker.id);
+              return (
+                <StaggerItem key={speaker.id} className="h-full">
+                  <SpeakerCard
+                    speaker={speaker}
+                    variant="full"
+                    className="h-full"
+                    watchHref={talk ? `/talks#${speaker.id}` : undefined}
+                    watchDuration={talk?.duration}
+                  />
+                </StaggerItem>
+              );
+            })}
           </StaggerContainer>
 
-          {/* Single subtle note that 2026 applications are closed. */}
           <FadeIn delay={0.2}>
             <p className="mt-10 text-sm text-[#9a9a9a]">
-              Speaker applications for 2026 are closed. Thank you to everyone who applied.
+              Thank you to every student across Greater Cleveland who applied to speak in 2026.
             </p>
           </FadeIn>
         </div>

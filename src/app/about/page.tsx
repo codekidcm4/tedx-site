@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "About | TEDxHuntingValley",
     description:
-      "A fully licensed, independently organized TEDx event built by two University School juniors. The first independent community TEDx in Cleveland in over a decade.",
+      "A fully licensed, independently organized TEDx event built by two University School students. The first independent community TEDx in Cleveland in over a decade.",
     url: "https://tedxhuntingvalley.com/about",
     type: "website",
     images: [{ url: "/og-image.jpg", width: 1200, height: 630, alt: "About TEDxHuntingValley" }],
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "About | TEDxHuntingValley",
     description:
-      "A fully licensed, independently organized TEDx event built by two University School juniors.",
+      "A fully licensed, independently organized TEDx event built by two University School students. Held August 22, 2026; every talk is now online.",
     images: ["/og-image.jpg"],
   },
 };
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
 const differentiators = [
   {
     label: "First in a decade",
-    body: "The last independent, community-organized TEDx open to the public in Cleveland was June 2015. More than ten years of silence from a city with no shortage of ideas. TEDxHuntingValley ends that gap on August 22, 2026.",
+    body: "The last independent, community-organized TEDx open to the public in Cleveland was June 2015. More than ten years of silence from a city with no shortage of ideas. TEDxHuntingValley ended that gap on August 22, 2026.",
   },
   {
     label: "No age qualifier",
@@ -41,11 +41,11 @@ const differentiators = [
   },
   {
     label: "A globally distributed platform",
-    body: "Every talk is filmed and uploaded to the TEDx YouTube channel after the event. The channel has 44 million subscribers and more than 8 billion total views. A local idea, if it is good enough, reaches a global audience for free, forever.",
+    body: "Every talk was filmed and is now published on YouTube, where a local idea, if it is good enough, reaches a global audience for free, forever. All twelve talks and the complete event recording went live on September 3, 2026.",
   },
   {
     label: "Independently organized",
-    body: "TEDxHuntingValley is organized by Charlie Martin and Jack Nelson, two juniors at University School. It is not a school project or institutional program. They applied for and received the TED license themselves, with the guidance of licensed organizer Dr. Tyler Yoder.",
+    body: "TEDxHuntingValley was organized by Charlie Martin and Jack Nelson, two students at University School. It was not a school project or institutional program. They applied for and received the TED license themselves, with the guidance of licensed organizer Dr. Tyler Yoder.",
   },
 ];
 
@@ -81,8 +81,8 @@ export default function AboutPage() {
             </h1>
             <p className="text-white/65 text-xl leading-relaxed max-w-2xl">
               A fully licensed, independently organized TEDx event. The first independent community
-              TEDx open to the public in Cleveland in over a decade. And it was built by two high
-              school juniors.
+              TEDx open to the public in Cleveland in over a decade, held August 22, 2026. And it was
+              built by two high school students.
             </p>
           </FadeIn>
         </div>
@@ -174,6 +174,7 @@ export default function AboutPage() {
                   {[
                     { label: "Date", value: "August 22, 2026" },
                     { label: "Venue", value: "Gund Auditorium, University School\nHunting Valley, Ohio" },
+                    { label: "Talks", value: "All twelve published to YouTube\nSeptember 3, 2026" },
                     { label: "Format", value: "Live speakers, talks 18 minutes or under\nNo panels, no PowerPoints" },
                     { label: "Audience", value: "100 attendees (TED licensing cap)" },
                     { label: "Theme", value: "\"The Invisible Engine: The Forces We Forget\"" },
@@ -251,7 +252,7 @@ export default function AboutPage() {
                 className="font-extrabold text-[#0a0a0a]"
                 style={{ fontSize: "clamp(1.75rem, 3.5vw, 2.5rem)", letterSpacing: "-0.03em", lineHeight: 1.05 }}
               >
-                Built by two high school juniors
+                Built by two high school students
               </h2>
             </div>
           </FadeIn>
@@ -280,7 +281,7 @@ export default function AboutPage() {
                 school: "History Instructor, University School",
                 photo: "/team/tyler-yoder.jpg",
                 quote:
-                  "When Charlie and Jack came to me with this, they had already done the hard part. My job has been to make sure they get to the finish line.",
+                  "When Charlie and Jack came to me with this, they had already done the hard part. My job was to make sure they got to the finish line.",
               },
             ].map((person, i) => (
               <FadeIn key={person.name} delay={i * 0.1}>
@@ -323,19 +324,19 @@ export default function AboutPage() {
                 </h2>
                 <div className="space-y-5 text-white/65 text-base leading-relaxed">
                   <p>
-                    TEDxHuntingValley is held at Gund Auditorium at University School in Hunting
+                    TEDxHuntingValley was held at Gund Auditorium at University School in Hunting
                     Valley, Ohio. Gund Auditorium is a professional performance venue with full
                     professional sound and lighting.
                   </p>
                   <p>
-                    University School is Ohio&apos;s leading independent school for boys, and is
-                    providing the auditorium as venue partner. The production quality of the space
+                    University School is Ohio&apos;s leading independent school for boys, and
+                    provided the auditorium as venue partner. The production quality of the space
                     matches the ambition of the event.
                   </p>
                   <p>
-                    When a speaker takes the stage on August 22, they stand in front of professional
-                    equipment, a live audience of 100 people, and a camera that will distribute
-                    their talk to 44 million people worldwide.
+                    When each speaker took the stage on August 22, they stood in front of professional
+                    equipment, a live audience of 100 people, and the cameras that now carry their
+                    talk to a global audience on YouTube.
                   </p>
                 </div>
               </div>

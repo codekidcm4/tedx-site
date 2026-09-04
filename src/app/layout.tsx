@@ -30,6 +30,8 @@ export const metadata: Metadata = {
     "University School",
     "Gund Auditorium",
     "August 2026",
+    "TEDx talks",
+    "The Invisible Engine",
   ],
   authors: [{ name: "Charlie Martin" }, { name: "Jack Nelson" }],
   creator: "TEDxHuntingValley",
@@ -37,7 +39,7 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     url: siteConfig.url,
-    title: "TEDxHuntingValley | August 22, 2026",
+    title: "TEDxHuntingValley | Watch all twelve talks",
     description: siteConfig.description,
     siteName: "TEDxHuntingValley",
     images: [
@@ -51,7 +53,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "TEDxHuntingValley | August 22, 2026",
+    title: "TEDxHuntingValley | Watch all twelve talks",
     description: siteConfig.description,
     creator: "@tedxhuntingvalley",
     images: ["/og-image.jpg"],

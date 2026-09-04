@@ -55,22 +55,24 @@ export const siteConfig = {
   livestreamUrl: null as string | null, // event-day livestream link
   watchNotifyUrl: null as string | null, // "notify me when talks publish" list URL
 
+  youtube: "https://www.youtube.com/@TEDxHuntingValley",
+
   description:
-    "TEDxHuntingValley is Cleveland's first independent community TEDx event in over a decade. Six adult speakers and six student speakers share one stage on August 22, 2026 at Gund Auditorium, University School in Hunting Valley, Ohio.",
+    "TEDxHuntingValley was Cleveland's first independent community TEDx event in over a decade. Six adult speakers and six student speakers shared one stage on August 22, 2026 at Gund Auditorium, University School in Hunting Valley, Ohio. Every talk is now free on YouTube.",
 };
 
 export const navLinks = [
   { label: "Home", href: "/" },
-  { label: "About", href: "/about" },
+  { label: "Talks", href: "/talks" },
   { label: "Speakers", href: "/speakers" },
   { label: "Schedule", href: "/schedule" },
+  { label: "About", href: "/about" },
   { label: "Press", href: "/press" },
   { label: "Media", href: "/media" },
   { label: "Social", href: "/social" },
 ];
 
-// Forward-looking road to August 22. Application milestones are intentionally folded into a single
-// completed-history entry so the timeline leads with what is ahead: speaker prep and the event.
+// The full arc of TEDxHuntingValley 2026, from the license to the published talks.
 export type KeyDate = {
   date: string;
   label: string;
@@ -78,8 +80,9 @@ export type KeyDate = {
 };
 
 export const keyDates: KeyDate[] = [
-  { date: "Spring 2026", label: "Speaker applications reviewed and the lineup selected", status: "done" },
-  { date: "Summer 2026", label: "Speaker coaching and talk development", status: "upcoming" },
+  { date: "Spring 2026", label: "TED license granted; open student speaker competition across Greater Cleveland", status: "done" },
+  { date: "May 2026", label: "Applications closed and the twelve-voice lineup selected", status: "done" },
+  { date: "Summer 2026", label: "Speaker coaching and talk development", status: "done" },
   { date: "August 22, 2026", label: "TEDxHuntingValley at Gund Auditorium, University School", status: "event" },
-  { date: "After the event", label: "Every talk published to the TEDx YouTube channel", status: "upcoming" },
+  { date: "September 3, 2026", label: "All twelve talks and the complete event published to YouTube", status: "done" },
 ];

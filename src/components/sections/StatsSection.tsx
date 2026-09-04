@@ -22,13 +22,13 @@ export function StatsSection() {
               className="font-extrabold text-[#0a0a0a] mb-6 max-w-3xl"
               style={{ fontSize: "clamp(2rem, 5vw, 3.5rem)", letterSpacing: "-0.03em", lineHeight: 1.05 }}
             >
-              Cleveland hasn&apos;t had an independent community TEDx in{" "}
+              Cleveland went without an independent community TEDx for{" "}
               <span className="text-[#e62b1e]">over a decade.</span>
             </h2>
             <p className="text-[#555555] text-lg leading-relaxed max-w-2xl">
               The last one was June 2015. More than ten years passed with no public ideas platform
-              of this kind in one of the Midwest&apos;s most idea-rich cities. Two high school juniors
-              noticed, and decided to stop waiting.
+              of this kind in one of the Midwest&apos;s most idea-rich cities. Two high school students
+              noticed, decided to stop waiting, and on August 22, 2026 the gap closed.
             </p>
           </div>
         </FadeIn>

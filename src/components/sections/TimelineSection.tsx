@@ -10,7 +10,7 @@ export function TimelineSection() {
             <span className="inline-flex items-center gap-3 mb-4">
               <span className="inline-block w-8 h-0.5 bg-[#e62b1e]" aria-hidden="true" />
               <span className="text-[0.65rem] font-bold tracking-[0.18em] uppercase text-[#e62b1e]">
-                Key Dates
+                The timeline
               </span>
             </span>
             <h2
@@ -18,7 +18,7 @@ export function TimelineSection() {
               className="font-extrabold text-[#0a0a0a] max-w-xl"
               style={{ fontSize: "clamp(1.875rem, 4vw, 3rem)", letterSpacing: "-0.03em", lineHeight: 1.05 }}
             >
-              The road to August 22
+              How it happened
             </h2>
           </div>
         </FadeIn>

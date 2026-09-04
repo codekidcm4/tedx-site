@@ -1,6 +1,7 @@
 import { FadeIn } from "@/components/ui/FadeIn";
 import Link from "next/link";
 import { siteConfig } from "@/data/site";
+import { youtubeChannelUrl } from "@/data/talks";
 
 export function CTASection() {
   return (
@@ -17,40 +18,43 @@ export function CTASection() {
         <FadeIn>
           <div className="max-w-3xl mx-auto text-center">
             <p className="text-[0.65rem] font-bold tracking-[0.18em] uppercase text-white/60 mb-6">
-              August 22, 2026 &middot; Gund Auditorium
+              That&apos;s a wrap &middot; August 22, 2026 &middot; Gund Auditorium
             </p>
             <h2
               id="cta-heading"
               className="text-white font-extrabold mb-6"
               style={{ fontSize: "clamp(2rem, 5vw, 3.75rem)", letterSpacing: "-0.03em", lineHeight: 1.05 }}
             >
-              Be in the room when the lights go up.
+              Twelve ideas left the room. Now they&apos;re yours.
             </h2>
             <p className="text-white/80 text-lg leading-relaxed mb-10 max-w-xl mx-auto">
-              Twelve voices, one stage, and an intentionally intimate room. Seats are limited, so
-              reserve yours before they are gone.
+              Thank you to every speaker, every volunteer, and everyone who filled the seats. All
+              twelve talks are free on YouTube. Watch one, then send it to the person it made you
+              think of.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
-                href="/tickets"
+                href="/talks"
                 className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white text-[#e62b1e] font-bold text-sm tracking-wide rounded-sm hover:bg-[#f0f0f0] transition-all duration-200 shadow-lg"
               >
-                Get tickets
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24" aria-hidden="true">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M8 5v14l11-7z" />
                 </svg>
+                Watch the talks
               </Link>
               <a
-                href={`mailto:${siteConfig.email}`}
+                href={youtubeChannelUrl}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-flex items-center justify-center gap-2 px-8 py-4 border-2 border-white/40 text-white font-semibold text-sm tracking-wide rounded-sm hover:border-white hover:bg-white/10 transition-all duration-200"
               >
-                Ask a Question
+                Subscribe on YouTube
               </a>
             </div>
 
             <p className="text-white/70 text-xs mt-8">
-              Seating at Gund Auditorium is intentionally limited. Questions to {siteConfig.email}.
+              Press, partnerships, or a note for the organizers: {siteConfig.email}
             </p>
           </div>
         </FadeIn>

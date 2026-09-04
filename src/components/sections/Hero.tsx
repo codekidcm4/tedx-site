@@ -40,7 +40,7 @@ export function Hero() {
           >
             <span className="inline-block w-8 h-0.5 bg-[#e62b1e]" aria-hidden="true" />
             <span className="text-[0.65rem] font-bold tracking-[0.18em] uppercase text-[#e62b1e]">
-              TEDxHuntingValley, August 22, 2026
+              {isPost ? "TEDxHuntingValley 2026 · All twelve talks now online" : "TEDxHuntingValley, August 22, 2026"}
             </span>
           </motion.div>
 
@@ -65,8 +65,9 @@ export function Hero() {
           >
             {isPost ? (
               <>
-                Cleveland&apos;s first independent community TEDx in over a decade. Thank you to
-                everyone who joined us. The talks are on their way to the TEDx YouTube channel.
+                Cleveland&apos;s first independent community TEDx in over a decade happened on August 22,
+                2026. Six students and six adults, one stage, one standard. Every talk is now free to
+                watch, forever.
               </>
             ) : (
               <>
@@ -115,13 +116,20 @@ export function Hero() {
             className="flex flex-wrap gap-4"
           >
             <Link
-              href={isPost ? "/media" : "/tickets"}
+              href={isPost ? "/talks" : "/tickets"}
               className="inline-flex items-center gap-2 px-8 py-4 bg-[#e62b1e] text-white font-bold text-sm tracking-wide rounded-sm hover:bg-[#c9231a] transition-all duration-200 shadow-lg shadow-red-900/30"
             >
+              {isPost ? (
+                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M8 5v14l11-7z" />
+                </svg>
+              ) : null}
               {isPost ? "Watch the talks" : "Get tickets"}
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24" aria-hidden="true">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-              </svg>
+              {!isPost && (
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24" aria-hidden="true">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              )}
             </Link>
             <Link
               href="/speakers"

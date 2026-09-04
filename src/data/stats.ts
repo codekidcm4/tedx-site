@@ -12,7 +12,7 @@ export const globalStats: Stat[] = [
     numericValue: 44,
     suffix: "M",
     label: "TEDx YouTube subscribers",
-    description: "Every talk from our stage reaches a global audience",
+    description: "The global audience every talk from our stage can reach",
   },
   {
     value: "8",
@@ -42,7 +42,7 @@ export const localStats: Stat[] = [
     value: "12",
     numericValue: 12,
     suffix: "",
-    label: "Voices on one stage",
+    label: "Talks now online",
     description: "Six adult speakers and six student speakers, no age qualifier",
   },
   {
@@ -56,14 +56,14 @@ export const localStats: Stat[] = [
     value: "100",
     numericValue: 100,
     suffix: "",
-    label: "Seats available",
+    label: "Seats in the room",
     description: "Intimate by design, per TED licensing",
   },
   {
-    value: "1",
-    numericValue: 1,
+    value: "Aug 22",
+    numericValue: 0,
     suffix: "",
-    label: "Day that changes the conversation",
-    description: "August 22, 2026 at Gund Auditorium, University School",
+    label: "The day it happened",
+    description: "2026, Gund Auditorium, University School",
   },
 ];

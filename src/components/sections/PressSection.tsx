@@ -3,6 +3,14 @@ import Link from "next/link";
 
 export const pressItems = [
   {
+    outlet: "FOX 8 News Cleveland",
+    headline: "New Day Cleveland: TEDxHuntingValley",
+    quote:
+      "Charlie Martin and Jack Nelson joined FOX 8's New Day Cleveland the day before the event to talk about bringing an independent TEDx back to Cleveland and putting students and adults on the same stage.",
+    url: "https://www.youtube.com/watch?v=nMfcYU_aLFg",
+    date: "August 21, 2026",
+  },
+  {
     outlet: "Canton Repository",
     headline: "Louisville High School senior to take part in Cleveland-area TED Talk",
     quote:

@@ -4,12 +4,12 @@ import { TicketsView } from "@/components/tickets/TicketsView";
 export const metadata: Metadata = {
   title: "Tickets",
   description:
-    "Reserve your seat for TEDxHuntingValley on August 22, 2026 at Gund Auditorium, University School. Two sessions, intimate seating.",
+    "TEDxHuntingValley 2026 has ended. Every talk from August 22 is now free to watch on YouTube.",
   alternates: { canonical: "/tickets" },
   openGraph: {
     title: "Tickets | TEDxHuntingValley",
     description:
-      "Reserve your seat for TEDxHuntingValley on August 22, 2026. Two sessions at Gund Auditorium, University School. Seating is intimate.",
+      "TEDxHuntingValley 2026 has ended. Every talk from August 22 is now free to watch on YouTube.",
     url: "https://tedxhuntingvalley.com/tickets",
     type: "website",
     images: [{ url: "/og-image.jpg", width: 1200, height: 630, alt: "TEDxHuntingValley tickets" }],

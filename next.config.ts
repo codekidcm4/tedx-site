@@ -10,6 +10,8 @@ const nextConfig: NextConfig = {
   },
   images: {
     formats: ["image/avif", "image/webp"],
+    // YouTube poster frames for the click-to-play talk embeds.
+    remotePatterns: [{ protocol: "https", hostname: "i.ytimg.com", pathname: "/vi/**" }],
   },
   // The student application program is retired. Permanently send any old bookmarks, shared links,
   // or search results for /apply and the application PDF to the home page instead of a 404.
@@ -18,6 +20,8 @@ const nextConfig: NextConfig = {
     return [
       { source: "/apply", destination: "/", permanent: true },
       { source: "/application.pdf", destination: "/", permanent: true },
+      // Ticket sales are over; the box office now points at the talks.
+      { source: "/tickets", destination: "/talks", permanent: false },
     ];
   },
 };

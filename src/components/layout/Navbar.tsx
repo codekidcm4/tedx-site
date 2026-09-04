@@ -78,10 +78,13 @@ export function Navbar() {
                 </Link>
               ))}
               <Link
-                href="/tickets"
-                className="ml-2 px-5 py-2.5 bg-[#e62b1e] text-white text-sm font-semibold rounded-sm hover:bg-[#c9231a] transition-colors duration-200 shadow-sm"
+                href="/talks"
+                className="ml-2 inline-flex items-center gap-2 px-5 py-2.5 bg-[#e62b1e] text-white text-sm font-semibold rounded-sm hover:bg-[#c9231a] transition-colors duration-200 shadow-sm"
               >
-                Tickets
+                <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M8 5v14l11-7z" />
+                </svg>
+                Watch the talks
               </Link>
             </nav>
 
@@ -144,10 +147,13 @@ export function Navbar() {
           ))}
           <div className="mt-8">
             <Link
-              href="/tickets"
-              className="inline-flex items-center justify-center w-full py-4 bg-[#e62b1e] text-white text-lg font-bold rounded-sm hover:bg-[#c9231a] transition-colors duration-200"
+              href="/talks"
+              className="inline-flex items-center justify-center gap-2 w-full py-4 bg-[#e62b1e] text-white text-lg font-bold rounded-sm hover:bg-[#c9231a] transition-colors duration-200"
             >
-              Get tickets
+              <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M8 5v14l11-7z" />
+              </svg>
+              Watch the talks
             </Link>
           </div>
 

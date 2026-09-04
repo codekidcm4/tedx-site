@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import { Hero } from "@/components/sections/Hero";
 import { MediaBar } from "@/components/sections/MediaBar";
-import { EventEssentials } from "@/components/sections/EventEssentials";
-import { TicketsSection } from "@/components/sections/TicketsSection";
+import { TalksSection } from "@/components/sections/TalksSection";
 import { StatsSection } from "@/components/sections/StatsSection";
 import { PressSection } from "@/components/sections/PressSection";
 import { ThemeSection } from "@/components/sections/ThemeSection";
@@ -10,30 +9,30 @@ import { SpeakersPreview } from "@/components/sections/SpeakersPreview";
 import { WhatIsTedx } from "@/components/sections/WhatIsTedx";
 import { OrganizersSection } from "@/components/sections/OrganizersSection";
 import { TimelineSection } from "@/components/sections/TimelineSection";
-import { WatchOnlineSection } from "@/components/sections/WatchOnlineSection";
 import { SocialSection } from "@/components/sections/SocialSection";
 import { CTASection } from "@/components/sections/CTASection";
 import { siteConfig } from "@/data/site";
 import { speakers } from "@/data/speakers";
+import { fullEvent, thumbUrl, watchUrl } from "@/data/talks";
 
 export const metadata: Metadata = {
   title: "TEDxHuntingValley",
   description:
-    "Cleveland's first independent community TEDx in over a decade. Twelve voices, six adult speakers and six student speakers, on one stage at Gund Auditorium, University School on August 22, 2026.",
+    "Cleveland's first independent community TEDx in over a decade. Twelve voices, six adult speakers and six student speakers, shared one stage at Gund Auditorium, University School on August 22, 2026. Every talk is now free on YouTube.",
   alternates: { canonical: "/" },
   openGraph: {
-    title: "TEDxHuntingValley | August 22, 2026",
+    title: "TEDxHuntingValley | Watch all twelve talks",
     description:
-      "Cleveland's first independent community TEDx in over a decade. Twelve voices, one stage, no age qualifier. The full lineup is taking shape ahead of August 22, 2026.",
+      "Cleveland's first independent community TEDx in over a decade. Twelve voices, one stage, no age qualifier. Every talk from August 22, 2026 is now free on YouTube.",
     url: "https://tedxhuntingvalley.com",
     type: "website",
     images: [{ url: "/og-image.jpg", width: 1200, height: 630, alt: "TEDxHuntingValley | The Invisible Engine: The Forces We Forget" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "TEDxHuntingValley | August 22, 2026",
+    title: "TEDxHuntingValley | Watch all twelve talks",
     description:
-      "Cleveland's first independent community TEDx in over a decade. Twelve voices, one stage, no age qualifier. The full lineup is taking shape ahead of August 22, 2026.",
+      "Cleveland's first independent community TEDx in over a decade. Twelve voices, one stage, no age qualifier. Every talk is now free on YouTube.",
     images: ["/og-image.jpg"],
   },
 };
@@ -41,9 +40,9 @@ export const metadata: Metadata = {
 const eventJsonLd = {
   "@context": "https://schema.org",
   "@type": "Event",
-  name: "TEDxHuntingValley",
+  name: "TEDxHuntingValley 2026",
   description:
-    "The Invisible Engine: The Forces We Forget. Cleveland's first independent community TEDx in over a decade. Six adult speakers and six student speakers share one stage. Organized by two University School students.",
+    "The Invisible Engine: The Forces We Forget. Cleveland's first independent community TEDx in over a decade. Six adult speakers and six student speakers shared one stage. Organized by two University School students. All talks are published on YouTube.",
   startDate: siteConfig.startDateTimeISO,
   endDate: siteConfig.endDateTimeISO,
   eventStatus: "https://schema.org/EventScheduled",
@@ -64,16 +63,22 @@ const eventJsonLd = {
     { "@type": "Person", name: "Charlie Martin" },
     { "@type": "Person", name: "Jack Nelson" },
   ],
-  // Performer list reflects the announced lineup. Talk titles are added to each Person as they confirm.
   performer: speakers.map((s) => ({
     "@type": "Person",
     name: s.name,
     ...(s.role ? { jobTitle: s.role } : {}),
   })),
+  recordedIn: {
+    "@type": "VideoObject",
+    name: fullEvent.title,
+    description: fullEvent.description,
+    thumbnailUrl: thumbUrl(fullEvent.videoId),
+    uploadDate: "2026-09-03",
+    duration: fullEvent.durationISO,
+    contentUrl: watchUrl(fullEvent.videoId),
+  },
   url: "https://tedxhuntingvalley.com",
   image: "https://tedxhuntingvalley.com/og-image.jpg",
-  // Ticket/offer info goes here once seats are released, e.g.:
-  // offers: { "@type": "Offer", url: siteConfig.ticketsUrl, availability: "https://schema.org/InStock", ... }
 };
 
 export default function HomePage() {
@@ -85,8 +90,7 @@ export default function HomePage() {
       />
       <Hero />
       <MediaBar />
-      <EventEssentials />
-      <TicketsSection />
+      <TalksSection />
       <StatsSection />
       <PressSection />
       <ThemeSection />
@@ -94,22 +98,7 @@ export default function HomePage() {
       <WhatIsTedx />
       <OrganizersSection />
       <TimelineSection />
-      <WatchOnlineSection />
       <SocialSection />
-
-      {/* ─────────────────────────────────────────────────────────────────
-          RESERVED: Day-of schedule / run-of-show.
-          Build the schedule section here (speaker order, timing, breaks).
-          The #run-of-show anchor is kept stable so nav and links can target it.
-         ───────────────────────────────────────────────────────────────── */}
-      <section id="run-of-show" aria-hidden="true" className="hidden" />
-
-      {/* ─────────────────────────────────────────────────────────────────
-          RESERVED: Post-event area (thank-you state, talk videos, photo gallery).
-          Build this after August 22. The #after anchor is kept stable.
-         ───────────────────────────────────────────────────────────────── */}
-      <section id="after" aria-hidden="true" className="hidden" />
-
       <CTASection />
     </>
   );

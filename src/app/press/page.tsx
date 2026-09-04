@@ -6,7 +6,7 @@ import { pressItems } from "@/components/sections/PressSection";
 export const metadata: Metadata = {
   title: "Press",
   description:
-    "Press kit, media contacts, story angles, and downloadable materials for TEDxHuntingValley on August 22, 2026 at Gund Auditorium, University School.",
+    "Press kit, media contacts, story angles, coverage, and downloadable materials for TEDxHuntingValley, held August 22, 2026 at Gund Auditorium, University School. All twelve talks are now online.",
   alternates: { canonical: "/press" },
   openGraph: {
     title: "Press | TEDxHuntingValley",
@@ -42,7 +42,7 @@ const storyAngles = [
   {
     number: "02",
     title: "The Cleveland Gap",
-    body: "Cleveland's last independent community TEDx was June 2015. More than a decade passed with no public ideas platform of this kind. Two high school juniors noticed, applied for a license, and are building one from scratch.",
+    body: "Cleveland's last independent community TEDx was June 2015. More than a decade passed with no public ideas platform of this kind. Two high school students noticed, applied for a license, and built one from scratch.",
   },
   {
     number: "03",
@@ -52,22 +52,22 @@ const storyAngles = [
   {
     number: "04",
     title: "The Organizers",
-    body: "Two high school students who filed a TED license application, negotiated a venue partnership, built a media outreach program, and ran a city-wide speaker competition, all as a side project outside school.",
+    body: "Two high school students who filed a TED license application, negotiated a venue partnership, built a media outreach program, ran a city-wide speaker competition, and hosted the day, all as a side project outside school.",
   },
   {
     number: "05",
     title: "The Coaching Arc",
-    body: "Six selected student speakers enter a multi-month coaching program over the summer to develop their talks. What does it look like to prepare a high schooler for a globally distributed stage?",
+    body: "Six selected student speakers went through a multi-month coaching program over the summer to develop their talks. What did it take to prepare a high schooler for a globally distributed stage? The results are online.",
   },
 ];
 
 const canProvide = [
-  "Interviews with organizers Charlie Martin and Jack Nelson, available by phone, email, or in person",
-  "Interviews with announced speakers as each is confirmed",
-  "Behind-the-scenes access through rehearsals and the summer coaching process",
-  "Press credentials for the August 22 event, contact us to request",
-  "Speaker bios and talk summaries as the lineup is finalized",
-  "High-resolution event photos after August 22",
+  "Interviews with organizers Charlie Martin and Jack Nelson, by phone, email, or in person",
+  "Introductions to any of the twelve speakers for follow-up interviews",
+  "Embeddable video of every talk and the complete event recording, free to use",
+  "High-resolution event photography, on request",
+  "Speaker bios, headshots, and one-line talk summaries (see /talks)",
+  "The full story of how two students licensed, funded, and ran the event",
 ];
 
 const breadcrumb = {
@@ -102,7 +102,7 @@ export default function PressPage() {
             </h1>
             <p className="text-white/65 text-xl leading-relaxed max-w-2xl mb-10">
               TEDxHuntingValley, August 22, 2026. Cleveland&apos;s first independent community
-              TEDx in over a decade, organized by two high school juniors.
+              TEDx in over a decade, organized by two high school students. Every talk is now online.
             </p>
             {/* Downloads */}
             <div className="flex flex-wrap gap-4">
@@ -152,19 +152,19 @@ export default function PressPage() {
                 </h2>
                 <div className="space-y-4 text-[#555555] text-base leading-relaxed">
                   <p>
-                    TEDxHuntingValley is a fully licensed, independently organized TEDx event
-                    organized by Charlie Martin and Jack Nelson, juniors at University School,
+                    TEDxHuntingValley was a fully licensed, independently organized TEDx event,
+                    organized by Charlie Martin and Jack Nelson, students at University School,
                     with the guidance of licensed organizer Dr. Tyler Yoder.
                   </p>
                   <p>
-                    The event follows the full standard TEDx format: live speakers, talks 18
-                    minutes or under, no panels, no PowerPoints. Student and adult speakers
-                    share the same stage with identical introductions. No age qualifier.
+                    The event followed the full standard TEDx format: live speakers, no panels,
+                    no PowerPoints. Student and adult speakers shared the same stage with
+                    identical introductions. No age qualifier.
                   </p>
                   <p>
-                    All talks are filmed and published to the TEDx YouTube channel, 44 million
-                    subscribers, more than 8 billion total views. A local idea, if it&apos;s good
-                    enough, reaches a global audience for free, forever.
+                    All twelve talks and the complete event recording were published to YouTube on
+                    September 3, 2026. A local idea, if it&apos;s good enough, reaches a global
+                    audience for free, forever.
                   </p>
                 </div>
               </div>
@@ -182,7 +182,7 @@ export default function PressPage() {
                     { label: "Audience", value: "100 attendees (TED licensing cap)" },
                     { label: "Theme", value: '"The Invisible Engine: The Forces We Forget"' },
                     { label: "Format", value: "Live speakers, talks ≤18 min, no panels, no PowerPoints" },
-                    { label: "After event", value: "All talks uploaded to TEDx YouTube channel" },
+                    { label: "Talks", value: "All twelve published to YouTube, September 3, 2026" },
                     { label: "Contact", value: "tedxhuntingvalley@gmail.com" },
                   ].map((item) => (
                     <div key={item.label} className="border-b border-[#e0e0e0] pb-4 last:border-0">
@@ -229,10 +229,10 @@ export default function PressPage() {
         <div className="max-w-[1200px] mx-auto px-6 md:px-8 lg:px-12">
           <FadeIn>
             <div className="flex items-center gap-3 mb-2">
-              <h2 id="coverage-heading" className="sr-only">Coverage so far</h2>
+              <h2 id="coverage-heading" className="sr-only">Coverage</h2>
               <span className="inline-block w-8 h-0.5 bg-[#e62b1e]" aria-hidden="true" />
               <span className="text-[0.65rem] font-bold tracking-[0.18em] uppercase text-[#9a9a9a]">
-                Coverage so far
+                Coverage
               </span>
             </div>
             <div className="divide-y divide-[#e8e8e8]">
@@ -408,7 +408,7 @@ export default function PressPage() {
                 <p className="text-white/65 leading-relaxed mb-8">
                   Charlie Martin and Jack Nelson are available for interviews by phone, email,
                   or in person. We respond to every press inquiry. A 10-minute call is available
-                  to walk any journalist through the full story ahead of August 22.
+                  to walk any journalist through the full story of the event.
                 </p>
                 <div className="space-y-3">
                   <a

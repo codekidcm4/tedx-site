@@ -51,8 +51,8 @@ export default function SocialPage() {
               {siteConfig.handle}
             </h1>
             <p className="text-white/65 text-xl leading-relaxed max-w-2xl">
-              Speaker announcements, behind-the-scenes coverage, and updates as August 22
-              approaches. Follow us on Instagram and X.
+              Speaker announcements, behind-the-scenes coverage, and everything from August 22.
+              Follow us on Instagram and X.
             </p>
           </FadeIn>
         </div>

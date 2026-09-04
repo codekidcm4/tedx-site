@@ -5,7 +5,7 @@ import { siteConfig } from "@/data/site";
 export const metadata: Metadata = {
   title: "Partners",
   description:
-    "Become a community partner of TEDxHuntingValley. Support a not-for-profit, TED-licensed event bringing twelve voices to one stage on August 22, 2026.",
+    "The community partners behind TEDxHuntingValley, a not-for-profit, TED-licensed event that brought twelve voices to one stage on August 22, 2026.",
   alternates: { canonical: "/sponsors" },
 };
 

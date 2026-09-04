@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
-import { FadeIn } from "@/components/ui/FadeIn";
+import { FadeIn, StaggerContainer, StaggerItem } from "@/components/ui/FadeIn";
+import { TalkCard } from "@/components/ui/TalkCard";
+import { talks } from "@/data/talks";
 import { pressItems } from "@/components/sections/PressSection";
 import { siteConfig } from "@/data/site";
 import Link from "next/link";
@@ -7,12 +9,12 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "Media",
   description:
-    "Press resources, media kit, and event coverage for TEDxHuntingValley. Talks published to the TEDx YouTube channel after August 22, 2026.",
+    "Press resources, media kit, and event coverage for TEDxHuntingValley. All twelve talks from August 22, 2026 are on YouTube.",
   alternates: { canonical: "/media" },
   openGraph: {
     title: "Media | TEDxHuntingValley",
     description:
-      "Resources for journalists, photographers, and producers. Talks published to the TEDx YouTube channel after the August 22, 2026 event.",
+      "Resources for journalists, photographers, and producers. All twelve talks from the August 22, 2026 event are on YouTube.",
     url: "https://tedxhuntingvalley.com/media",
     type: "website",
     images: [{ url: "/og-image.jpg", width: 1200, height: 630, alt: "TEDxHuntingValley media resources" }],
@@ -46,8 +48,8 @@ export default function MediaPage() {
               Press and Media
             </h1>
             <p className="text-white/65 text-xl leading-relaxed max-w-2xl">
-              Resources for journalists, press, and anyone covering TEDxHuntingValley. Event talks
-              will be published to the TEDx YouTube channel after August 22, 2026.
+              Resources for journalists, press, and anyone covering TEDxHuntingValley. Every talk
+              from August 22, 2026 is now on YouTube, and every story written about us is below.
             </p>
           </FadeIn>
         </div>
@@ -126,7 +128,7 @@ export default function MediaPage() {
         </div>
       </section>
 
-      {/* Coming soon / TBD */}
+      {/* Media status */}
       <section className="py-20 md:py-28 bg-white" aria-labelledby="media-heading">
         <div className="max-w-[1200px] mx-auto px-6 md:px-8 lg:px-12">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-20 items-start">
@@ -143,17 +145,17 @@ export default function MediaPage() {
                   className="font-extrabold text-[#0a0a0a] mb-6"
                   style={{ fontSize: "clamp(1.75rem, 3.5vw, 2.5rem)", letterSpacing: "-0.03em", lineHeight: 1.05 }}
                 >
-                  Talks coming after August 22
+                  Every talk is online
                 </h2>
                 <div className="space-y-5 text-[#555555] leading-relaxed">
                   <p>
-                    Every talk from TEDxHuntingValley will be filmed and published to the TEDx
-                    YouTube channel after the event. The channel has over 44 million subscribers
-                    and more than 8 billion total views across 241,000 published talks.
+                    All twelve talks and the complete four-hour event recording were published to
+                    the TEDxHuntingValley YouTube channel on September 3, 2026. Every video is
+                    embeddable and free to use in coverage.
                   </p>
                   <p>
-                    Event photography will also be released after August 22. Press credentials for
-                    event day coverage are available. Contact us to request access.
+                    High-resolution event photography is available on request, and both organizers
+                    remain available for interviews about the event and what comes next.
                   </p>
                 </div>
 
@@ -166,10 +168,10 @@ export default function MediaPage() {
                   </div>
                   <div className="space-y-3">
                     {[
-                      { label: "Talk recordings", status: "Available after August 22, 2026" },
-                      { label: "Event photography", status: "Available after August 22, 2026" },
+                      { label: "Talk recordings", status: "Live on YouTube since September 3, 2026" },
+                      { label: "Event photography", status: "Available on request" },
                       { label: "Speaker bios and summaries", status: "Available now \u2014 full lineup announced" },
-                      { label: "Press credentials", status: "Contact us to request" },
+                      { label: "Speaker interviews", status: "Introductions on request" },
                       { label: "Organizer interviews", status: "Available now" },
                     ].map((item) => (
                       <div
@@ -226,10 +228,10 @@ export default function MediaPage() {
                   {[
                     "Interviews with Charlie Martin and Jack Nelson (phone, email, or in person)",
                     "Interviews with any of the twelve announced speakers",
-                    "Behind-the-scenes access through rehearsals and summer coaching",
-                    "Press credentials for August 22",
+                    "Embeddable video of every talk and the complete event",
+                    "The organizers' own account of building the event",
                     "Speaker bios and talk summaries for the full twelve-speaker lineup",
-                    "High-resolution event photos after August 22",
+                    "High-resolution event photos, on request",
                   ].map((item, i) => (
                     <li key={i} className="flex items-start gap-2.5 text-sm text-[#555555]">
                       <span className="text-[#e62b1e] mt-1 flex-shrink-0" aria-hidden="true">
@@ -263,29 +265,32 @@ export default function MediaPage() {
                 className="font-extrabold text-[#0a0a0a] mb-4"
                 style={{ fontSize: "clamp(1.75rem, 3.5vw, 2.5rem)", letterSpacing: "-0.03em", lineHeight: 1.05 }}
               >
-                Available after August 22
+                Watch the talks
               </h2>
               <p className="text-[#555555] max-w-xl leading-relaxed">
-                Event talks and photography will be published here after the event. All talks will
-                also be available on the TEDx YouTube channel.
+                All twelve talks from the stage, click to play. The complete event recording, with
+                every introduction and Q&amp;A, is on the talks page.
               </p>
             </div>
           </FadeIn>
 
-          {/* Placeholder grid */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {Array.from({ length: 8 }).map((_, i) => (
-              <FadeIn key={i} delay={i * 0.04}>
-                <div className="aspect-video bg-[#e0e0e0] flex flex-col items-center justify-center gap-2">
-                  <svg className="w-8 h-8 text-[#c0c0c0]" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z" />
-                  </svg>
-                  <p className="text-[0.6rem] font-bold tracking-widest uppercase text-[#b0b0b0]">
-                    Coming Soon
-                  </p>
-                </div>
-              </FadeIn>
+          <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
+            {talks.map((talk) => (
+              <StaggerItem key={talk.videoId} className="h-full">
+                <TalkCard talk={talk} className="h-full" />
+              </StaggerItem>
             ))}
+          </StaggerContainer>
+          <div className="mt-8">
+            <Link
+              href="/talks"
+              className="inline-flex items-center gap-2 text-[0.65rem] font-bold tracking-wide uppercase text-[#e62b1e] hover:underline"
+            >
+              The complete event with chapters
+              <svg className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24" aria-hidden="true">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </Link>
           </div>
         </div>
       </section>
@@ -300,8 +305,8 @@ export default function MediaPage() {
                   Covering TEDxHuntingValley?
                 </p>
                 <p className="text-[#555555] text-sm leading-relaxed max-w-md">
-                  We offer a 10-minute call to walk any journalist through the full story ahead of
-                  August 22. Contact us and we will set it up.
+                  We offer a 10-minute call to walk any journalist through the full story of the
+                  event. Contact us and we will set it up.
                 </p>
               </div>
               <div className="flex gap-4 flex-shrink-0">
