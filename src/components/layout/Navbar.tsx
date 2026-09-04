@@ -20,10 +20,6 @@ export function Navbar() {
   }, []);
 
   useEffect(() => {
-    setMobileOpen(false);
-  }, [pathname]);
-
-  useEffect(() => {
     document.body.style.overflow = mobileOpen ? "hidden" : "";
     return () => { document.body.style.overflow = ""; };
   }, [mobileOpen]);
@@ -141,6 +137,7 @@ export function Navbar() {
                 pathname === link.href ? "text-[#e62b1e]" : "text-[#0a0a0a] hover:text-[#e62b1e]",
               )}
               style={{ transitionDelay: mobileOpen ? `${i * 50}ms` : "0ms" }}
+              onClick={() => setMobileOpen(false)}
             >
               {link.label}
             </Link>
@@ -148,6 +145,7 @@ export function Navbar() {
           <div className="mt-8">
             <Link
               href="/talks"
+              onClick={() => setMobileOpen(false)}
               className="inline-flex items-center justify-center gap-2 w-full py-4 bg-[#e62b1e] text-white text-lg font-bold rounded-sm hover:bg-[#c9231a] transition-colors duration-200"
             >
               <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
