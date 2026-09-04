@@ -102,14 +102,6 @@ export function Footer() {
               ))}
               <li>
                 <Link
-                  href="/sponsors"
-                  className="text-sm text-[#e0e0e0] hover:text-white transition-colors duration-200"
-                >
-                  Partners
-                </Link>
-              </li>
-              <li>
-                <Link
                   href="/talks"
                   className="text-sm text-[#e62b1e] hover:text-[#ff4438] font-semibold transition-colors duration-200"
                 >

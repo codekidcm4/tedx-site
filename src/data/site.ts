@@ -5,11 +5,7 @@ export const siteConfig = {
   // Event date and timing
   date: "August 22, 2026",
   dateISO: "2026-08-22",
-  // From the draft running order (see src/data/schedule.ts). Update both places together if the
-  // times shift. Set either to null to show "Time to be announced" in the event-essentials card.
-  doorsOpen: "12:30 PM" as string | null,
-  startTime: "1:00 PM" as string | null,
-  // Drives the countdown, the Event JSON-LD, and the pre/live/post event phase.
+  // Used by the Event structured data.
   startDateTimeISO: "2026-08-22T13:00:00-04:00",
   endDateTimeISO: "2026-08-22T17:55:00-04:00",
 
@@ -47,13 +43,6 @@ export const siteConfig = {
   // Official TED / TEDx program links (required: a visible TEDx program link on the homepage).
   tedUrl: "https://www.ted.com",
   tedxProgramUrl: "https://www.ted.com/about/programs-initiatives/tedx-program",
-
-  // Swappable launch config. Each value is null until the real thing exists; setting a value
-  // flips the matching section from its "coming soon" state to live, with no other code change.
-  ticketsUrl: "/tickets" as string | null, // live box office (tickets are on sale to everyone)
-  interestFormUrl: null as string | null, // seat-interest / notify list (e.g. a Google Form URL)
-  livestreamUrl: null as string | null, // event-day livestream link
-  watchNotifyUrl: null as string | null, // "notify me when talks publish" list URL
 
   youtube: "https://www.youtube.com/@TEDxHuntingValley",
 

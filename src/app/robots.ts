@@ -5,9 +5,12 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: "*",
       allow: "/",
-      // /setup is an organizer-only admin guide; /apply is retired and now redirects home.
-      disallow: ["/setup", "/apply"],
+      // /apply is retired and redirects home.
+      disallow: ["/apply"],
     },
-    sitemap: "https://tedxhuntingvalley.com/sitemap.xml",
+    sitemap: [
+      "https://tedxhuntingvalley.com/sitemap.xml",
+      "https://tedxhuntingvalley.com/video-sitemap.xml",
+    ],
   };
 }

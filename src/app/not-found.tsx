@@ -1,11 +1,13 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import { youtubeChannelUrl } from "@/data/talks";
 
 export const metadata: Metadata = {
   title: "Page not found",
   robots: { index: false, follow: false },
 };
 
+// Old ticket, check-in, and application links all end up here; send people to the talks.
 export default function NotFound() {
   return (
     <section className="bg-[#0a0a0a] min-h-[70vh] flex items-center relative overflow-hidden" aria-labelledby="notfound-heading">
@@ -25,25 +27,33 @@ export default function NotFound() {
           This page took an <span className="text-[#e62b1e]">invisible</span> turn.
         </h1>
         <p className="text-white/65 text-lg leading-relaxed max-w-xl mb-10">
-          We couldn&apos;t find what you were looking for. The page may have moved, or the link may be
-          out of date. Let&apos;s get you back on track.
+          TEDxHuntingValley 2026 has happened, and pages from before the event, like tickets and
+          check-in, have been retired. The good news: every talk from the stage is online.
         </p>
         <div className="flex flex-wrap gap-4">
           <Link
-            href="/"
+            href="/talks"
             className="inline-flex items-center gap-2 px-8 py-4 bg-[#e62b1e] text-white font-bold text-sm tracking-wide rounded-sm hover:bg-[#c9231a] transition-colors duration-200"
           >
-            Back to home
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24" aria-hidden="true">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M8 5v14l11-7z" />
             </svg>
+            Watch the talks
           </Link>
           <Link
-            href="/speakers"
+            href="/"
             className="inline-flex items-center gap-2 px-8 py-4 border border-white/30 text-white font-semibold text-sm tracking-wide rounded-sm hover:bg-white/10 transition-colors duration-200"
           >
-            Meet the speakers
+            Back to home
           </Link>
+          <a
+            href={youtubeChannelUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-8 py-4 text-white/70 font-semibold text-sm tracking-wide hover:text-white transition-colors duration-200"
+          >
+            YouTube channel &rarr;
+          </a>
         </div>
       </div>
     </section>

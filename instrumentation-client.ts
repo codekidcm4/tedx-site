@@ -10,8 +10,6 @@
  * 3. Replace "G-XXXXXXXXXX" below with your real ID
  * 4. Uncomment the three lines marked UNCOMMENT BELOW
  * 5. Redeploy the site — analytics will begin tracking immediately
- *
- * See /setup for full step-by-step instructions.
  */
 
 const GA_MEASUREMENT_ID = "G-XXXXXXXXXX"; // Replace with your real GA4 ID

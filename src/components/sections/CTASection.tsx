@@ -54,7 +54,7 @@ export function CTASection() {
             </div>
 
             <p className="text-white/70 text-xs mt-8">
-              Press, partnerships, or a note for the organizers: {siteConfig.email}
+              Press inquiries or a note for the organizers: {siteConfig.email}
             </p>
           </div>
         </FadeIn>

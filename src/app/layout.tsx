@@ -58,6 +58,11 @@ export const metadata: Metadata = {
     creator: "@tedxhuntingvalley",
     images: ["/og-image.jpg"],
   },
+  // Google Search Console: set GOOGLE_SITE_VERIFICATION in Vercel to the token from the
+  // "HTML tag" verification method and this emits the meta tag. Nothing is emitted if unset.
+  ...(process.env.GOOGLE_SITE_VERIFICATION
+    ? { verification: { google: process.env.GOOGLE_SITE_VERIFICATION } }
+    : {}),
   robots: {
     index: true,
     follow: true,
@@ -92,6 +97,7 @@ export default function RootLayout({
               sameAs: [
                 "https://instagram.com/tedxhuntingvalley",
                 "https://x.com/tedxhv26",
+                "https://www.youtube.com/@TEDxHuntingValley",
               ],
               contactPoint: {
                 "@type": "ContactPoint",

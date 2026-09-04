@@ -13,15 +13,19 @@ const nextConfig: NextConfig = {
     // YouTube poster frames for the click-to-play talk embeds.
     remotePatterns: [{ protocol: "https", hostname: "i.ytimg.com", pathname: "/vi/**" }],
   },
-  // The student application program is retired. Permanently send any old bookmarks, shared links,
-  // or search results for /apply and the application PDF to the home page instead of a 404.
-  // Redirects are evaluated before the filesystem, so these catch the public PDF path too.
+  // The event is over. Every pre-event and organizer-only route has been retired; old bookmarks,
+  // QR tickets, shared links, and search results land somewhere useful instead of a 404.
+  // Redirects are evaluated before the filesystem, so these catch the old public PDF path too.
   async redirects() {
     return [
       { source: "/apply", destination: "/", permanent: true },
       { source: "/application.pdf", destination: "/", permanent: true },
-      // Ticket sales are over; the box office now points at the talks.
-      { source: "/tickets", destination: "/talks", permanent: false },
+      { source: "/tickets", destination: "/talks", permanent: true },
+      { source: "/tickets/:path*", destination: "/talks", permanent: true },
+      { source: "/ticket/:path*", destination: "/talks", permanent: true },
+      { source: "/scan", destination: "/talks", permanent: true },
+      { source: "/setup", destination: "/", permanent: true },
+      { source: "/sponsors", destination: "/", permanent: true },
     ];
   },
 };
